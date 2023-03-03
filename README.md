@@ -4,8 +4,6 @@
 
 포크 뜨세요!
 
-<br>
-
 ## 📁 브랜치 관리
 
 - `master`
@@ -22,7 +20,6 @@
     - 더 이상 필요하지 않은 `feature` 브랜치는 삭제합니다.
     - 중앙 원격 저장소에 올리기(`push`) 전에 `pull` 땡겨와서 `merge conflict` 해결해줍니다.
     - `feature/기능요약` : `feature/login`
-    -
     ```
     git checkout -b feature/login develop
     /* 새로운 기능 작업 수행, add, commit, add, commit, ... */ 
@@ -32,8 +29,6 @@
     git push origin develop
     ```
 
-<br>
-
 ## 💦 참고
 
 [Git 브랜치의 종류](https://gmlwjd9405.github.io/2018/05/11/types-of-git-branch.html)
@@ -41,5 +36,3 @@
 [자주 사용되는 Git 명령어](https://www.holaxprogramming.com/2018/11/01/git-commands/)
 
 [프로젝트 fork 하는 법](https://salix97.tistory.com/223)
-
-<br>
