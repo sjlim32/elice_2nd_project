@@ -1,4 +1,4 @@
-# Team01 Backend Repository
+# :smiley: Team01 Backend Repository
 
 1팀 백엔드 저장소입니다.
 
