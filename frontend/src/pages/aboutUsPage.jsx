@@ -1,6 +1,6 @@
-import Chart1 from "../components/charts/Chart1";
-import Chart2 from "../components/charts/Chart2";
-import Chart3 from "../components/charts/Chart3";
+import Chart1 from "../components/pages/aboutUS/charts/chart1";
+import Chart2 from "../components/pages/aboutUS/charts/chart2";
+import Chart3 from "../components/pages/aboutUS/charts/chart3";
 import styled from "styled-components";
 
 function AboutUsPage() {
