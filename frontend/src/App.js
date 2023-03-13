@@ -1,11 +1,11 @@
-import { BrouserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import aboutUsPage from "./pages/aboutUsPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import AboutUsPage from "./pages/aboutUsPage";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/aboutUs" element={<aboutUsPage />} />
+        <Route path="/aboutus" element={<AboutUsPage />} />
       </Routes>
     </Router>
   );
