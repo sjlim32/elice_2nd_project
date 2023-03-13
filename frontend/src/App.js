@@ -1,5 +1,14 @@
+import { BrouserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import aboutUsPage from "./pages/aboutUsPage";
+
 function App() {
-  return <div>hello</div>;
+  return (
+    <Router>
+      <Routes>
+        <Route path="/aboutUs" element={<aboutUsPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
