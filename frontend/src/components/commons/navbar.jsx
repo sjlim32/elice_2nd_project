@@ -54,9 +54,9 @@ function NavigationBar() {
         </MypageLogoutWrapper>
         <MenuWrapper>
           {menuObj.map(({ name, path }) => (
-            <Link to={path}>
+            <StyledLink to={path}>
               <div key={name}>{name}</div>
-            </Link>
+            </StyledLink>
           ))}
         </MenuWrapper>
       </Container>
@@ -77,6 +77,10 @@ const MenuWrapper = styled.div`
   gap: 10px;
   margin-top: auto;
   font-size: 30px;
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 const LogoImg = styled.img`
