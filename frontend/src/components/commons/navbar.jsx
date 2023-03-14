@@ -28,18 +28,22 @@ function NavigationBar() {
 
   return (
     <NavContainer>
+      <Link to="/">
+        <LogoImg src={logo} alt="logo"></LogoImg>
+      </Link>
       <div>
-        <Link to="/">
-          <LogoImg src={logo} alt="logo"></LogoImg>
-        </Link>
+        <RegisterLoginWrapper>
+          <Link to="/users/register">회원가입</Link>
+          <Link to="/users/login">로그인</Link>
+        </RegisterLoginWrapper>
+        <MenuWrapper>
+          {menuObj.map(({ name, path }) => (
+            <Link to={path}>
+              <div key={name}>{name}</div>
+            </Link>
+          ))}
+        </MenuWrapper>
       </div>
-      <ListContainer>
-        {menuObj.map(({ name, path }) => (
-          <Link to={path}>
-            <div key={name}>{name}</div>
-          </Link>
-        ))}
-      </ListContainer>
     </NavContainer>
   );
 }
@@ -51,7 +55,7 @@ const NavContainer = styled.nav`
   justify-content: space-between;
 `;
 
-const ListContainer = styled.div`
+const MenuWrapper = styled.div`
   display: flex;
   gap: 10px;
 `;
@@ -59,6 +63,11 @@ const ListContainer = styled.div`
 const LogoImg = styled.img`
   width: 200px;
   height: 100%;
+`;
+
+const RegisterLoginWrapper = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 export default NavigationBar;
