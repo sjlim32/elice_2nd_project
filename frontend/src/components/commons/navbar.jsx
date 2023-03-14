@@ -41,14 +41,14 @@ function NavigationBar() {
         <MypageLogoutWrapper>
           {token == true ? (
             <>
-              <Link to="/users/mypage">마이페이지</Link>
-              <Link to="/users/logout">로그아웃</Link>
+              <StyledLink to="/users/mypage">마이페이지</StyledLink>
+              <StyledLink to="/users/logout">로그아웃</StyledLink>
             </>
           ) : (
             <>
               {" "}
-              <Link to="/users/register">회원가입</Link>
-              <Link to="/users/login">로그인</Link>
+              <StyledLink to="/users/register">회원가입</StyledLink>
+              <StyledLink to="/users/login">로그인</StyledLink>
             </>
           )}
         </MypageLogoutWrapper>
