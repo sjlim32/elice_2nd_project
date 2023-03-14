@@ -2,9 +2,10 @@
   "name": "team01",
   "version": "1.0.0",
   "description": "1팀 백엔드 저장소입니다.",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --experimental-modules --es-module-specifier-resolution=node index.js"
   },
   "type": "module",
   "repository": {
