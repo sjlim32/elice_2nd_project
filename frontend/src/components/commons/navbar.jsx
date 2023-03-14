@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import logo from "../../images/logo_transparent.png";
 
 function NavigationBar() {
   const listObj = [
@@ -28,7 +29,9 @@ function NavigationBar() {
   return (
     <NavContainer>
       <div>
-        <Link to="/">logo here</Link>
+        <Link to="/">
+          <LogoImg src={logo} alt="logo"></LogoImg>
+        </Link>
       </div>
       <ListContainer>
         {listObj.map(({ name, path }) => (
@@ -51,6 +54,11 @@ const NavContainer = styled.nav`
 const ListContainer = styled.div`
   display: flex;
   gap: 10px;
+`;
+
+const LogoImg = styled.img`
+  width: 200px;
+  height: 200px;
 `;
 
 export default NavigationBar;
