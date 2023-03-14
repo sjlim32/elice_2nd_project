@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "../../images/logo_transparent.png";
 
 function NavigationBar() {
-  const listObj = [
+  const menuObj = [
     {
       name: "24/7 소개",
       path: "/aboutus",
@@ -34,7 +34,7 @@ function NavigationBar() {
         </Link>
       </div>
       <ListContainer>
-        {listObj.map(({ name, path }) => (
+        {menuObj.map(({ name, path }) => (
           <Link to={path}>
             <div key={name}>{name}</div>
           </Link>
@@ -58,7 +58,7 @@ const ListContainer = styled.div`
 
 const LogoImg = styled.img`
   width: 200px;
-  height: 200px;
+  height: 100%;
 `;
 
 export default NavigationBar;
