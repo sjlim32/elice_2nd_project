@@ -1,26 +1,27 @@
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 function NavigationBar() {
   const listObj = [
     {
       name: "24/7 소개",
-      pthh: "/aboutus",
+      path: "/aboutus",
     },
     {
       name: "가정폭력이란?",
-      pthh: "/aboutdomesticviolence",
+      path: "/aboutdomesticviolence",
     },
     {
       name: "이야기 광장",
-      pthh: "/comunity",
+      path: "/comunity",
     },
     {
       name: "상담소 찾기",
-      pthh: "/counselingcenter",
+      path: "/counselingcenter",
     },
     {
       name: "캠페인",
-      pthh: "/campaigns",
+      path: "/campaigns",
     },
   ];
 
