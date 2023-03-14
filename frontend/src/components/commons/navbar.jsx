@@ -31,7 +31,7 @@ function NavigationBar() {
       <Link to="/">
         <LogoImg src={logo} alt="logo"></LogoImg>
       </Link>
-      <div>
+      <Container>
         <RegisterLoginWrapper>
           <Link to="/users/register">회원가입</Link>
           <Link to="/users/login">로그인</Link>
@@ -43,21 +43,24 @@ function NavigationBar() {
             </Link>
           ))}
         </MenuWrapper>
-      </div>
+      </Container>
     </NavContainer>
   );
 }
 
 const NavContainer = styled.nav`
   width: 100%;
-  height: 200px;
+  height: 150px;
   display: flex;
   justify-content: space-between;
+  background-color: yellowgreen;
 `;
 
 const MenuWrapper = styled.div`
   display: flex;
   gap: 10px;
+  margin-top: auto;
+  font-size: 30px;
 `;
 
 const LogoImg = styled.img`
@@ -68,6 +71,12 @@ const LogoImg = styled.img`
 const RegisterLoginWrapper = styled.div`
   display: flex;
   gap: 10px;
+  margin-left: auto;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export default NavigationBar;
