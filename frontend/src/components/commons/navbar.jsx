@@ -26,16 +26,32 @@ function NavigationBar() {
     },
   ];
 
+  const token = false;
+
   return (
     <NavContainer>
       <Link to="/">
         <LogoImg src={logo} alt="logo"></LogoImg>
       </Link>
       <Container>
-        <RegisterLoginWrapper>
+        {/* <RegisterLoginWrapper>
           <Link to="/users/register">회원가입</Link>
           <Link to="/users/login">로그인</Link>
-        </RegisterLoginWrapper>
+        </RegisterLoginWrapper> */}
+        <MypageLogoutWrapper>
+          {token == true ? (
+            <>
+              <Link to="/users/mypage">마이페이지</Link>
+              <Link to="/users/logout">로그아웃</Link>
+            </>
+          ) : (
+            <>
+              {" "}
+              <Link to="/users/register">회원가입</Link>
+              <Link to="/users/login">로그인</Link>
+            </>
+          )}
+        </MypageLogoutWrapper>
         <MenuWrapper>
           {menuObj.map(({ name, path }) => (
             <Link to={path}>
@@ -68,7 +84,7 @@ const LogoImg = styled.img`
   height: 100%;
 `;
 
-const RegisterLoginWrapper = styled.div`
+const MypageLogoutWrapper = styled.div`
   display: flex;
   gap: 10px;
   margin-left: auto;
