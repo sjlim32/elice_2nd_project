@@ -1,8 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/commons/layout";
-import AboutUsPage from "./pages/aboutUsPage";
-import AboutViolencePage from "./pages/aboutViolencePage";
-import Campaigns from './pages/campaigns';
+import {
+  AboutUsPage,
+  AboutDomesticeViolencePage,
+  ComunityPage,
+  CounselingCenterPage,
+  CampaignsPage,
+} from "./pages";
 
 function App() {
   return (
@@ -10,8 +14,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/aboutus" element={<AboutUsPage />} />
-          <Route path="/aboutdomesticviolence" element={<AboutViolencePage />} />
-          <Route path="/campaigns" element={<Campaigns />} />        
+          <Route
+            path="/aboutdomesticviolence"
+            element={<AboutDomesticeViolencePage />}
+          />
+          <Route path="/comunity" element={<ComunityPage />} />
+          <Route path="/counselingcenter" element={<CounselingCenterPage />} />
+          <Route path="/campaigns" element={<CampaignsPage />} />
         </Route>
       </Routes>
     </Router>

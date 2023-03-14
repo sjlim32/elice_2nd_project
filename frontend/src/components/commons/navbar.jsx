@@ -3,7 +3,7 @@ import styled from "styled-components";
 import logo from "../../images/logo_transparent.png";
 
 function NavigationBar() {
-  const listObj = [
+  const menuObj = [
     {
       name: "24/7 소개",
       path: "/aboutus",
@@ -26,39 +26,73 @@ function NavigationBar() {
     },
   ];
 
+  const token = false;
+
   return (
     <NavContainer>
-      <div>
-        <Link to="/">
-          <LogoImg src={logo} alt="logo"></LogoImg>
-        </Link>
-      </div>
-      <ListContainer>
-        {listObj.map(({ name, path }) => (
-          <Link to={path}>
-            <div key={name}>{name}</div>
-          </Link>
-        ))}
-      </ListContainer>
+      <Link to="/">
+        <LogoImg src={logo} alt="logo"></LogoImg>
+      </Link>
+      <Container>
+        {/* <RegisterLoginWrapper>
+          <Link to="/users/register">회원가입</Link>
+          <Link to="/users/login">로그인</Link>
+        </RegisterLoginWrapper> */}
+        <MypageLogoutWrapper>
+          {token == true ? (
+            <>
+              <Link to="/users/mypage">마이페이지</Link>
+              <Link to="/users/logout">로그아웃</Link>
+            </>
+          ) : (
+            <>
+              {" "}
+              <Link to="/users/register">회원가입</Link>
+              <Link to="/users/login">로그인</Link>
+            </>
+          )}
+        </MypageLogoutWrapper>
+        <MenuWrapper>
+          {menuObj.map(({ name, path }) => (
+            <Link to={path}>
+              <div key={name}>{name}</div>
+            </Link>
+          ))}
+        </MenuWrapper>
+      </Container>
     </NavContainer>
   );
 }
 
 const NavContainer = styled.nav`
   width: 100%;
-  height: 200px;
+  height: 150px;
   display: flex;
   justify-content: space-between;
+  background-color: yellowgreen;
 `;
 
-const ListContainer = styled.div`
+const MenuWrapper = styled.div`
   display: flex;
   gap: 10px;
+  margin-top: auto;
+  font-size: 30px;
 `;
 
 const LogoImg = styled.img`
   width: 200px;
-  height: 200px;
+  height: 100%;
+`;
+
+const MypageLogoutWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 export default NavigationBar;
