@@ -43,4 +43,4 @@ class UserModel {
 
 const userModel = new UserModel();
 
-export { userModel };
+export { User, userModel };
