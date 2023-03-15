@@ -1,4 +1,4 @@
-import { jwt } from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 const loginRequired = (req, res, next) => {
   // Request 헤더로부터 Authorization 검증

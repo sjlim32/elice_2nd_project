@@ -1,13 +1,21 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from "../db/models";
+import { userModel } from "../db/models";
 
 class UserService {
-  constructor(userModel) {
-    this.userModel = userModel;
+  constructor(UserModel) {
+    this.userModel = UserModel;
   }
+
+  async addUser(userInfo) {
+    console.log(userInfo);
+    const createdNewUser = await this.userModel.create(userInfo);
+    return createdNewUser;
+  }
+
+  async getUser(userId) {}
 }
 
-const userService = UserService();
+const userService = new UserService(userModel);
 
 export { userService };
