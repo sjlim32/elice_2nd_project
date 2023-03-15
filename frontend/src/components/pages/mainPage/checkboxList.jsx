@@ -41,6 +41,8 @@ function CheckboxList() {
   const onSubmitHandler = useCallback(
     (evt) => {
       evt.preventDefault();
+      console.log(`당신의 가정폭력 위험지수는 ${checkedList.length}점 입니다.`);
+      setCheckedList([]);
     },
     [checkedList]
   );
@@ -59,7 +61,7 @@ function CheckboxList() {
             <label htmlFor={list}>{list}</label>
           </div>
         ))}
-        <SubmitButton onClick={() => setCheckedList([])}>제출하기</SubmitButton>
+        <SubmitButton>제출하기</SubmitButton>
       </form>
     </div>
   );
