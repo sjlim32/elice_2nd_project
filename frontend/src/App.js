@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/commons/layout";
 import {
+  MainPage,
   AboutUsPage,
   AboutDomesticeViolencePage,
   ComunityPage,
@@ -13,6 +14,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path="/" element={<MainPage />} />
           <Route path="/aboutus" element={<AboutUsPage />} />
           <Route
             path="/aboutdomesticviolence"
