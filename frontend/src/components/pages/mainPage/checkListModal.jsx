@@ -32,7 +32,7 @@ const Overlay = styled.div`
 `;
 
 const ModalWrap = styled.div`
-  width: 600px;
+  width: 650px;
   height: fit-content;
   border-radius: 15px;
   background-color: #fff;
