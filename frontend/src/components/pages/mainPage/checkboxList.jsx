@@ -48,7 +48,7 @@ function CheckboxList() {
   );
 
   return (
-    <div>
+    <Container>
       <form onSubmit={onSubmitHandler}>
         {checkList.map((list, i) => (
           <div key={i}>
@@ -61,20 +61,32 @@ function CheckboxList() {
             <label htmlFor={list}>{list}</label>
           </div>
         ))}
-        <SubmitButton>제출하기</SubmitButton>
+        <ButtonWrapper>
+          <SubmitButton>제출하기</SubmitButton>
+        </ButtonWrapper>
       </form>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  margin-left: 20px;
+`;
 
 const SubmitButton = styled.button`
   width: 80px;
   height: 40px;
-  margin: 20px;
+  /* margin: 20px; */
   color: #ffffff;
   background-color: #3e4e34;
   border-radius: 10px;
   cursor: pointer;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 10px;
 `;
 
 export default CheckboxList;

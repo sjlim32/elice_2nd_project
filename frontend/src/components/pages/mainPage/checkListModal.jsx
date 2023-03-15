@@ -9,7 +9,10 @@ function CheckListModal({ onClose }) {
     <Overlay>
       <ModalWrap>
         <CloseButton onClick={handleClose}>X</CloseButton>
-        <h2>가정폭력 체크리스트</h2>
+        <TextContainer>
+          <h2>나의 가정폭력 위험지수는?</h2>
+          <h4>해당하는 내용을 선택 후 제출하기를 눌러보세요!</h4>
+        </TextContainer>
         <CheckboxList />
       </ModalWrap>
     </Overlay>
@@ -51,6 +54,10 @@ const CloseButton = styled.div`
   align-items: center;
   justify-content: center;
   cursor: pointer;
+`;
+
+const TextContainer = styled.div`
+  text-align: center;
 `;
 
 export default CheckListModal;
