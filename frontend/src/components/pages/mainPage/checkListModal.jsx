@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import CheckboxList from "./checkboxList";
 
 function CheckListModal({ onClose }) {
   const handleClose = () => {
@@ -9,7 +10,7 @@ function CheckListModal({ onClose }) {
       <ModalWrap>
         <CloseButton onClick={handleClose}>X</CloseButton>
         <h2>가정폭력 체크리스트</h2>
-        <SubmitButton>제출하기</SubmitButton>
+        <CheckboxList />
       </ModalWrap>
     </Overlay>
   );
@@ -49,16 +50,6 @@ const CloseButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-`;
-
-const SubmitButton = styled.button`
-  width: 80px;
-  height: 40px;
-  margin: 20px;
-  color: #ffffff;
-  background-color: #3e4e34;
-  border-radius: 10px;
   cursor: pointer;
 `;
 
