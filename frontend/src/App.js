@@ -1,15 +1,28 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/commons/layout";
-import AboutUsPage from "./pages/aboutUsPage";
-import UserRegisterForm from "./components/UserRegisterForm";
+import {
+  MainPage,
+  AboutUsPage,
+  AboutDomesticeViolencePage,
+  ComunityPage,
+  CounselingCenterPage,
+  CampaignsPage,
+} from "./pages";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path="/" element={<MainPage />} />
           <Route path="/aboutus" element={<AboutUsPage />} />
-          <Route path='/register' element={<UserRegisterForm />} />
+          <Route
+            path="/aboutdomesticviolence"
+            element={<AboutDomesticeViolencePage />}
+          />
+          <Route path="/comunity" element={<ComunityPage />} />
+          <Route path="/counselingcenter" element={<CounselingCenterPage />} />
+          <Route path="/campaigns" element={<CampaignsPage />} />
         </Route>
       </Routes>
     </Router>
