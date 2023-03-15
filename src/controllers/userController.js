@@ -1,6 +1,38 @@
+import { userService } from "../services";
+import { supportUserService } from "../services/supportUserService";
+
 class UserController {
   async register(req, res, next) {
-    const { email, password } = req.body;
+    try {
+      if (req.formType === "user") {
+        const { email, password } = req.body;
+        const newUser = await userService.addUser({ email, password });
+        res.status(200).json(newUser);
+      } else {
+        const {
+          email,
+          password,
+          userName,
+          phoneNumber,
+          address,
+          history,
+          certification,
+        } = req.body;
+
+        const newUser = await supportUserService.addUser({
+          email,
+          password,
+          userName,
+          phoneNumber,
+          address,
+          history,
+          certification,
+        });
+        res.status(200).json(newUser);
+      }
+    } catch (error) {
+      next(error);
+    }
   }
 
   async getUser(req, res, next) {
@@ -24,6 +56,6 @@ class UserController {
   }
 }
 
-const userController = UserController();
+const userController = new UserController();
 
 export { userController };
