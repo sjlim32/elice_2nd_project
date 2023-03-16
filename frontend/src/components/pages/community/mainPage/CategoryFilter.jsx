@@ -46,7 +46,7 @@ const CategoryWrap = styled.div`
 	justify-content: space-between;
 	width: 300px;
 	padding: 10px;
-	margin: 5px;
+	margin: 25px;
 `
 
 export default CategoryFilter;

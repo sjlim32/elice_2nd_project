@@ -59,7 +59,7 @@ function SearchFunc() {
 	flex-direction: column;
 	align-items: center;
 	width: 800px;
-	height: 100px;
+	height: 160px;
 	border: 1px solid gray;
 `
 
