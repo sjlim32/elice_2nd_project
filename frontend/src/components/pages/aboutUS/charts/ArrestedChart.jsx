@@ -107,9 +107,6 @@ export default function ArrestedChart() {
         endAngle={450}
         dataKey="value"
         onMouseEnter={onPieEnter}
-        // nameKey="name"
-        // labelLine={false}
-        // label={(entry) => `${entry.name}: ${entry.value}`}
       >
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
