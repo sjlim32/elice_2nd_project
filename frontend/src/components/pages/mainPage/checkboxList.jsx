@@ -117,6 +117,7 @@ const LinkButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 20px;
+  margin-top: 10px;
 `;
 
 const LinkButton = styled.button`
