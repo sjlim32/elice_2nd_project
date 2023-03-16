@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const checkList = [
   "가족구성원이 물건을 던지면서 위협적인 분위기를 조성했다.",
@@ -14,11 +15,28 @@ const checkList = [
   "가족구성원이 원하지 않은 성행위를 강요했다.",
 ];
 
+const Result = ({ score }) => {
+  const navigate = useNavigate();
+  return (
+    <>
+      당신의 가정폭력 위험지수는 {score}점 입니다.
+      <LinkButtonContainer>
+        <LinkButton>온라인 상담 받기</LinkButton>
+        <LinkButton onClick={() => navigate("/counselingcenter")}>
+          가까운 상담소 찾기
+        </LinkButton>
+      </LinkButtonContainer>
+    </>
+  );
+};
+
 function CheckboxList() {
   //   CheckboxList 배열 중 체크 된 요소를 관리
   const [checkedList, setCheckedList] = useState([]);
   // 체크된 상태를 파악
   const [isChecked, setIsChecked] = useState(false);
+
+  const [score, setScore] = useState(0);
 
   const checkedListHandler = (value, isChecked) => {
     // 체크되어있지 않다면 새롭게 추가
@@ -36,29 +54,27 @@ function CheckboxList() {
   const checkHandler = (evt, value) => {
     setIsChecked(!isChecked);
     checkedListHandler(value, evt.target.checked);
+    if (evt.target.checked) {
+      setScore((prev) => prev + 1);
+    }
+    if (evt.target.checked === false) {
+      setScore((prev) => prev - 1);
+    }
   };
 
   const onSubmitHandler = useCallback(
     (evt) => {
       evt.preventDefault();
-      //   setCheckedList([]);
+      // setCheckedList(checkedList.filter((list) => list === ""));
     },
     [checkedList]
   );
 
   const [isSubmit, setIsSubmit] = useState(false);
 
-  const result = () => {
-    return (
-      <>
-        당신의 가정폭력 위험지수는 {checkedList.length}점 입니다.
-        <LinkButtonContainer>
-          <LinkButton>온라인 상담 받기</LinkButton>
-          <LinkButton>가까운 상담소 찾기</LinkButton>
-        </LinkButtonContainer>
-      </>
-    );
-  };
+  const ResultComponent = useMemo(() => {
+    return <Result score={score} />;
+  }, [score]);
 
   return (
     <>
@@ -79,7 +95,7 @@ function CheckboxList() {
             제출하기
           </SubmitButton>
         </SubmitButtonWrapper>
-        <ResultContainer>{isSubmit ? result() : null}</ResultContainer>
+        <ResultContainer>{isSubmit ? ResultComponent : null}</ResultContainer>
       </form>
     </>
   );
