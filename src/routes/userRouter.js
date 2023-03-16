@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginRequired } from "../middlewares";
+import { loginRequired, adminOnly } from "../middlewares";
 import { userController } from "../controllers";
 
 const userRouter = Router();
@@ -21,5 +21,35 @@ userRouter.post("/login", userController.login);
 
 // 로그아웃
 userRouter.delete("/logout", loginRequired, userController.logout);
+
+/* 관리자 */
+
+userRouter.get(
+  "/admin/users/userRole/:userRole",
+  loginRequired,
+  adminOnly,
+  userController.getUser,
+);
+
+userRouter.get(
+  "/admin/users/:userId",
+  loginRequired,
+  adminOnly,
+  userController.getUser,
+);
+
+userRouter.patch(
+  "/admin/users/:userId",
+  loginRequired,
+  adminOnly,
+  userController.editUser,
+);
+
+userRouter.delete(
+  "/admin/users/:userId",
+  loginRequired,
+  adminOnly,
+  userController.deleteUser,
+);
 
 export { userRouter };

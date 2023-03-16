@@ -2,7 +2,7 @@ import { model } from "mongoose";
 import { User } from "./userModel";
 import { supportUserSchema } from "../schemas";
 
-const SupportUser = User.discriminator("supportUser", supportUserSchema);
+const SupportUser = User.discriminator("SupportUser", supportUserSchema);
 
 class SupportUserModel {
   async create(userInfo) {

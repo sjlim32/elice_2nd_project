@@ -21,6 +21,11 @@ class UserModel {
     return user;
   }
 
+  async findByRole(role) {
+    const users = await User.find({ role });
+    return users;
+  }
+
   async findAll() {
     const users = await User.find({});
     return users;

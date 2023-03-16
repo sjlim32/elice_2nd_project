@@ -23,7 +23,7 @@ class UserService {
     return createdNewUser;
   }
 
-  async getUser(userId) {
+  async getUserById(userId) {
     const user = await this.userModel.findById(userId);
 
     if (!user) {
@@ -33,6 +33,12 @@ class UserService {
     }
 
     return user;
+  }
+
+  async getUserByRole(role) {
+    const users = await this.userModel.findByRole(role);
+
+    return users;
   }
 
   async editUser(userInfo, toUpdate) {

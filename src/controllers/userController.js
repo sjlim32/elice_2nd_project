@@ -1,90 +1,86 @@
-import { userService } from "../services";
-import { supportUserService } from "../services/supportUserService";
+import { userService, supportUserService } from "../services";
 
 class UserController {
   async register(req, res, next) {
     try {
-      const {
-        formType,
-        email,
-        password,
-        userName,
-        phoneNumber,
-        address,
-        history,
-        certification,
-      } = req.body;
+      const userInfo = req.body;
+      let newUser;
 
-      const userInfo = {
-        email,
-        password,
-        ...(userName && { userName }),
-        ...(phoneNumber && { phoneNumber }),
-        ...(address && { address }),
-        ...(history && { history }),
-        ...(certification && { certification }),
-      };
-
-      if (formType === "user") {
-        const newUser = await userService.addUser(userInfo);
-        res.status(200).json(newUser);
-      } else if (formType === "support") {
-        const newUser = await supportUserService.addUser(userInfo);
-        res.status(200).json(newUser);
+      if (userInfo.role === "user") {
+        newUser = await userService.addUser(userInfo);
+      } else if (userInfo.role === "pending") {
+        newUser = await supportUserService.addUser(userInfo);
       } else {
-        res.status(400).send(`formType 속성을 지정해주세요.`);
+        throw new Error(`role 속성이 존재하지 않습니다.`);
       }
+
+      res.status(200).json(newUser);
     } catch (error) {
       next(error);
     }
   }
 
   async getUser(req, res, next) {
-    const { userId } = req.user;
+    try {
+      const { userId, role } = req.user;
+      const param = req.params;
+      let user = null;
 
-    const user = await userService.getUser(userId);
+      if (role !== "admin") {
+        user = await userService.getUserById(userId);
+      } else {
+        user =
+          Object.keys(param)[0] === "userId"
+            ? await userService.getUserById(Object.values(param)[0])
+            : await userService.getUserByRole(Object.values(param)[0]);
+      }
 
-    res.status(200).send(user);
+      res.status(200).send(user);
+    } catch (error) {
+      next(error);
+    }
   }
 
   async editUser(req, res, next) {
-    const { userId } = req.user;
-    const { formType } = req.body;
-    const { currentPassword } = req.body;
+    const { userId } = req.params || req.user;
+    const { formType, currentPassword, ...updateFields } = req.body;
+
     const userInfo = { userId, currentPassword };
-    const { password, userName, phoneNumber, address } = req.body;
+    const toUpdate = Object.fromEntries(
+      Object.entries(updateFields).filter(([_, value]) => value),
+    );
 
     try {
-      const toUpdate = {
-        ...(password && { password }),
-        ...(userName && { userName }),
-        ...(phoneNumber && { phoneNumber }),
-        ...(address && { address }),
-      };
-
+      let updatedUser = null;
       if (formType === "user") {
-        const updatedUser = await userService.editUser(userInfo, toUpdate);
-        res.status(200).json(updatedUser);
+        updatedUser = await userService.editUser(userInfo, toUpdate);
       } else if (formType === "support") {
-        const updatedUser = await supportUserService.editUser(
-          userInfo,
-          toUpdate,
-        );
-        res.status(200).json(updatedUser);
+        updatedUser = await supportUserService.editUser(userInfo, toUpdate);
       } else {
-        res.status(400).send(`formType 속성을 지정해주세요.`);
+        throw new Error(`formType 속성을 지정해주세요.`);
       }
+
+      res.status(200).json(updatedUser);
     } catch (error) {
       next(error);
     }
   }
 
   async deleteUser(req, res, next) {
-    const { userId } = req.user;
+    try {
+      const user = req.user;
 
-    const user = await userService.deleteUser(userId);
-
-    res.status(200).send(user);
+      if (user.role !== "admin") {
+        const deletedUser = await userService.deleteUser(user.userId);
+        res.status(200).send(deletedUser);
+      } else {
+        const { userId } = req.params;
+        const deletedUser = await userService.deleteUser(userId);
+        res.status(200).send(deletedUser);
+      }
+    } catch (error) {
+      next(error);
+    }
   }
 
   async login(req, res, next) {
