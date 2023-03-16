@@ -34,10 +34,6 @@ function NavigationBar() {
         <LogoImg src={logo} alt="logo"></LogoImg>
       </Link>
       <Container>
-        {/* <RegisterLoginWrapper>
-          <Link to="/users/register">회원가입</Link>
-          <Link to="/users/login">로그인</Link>
-        </RegisterLoginWrapper> */}
         <MypageLogoutWrapper>
           {token == true ? (
             <>
