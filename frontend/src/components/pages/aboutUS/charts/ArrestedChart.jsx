@@ -1,4 +1,4 @@
-import { PieChart, Pie, Legend, Cell, Tooltip, Sector } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Sector } from "recharts";
 import { useCallback, useState } from "react";
 
 const data = [
@@ -95,7 +95,7 @@ export default function ArrestedChart() {
   );
 
   return (
-    <PieChart width={800} height={600}>
+    <PieChart width={700} height={550}>
       <Pie
         activeIndex={activeIndex}
         activeShape={renderActiveShape}
@@ -114,7 +114,6 @@ export default function ArrestedChart() {
         ))}
       </Pie>
       <Tooltip />
-      <Legend />
     </PieChart>
   );
 }
