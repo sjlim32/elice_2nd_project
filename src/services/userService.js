@@ -90,14 +90,14 @@ class UserService {
       throw new Error("패스워드가 일치하지 않습니다.");
     }
     const accessToken = jwt.sign(
-      { userId: user._id },
+      { userId: user._id, role: user.role },
       process.env.ACCESS_TOKEN_SECRET,
       {
         expiresIn: "15m",
       },
     );
     const refreshToken = jwt.sign(
-      { userId: user.userId },
+      { userId: user._id },
       process.env.REFRESH_TOKEN_SECRET,
     );
 
