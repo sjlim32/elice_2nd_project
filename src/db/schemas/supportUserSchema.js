@@ -9,7 +9,6 @@ const supportUserSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
       required: true,
-      unique: true,
     },
     address: {
       type: String,
