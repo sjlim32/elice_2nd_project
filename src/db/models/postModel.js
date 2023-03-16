@@ -1,7 +1,7 @@
-import { Model } from "mongoose";
+import { model } from "mongoose";
 import { postSchema } from "../schemas";
 
-const Post = Model("Post", postSchema);
+const Post = model("Post", postSchema);
 
 class PostModel {}
 

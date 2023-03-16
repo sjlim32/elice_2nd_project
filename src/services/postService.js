@@ -1,4 +1,4 @@
-import { postModel } from "../db/models";
+import { postModel } from "../db";
 
 class PostService {}
 
