@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
 import styled from "styled-components";
+import { useCallback, useState } from "react";
 
 const checkList = [
   "가족구성원이 물건을 던지면서 위협적인 분위기를 조성했다.",
@@ -41,11 +41,24 @@ function CheckboxList() {
   const onSubmitHandler = useCallback(
     (evt) => {
       evt.preventDefault();
-      console.log(`당신의 가정폭력 위험지수는 ${checkedList.length}점 입니다.`);
-      setCheckedList([]);
+      //   setCheckedList([]);
     },
     [checkedList]
   );
+
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  const result = () => {
+    return (
+      <>
+        당신의 가정폭력 위험지수는 {checkedList.length}점 입니다.
+        <LinkButtonContainer>
+          <LinkButton>온라인 상담 받기</LinkButton>
+          <LinkButton>가까운 상담소 찾기</LinkButton>
+        </LinkButtonContainer>
+      </>
+    );
+  };
 
   return (
     <>
@@ -61,9 +74,12 @@ function CheckboxList() {
             <label htmlFor={list}>{list}</label>
           </ListWrapper>
         ))}
-        <ButtonWrapper>
-          <SubmitButton>제출하기</SubmitButton>
-        </ButtonWrapper>
+        <SubmitButtonWrapper>
+          <SubmitButton onClick={() => setIsSubmit(true)}>
+            제출하기
+          </SubmitButton>
+        </SubmitButtonWrapper>
+        <ResultContainer>{isSubmit ? result() : null}</ResultContainer>
       </form>
     </>
   );
@@ -84,10 +100,33 @@ const SubmitButton = styled.button`
   cursor: pointer;
 `;
 
-const ButtonWrapper = styled.div`
+const SubmitButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
   margin: 20px 0 20px 0;
+`;
+
+const ResultContainer = styled.div`
+  font-weight: bold;
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const LinkButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+`;
+
+const LinkButton = styled.button`
+  width: 130px;
+  height: 40px;
+  color: #ffffff;
+  background-color: #3e4e34;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
 `;
 
 export default CheckboxList;

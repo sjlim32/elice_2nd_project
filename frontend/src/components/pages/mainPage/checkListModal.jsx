@@ -5,6 +5,7 @@ function CheckListModal({ onClose }) {
   const handleClose = () => {
     onClose?.();
   };
+
   return (
     <Overlay>
       <ModalWrap>
