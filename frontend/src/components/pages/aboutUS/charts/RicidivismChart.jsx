@@ -1,4 +1,3 @@
-import React, { PureComponent } from "react";
 import {
   BarChart,
   Bar,
@@ -56,17 +55,17 @@ const data = [
 ];
 
 export default class Example extends PureComponent {
-  static demoUrl = "https://codesandbox.io/s/stacked-bar-chart-s47i2";
+  static demoUrl = "https://codesandbox.io/s/simple-line-chart-kec3v";
 
   render() {
     return (
       <ResponsiveContainer width={500} height={500}>
-        <BarChart
+        <LineChart
           width={500}
           height={300}
           data={data}
           margin={{
-            top: 20,
+            top: 5,
             right: 30,
             left: 20,
             bottom: 5,
@@ -77,9 +76,14 @@ export default class Example extends PureComponent {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="pv" stackId="a" fill="#8884d8" />
-          <Bar dataKey="uv" stackId="a" fill="#82ca9d" />
-        </BarChart>
+          <Line
+            type="monotone"
+            dataKey="pv"
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
+        </LineChart>
       </ResponsiveContainer>
     );
   }

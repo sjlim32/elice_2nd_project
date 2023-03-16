@@ -1,6 +1,6 @@
-import Chart1 from "../components/pages/aboutUS/charts/chart1";
-import Chart2 from "../components/pages/aboutUS/charts/chart2";
+// import RicidivismChart from "../components/pages/aboutUS/charts/RicidivismChart";
 import Chart3 from "../components/pages/aboutUS/charts/chart3";
+import ArrestedChart from "../components/pages/aboutUS/charts/ArrestedChart";
 import styled from "styled-components";
 import bgImg from "../images/aboutus_back_image.png";
 
@@ -11,8 +11,8 @@ function AboutUsPage() {
         <Title>24/7은 언제 어디서나</Title>
         <Title>당신과 함께하겠습니다.</Title>
       </BackgroundImgLayout>
-      <Chart1 />
-      <Chart2 />
+      {/* <RicidivismChart /> */}
+      <ArrestedChart />
       <Chart3 />
     </div>
   );
