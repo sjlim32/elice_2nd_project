@@ -5,6 +5,7 @@ import {
   AboutUsPage,
   AboutDomesticeViolencePage,
   CommunityPage,
+  PostPage,
   CounselingCenterPage,
   CampaignsPage,
 } from "./pages";
@@ -20,7 +21,8 @@ function App() {
             path="/aboutdomesticviolence"
             element={<AboutDomesticeViolencePage />}
           />
-          <Route path="/community" element={<CommunityPage />} />
+          <Route path="/posts" element={<CommunityPage />} />
+          <Route path="/posts/:_id" element={<PostPage />} />
           <Route path="/counselingcenter" element={<CounselingCenterPage />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
         </Route>

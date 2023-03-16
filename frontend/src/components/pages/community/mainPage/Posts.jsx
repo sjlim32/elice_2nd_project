@@ -1,5 +1,6 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 import loadingImg from '../../../../images/loadingImg.png';
+import { Link } from 'react-router-dom';
 
 function Posts({contents}){
 		return (
@@ -9,7 +10,9 @@ function Posts({contents}){
 						return (
 							<Content key={idx}>
 								<SpanNo subject="no">{post.id}</SpanNo>
-								<SpanTitle subject="title">{post.email}</SpanTitle>
+								<SpanTitle subject="title">
+									<Link to={`/posts/:${post.id}`}>{post.email}</Link>
+								</SpanTitle>
 								<SpanAuthor subject="author">{post.username}</SpanAuthor>
 								<SpanDate subject="date">{post.name}</SpanDate>
 							</Content>

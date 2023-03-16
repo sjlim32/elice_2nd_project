@@ -14,7 +14,7 @@ function NavigationBar() {
     },
     {
       name: "이야기 광장",
-      path: "/community",
+      path: "/posts",
     },
     {
       name: "상담소 찾기",
