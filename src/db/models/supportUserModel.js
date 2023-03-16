@@ -11,17 +11,17 @@ class SupportUserModel {
   }
 
   // Read
-  async readById(userId) {
+  async findById(userId) {
     const user = await SupportUser.findById(userId);
     return user;
   }
 
-  async readByEmail(email) {
+  async findByEmail(email) {
     const user = await SupportUser.findOne({ email });
     return user;
   }
 
-  async readAll() {
+  async findAll() {
     const users = await SupportUser.find({});
     return users;
   }
@@ -36,7 +36,7 @@ class SupportUserModel {
 
   // Delete
   async deleteById(userId) {
-    const deletedUser = await SupportUser.findByIdAndDelte(userId);
+    const deletedUser = await SupportUser.findByIdAndDelete(userId);
     return deletedUser;
   }
 }

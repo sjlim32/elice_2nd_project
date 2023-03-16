@@ -6,7 +6,7 @@ const loginRequired = (req, res, next) => {
 
   // 토큰 존재여부
   if (!token || token === "null") {
-    res.sendStatus(401);
+    res.status(401).send(`token이 없음`);
   }
 
   // 토큰 검증
