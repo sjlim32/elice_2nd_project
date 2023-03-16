@@ -12,10 +12,8 @@ class CategoryController {
 
   async addCategory(req, res, next) {
     try {
-      const { title } = req.body;
-
-      const newCategory = await this.categoryService.addCategory({ title });
-
+      const categoryInfo = req.body;
+      const newCategory = await this.categoryService.addCategory(categoryInfo);
       res.status(200).json(newCategory);
     } catch (error) {
       next(error);
@@ -47,11 +45,8 @@ class CategoryController {
   async setCategory(req, res, next) {
     try {
       const { categoryId } = req.params;
-      const { title } = req.body;
-
-      // 수정하는 값이 undefined인지, 공백으로 구성된 문자열인지 확인하는 작업 추가 필요
-
-      const result = await categoryService.setCategory(categoryId, title);
+      const toUpdate = req.body;
+      const result = await categoryService.setCategory(categoryId, toUpdate);
       res.status(200).json(result);
     } catch (error) {
       next(error);

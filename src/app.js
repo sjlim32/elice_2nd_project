@@ -9,6 +9,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api", userRouter);
 app.use("/api", categoryRouter);
 app.use("/api", postRouter);
+app.use("/api", replyRouter);
 
 // 실험 페이지
 app.get("/", (req, res) => {
