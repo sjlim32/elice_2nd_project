@@ -1,8 +1,9 @@
-import { categoryModel } from "../db";
+import { categoryModel, postModel } from "../db";
 
 class CategoryService {
-  constructor(CategoryModel) {
+  constructor(CategoryModel, PostModel) {
     this.categoryModel = CategoryModel;
+    this.postModel = PostModel;
     this.addCategory = this.addCategory.bind(this);
     this.getCategories = this.getCategories.bind(this);
     this.getCategory = this.getCategory.bind(this);
@@ -35,8 +36,8 @@ class CategoryService {
     return category;
   }
 
-  async setCategory(categoryId, title) {
-    const category = await this.categoryModel.findByTitle(title);
+  async setCategory(categoryId, toUpdate) {
+    const category = await this.categoryModel.findByTitle(toUpdate.title);
     if (category) {
       if (category.id !== categoryId) {
         throw new Error(`같은 이름의 카테고리가 이미 존재합니다.`);
@@ -44,7 +45,7 @@ class CategoryService {
     }
     const { matchedCount, modifiedCount } = await this.categoryModel.updateById(
       categoryId,
-      title,
+      toUpdate,
     );
 
     if (matchedCount === 0) {
@@ -59,7 +60,10 @@ class CategoryService {
   }
 
   async deleteCategory(categoryId) {
-    // ++해당 카테고리에 속한 post 있으면 삭제 불가하게 추가 처리 필요
+    const found = await this.postModel.findByCategory(categoryId);
+    if (found) {
+      throw new Error(`카테고리에 게시글이 존재해 삭제할 수 없습니다.`)
+    }
 
     const { deletedCount } = await this.categoryModel.deleteById(categoryId);
     if (deletedCount === 0) {
@@ -69,6 +73,6 @@ class CategoryService {
   }
 }
 
-const categoryService = new CategoryService(categoryModel);
+const categoryService = new CategoryService(categoryModel, postModel);
 
 export { categoryService };
