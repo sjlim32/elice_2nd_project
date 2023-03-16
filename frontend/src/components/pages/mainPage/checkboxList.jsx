@@ -65,7 +65,8 @@ function CheckboxList() {
   const onSubmitHandler = useCallback(
     (evt) => {
       evt.preventDefault();
-      // setCheckedList(checkedList.filter((list) => list === ""));
+      //? 제출하면 체크박스 초기화되게 함. 안하는게 더 나을 것 같음.
+      //? setCheckedList(checkedList.filter((list) => list === ""));
     },
     [checkedList]
   );
