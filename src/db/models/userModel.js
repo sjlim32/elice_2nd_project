@@ -1,7 +1,7 @@
 import { model } from "mongoose";
 import { userSchema } from "../schemas";
 
-const User = model("users", userSchema);
+const User = model("User", userSchema);
 
 class UserModel {
   // Create
@@ -19,6 +19,11 @@ class UserModel {
   async findByEmail(email) {
     const user = await User.findOne({ email });
     return user;
+  }
+
+  async findByRole(role) {
+    const users = await User.find({ role });
+    return users;
   }
 
   async findAll() {
