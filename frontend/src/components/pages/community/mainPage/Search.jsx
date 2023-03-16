@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components'
 import CategoryFilter from './CategoryFilter'
 
@@ -9,15 +9,15 @@ const categories = [
 	},
 	{
 		name: '소통공감',
-		value: 'category1'
+		value: '소통공감'
 	},
 	{
 		name: '좋은정보',
-		value: 'category2'
+		value: '좋은정보'
 	},
 	{
 		name: '고민상담',
-		value: 'category3'
+		value: '고민상담'
 	},
 ]
 
@@ -26,7 +26,8 @@ function SearchFunc() {
 	const [category, setCategory] = useState('all');
 	const [search, setSearch] = useState('')
 
-	// * 추후 디바운스 처리 필요 
+	// ! 추후 디바운스 처리 필요 
+
 	const handleSearch = (e) => {
 		setSearch(e.target.value);
 	}

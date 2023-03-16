@@ -3,6 +3,9 @@ import loadingImg from '../../../../images/loadingImg.png';
 import { Link } from 'react-router-dom';
 
 function Posts({contents}){
+
+		// ! 게시물 번호 = get으로 받아온 게시물을 시간 순으로 정렬 후 map 돌려서 리스트로 만듦
+
 		return (
 			<ContentWrap>
 				{
@@ -10,6 +13,7 @@ function Posts({contents}){
 						return (
 							<Content key={idx}>
 								<SpanNo subject="no">{post.id}</SpanNo>
+								<SpanCate subject="category">{post.username}</SpanCate>
 								<SpanTitle subject="title">
 									<Link to={`/posts/:${post.id}`}>{post.email}</Link>
 								</SpanTitle>
@@ -43,13 +47,19 @@ const Content = styled.div`
 
 const SpanNo = styled.span`
 	display: flex;
+	width: 50px;
+	padding-left: 30px;
+`;
+
+const SpanCate = styled.span`
+	display: flex;
 	width: 150px;
 	padding-left: 30px;
 `;
 
 const SpanTitle = styled.span`
 	display: flex;
-	width: 650px;
+	width: 550px;
 `;
 
 const SpanAuthor = styled.span`
