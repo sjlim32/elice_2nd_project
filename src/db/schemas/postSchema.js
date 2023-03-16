@@ -6,15 +6,15 @@ const postSchema = new Schema(
       type: String,
       required: true,
       trim: true,
-      maxLength: 30,
+      maxLength: 50,
     },
     contents: {
       type: String,
       required: true,
       trim: true,
-      maxLength: 300, // 글자 제한 수 의논 필요
+      maxLength: 1000, // 글자 제한 수 의논 필요
     },
-    writer: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
@@ -33,6 +33,7 @@ const postSchema = new Schema(
       type: Date,
       default: null,
     },
+    // 이미지 업로드 깜빡함, 추후 추가 예정
   },
   { timestamps: true },
 );

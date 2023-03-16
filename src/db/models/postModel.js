@@ -3,7 +3,68 @@ import { postSchema } from "../schemas";
 
 const Post = model("Post", postSchema);
 
-class PostModel {}
+class PostModel {
+  async create(postInfo) {
+    const createdNewPost = await Post.create(postInfo);
+    return createdNewPost;
+  }
+
+  async findAll() {
+    const posts = await Post.find({ isDeleted: false })
+      .populate("userId")
+      .populate("categoryId");
+    return posts;
+  }
+
+  async findAllByCategory(categoryId) {
+    const posts = await Post.find({ categoryId, isDeleted: false })
+      .populate("userId")
+      .populate("categoryId");
+    return posts;
+  }
+
+  async findAllByUser(userId) {
+    const posts = await Post.find({ userId, isDeleted: false }).populate(
+      "categoryId",
+    );
+    return posts;
+  }
+
+  async findAllByTitleSearching(reg) {
+    const posts = await Post.find({ title: { $regex: reg }, isDeleted: false })
+      .populate("userId")
+      .populate("categoryId");
+    return posts;
+  }
+
+  async findById(id) {
+    const post = await Post.findOne({ _id: id, isDeleted: false })
+      .populate("userId")
+      .populate("categoryId");
+    return post;
+  }
+
+  async findByCategory(categoryId) {
+    const post = await Post.findOne({ categoryId, isDeleted: false });
+    return post;
+  }
+
+  async updateById(id, toUpdate) {
+    // runValidators: 검증, omitUndefined: undefined 반영 X
+    const opts = { runValidators: true, omitUndefined: true };
+    const updated = await Post.updateOne({ _id: id }, { $set: toUpdate }, opts);
+    // err 메시지 따로 못 하나? 콜백함수 추가 안 됨
+    return updated;
+  }
+
+  async softDeleteById(id) {
+    const deleted = await Post.updateOne(
+      { _id: id },
+      { $set: { isDeleted: true, deletedAt: Date.now() } },
+    );
+    return deleted;
+  }
+}
 
 const postModel = new PostModel();
 
