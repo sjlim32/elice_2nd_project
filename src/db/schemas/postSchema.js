@@ -5,10 +5,14 @@ const postSchema = new Schema(
     title: {
       type: String,
       required: true,
+      trim: true,
+      maxLength: 30,
     },
     contents: {
       type: String,
       required: true,
+      trim: true,
+      maxLength: 300, // 글자 제한 수 의논 필요
     },
     writer: {
       type: Schema.Types.ObjectId,

@@ -1,5 +1,5 @@
 import express from "express";
-import { categoryRouter } from "./routes";
+import { categoryRouter, postRouter } from "./routes";
 
 const app = express();
 
@@ -8,6 +8,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // app.use("/", indexRouter);
 app.use("/api", categoryRouter);
+app.use("/api", postRouter);
 
 // 실험 페이지
 app.get("/", (req, res) => {
