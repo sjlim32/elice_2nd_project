@@ -11,9 +11,11 @@ function AboutUsPage() {
         <Title>24/7은 언제 어디서나</Title>
         <Title>당신과 함께하겠습니다.</Title>
       </BackgroundImgLayout>
-      {/* <RicidivismChart /> */}
-      <ArrestedChart />
-      <Chart3 />
+      <ChartLayout>
+        {/* <RicidivismChart /> */}
+        <ArrestedChart />
+        <Chart3 />
+      </ChartLayout>
     </div>
   );
 }
@@ -36,6 +38,12 @@ const Title = styled.div`
   font-weight: 1000;
   text-align: center;
   margin-bottom: 30px;
+`;
+
+const ChartLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export default AboutUsPage;

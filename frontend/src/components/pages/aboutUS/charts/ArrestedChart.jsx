@@ -1,8 +1,9 @@
 import { PieChart, Pie, Legend, Cell, Tooltip, Sector } from "recharts";
+import { useCallback, useState } from "react";
 
 const data = [
   { name: "구속", value: 1969, desc: "구속 인원 1,969명" },
-  { name: "불구속", value: 252759, desc: "불구속 인원 252,759명" },
+  { name: "불구속", value: 252759, desc: "불구속 252,759명" },
 ];
 
 const COLORS = ["#FF3333", "#a3a3a3"];
@@ -85,25 +86,25 @@ const renderActiveShape = (props) => {
 };
 
 export default function ArrestedChart() {
-  const state = {
-    activeIndex: 0,
-  };
-  const onPieEnter = (_, index) => {
-    this.setState({
-      activeIndex: index,
-    });
-  };
+  const [activeIndex, setActiveIndex] = useState(0);
+  const onPieEnter = useCallback(
+    (_, index) => {
+      setActiveIndex(index);
+    },
+    [setActiveIndex]
+  );
+
   return (
     <PieChart width={800} height={600}>
       <Pie
-        activeIndex={state.activeIndex}
+        activeIndex={activeIndex}
         activeShape={renderActiveShape}
         data={data}
         cx={360}
         cy={300}
         innerRadius={140}
         outerRadius={190}
-        startAngle={0}
+        startAngle={50}
         endAngle={450}
         dataKey="value"
         onMouseEnter={onPieEnter}
