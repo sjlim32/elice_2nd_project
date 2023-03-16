@@ -4,7 +4,14 @@ import { Link } from 'react-router-dom';
 
 function Posts({contents}){
 
-		// ! 게시물 번호 = get으로 받아온 게시물을 시간 순으로 정렬 후 map 돌려서 리스트로 만듦
+		// ! SpanNo = get으로 받아온 게시물을 시간 순으로 정렬 후 map 돌려서 리스트로 만듦
+		// ! SpanCate = post.categoryId
+		// ! SpanTitlte = post.title
+		// ! SpanAuthor = 
+		// 1. post.writer.role = 'user' -> '익명'
+		// 2. post.writer.role = 'support' -> const author = post.writer.split('@')
+		// 			-> SpanAuthor = author[0]
+		// ! SpanDate = post.createdAt
 
 		return (
 			<ContentWrap>

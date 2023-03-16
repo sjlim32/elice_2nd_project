@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
-import styled from "styled-components";
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
+import axios from 'axios'
 
 // * localStorage 이용하여 새로고침해도 현재 선택한 카테고리 유지
-const LS_KEY_CATEGORY = "LS_KEY_CATEGORY"
+const LS_KEY_CATEGORY = 'LS_KEY_CATEGORY'
 
 const CategoryFilter = ({ categories, category, setCategory }) => {
 
@@ -13,11 +14,10 @@ const CategoryFilter = ({ categories, category, setCategory }) => {
 			<div
 				key={idx}
 				className={
-					item.value === category ? "category-child selected" : "category-child"
+					item.value === category ? 'category-child selected' : 'category-child'
 				}
 				onClick={() => {
 					setCategory(item.value);
-					console.log(item.value);
 					localStorage.setItem(LS_KEY_CATEGORY, item.value);
 				}}
 				style={ item.value === category ? { borderBottom: '2px solid gray'} : {border: 'none'}}
@@ -36,7 +36,7 @@ const CategoryFilter = ({ categories, category, setCategory }) => {
 
 	return (
 		<div>
-			<CategoryWrap className="category-set" >{makeCategories()}</CategoryWrap>
+			<CategoryWrap className='category-set' >{makeCategories()}</CategoryWrap>
 		</div>
 	)
 }

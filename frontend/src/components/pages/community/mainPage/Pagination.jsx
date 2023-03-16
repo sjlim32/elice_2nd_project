@@ -7,6 +7,9 @@ function Pagination({totalPosts, limit, page, setPage}) {
 		let firstNum = currPage - (currPage % 5) + 1;
 		let lastNum = currPage - (currPage % 5) + 5;
 
+
+		// * pagination Refectoring
+
 		return (
 			<PageSection>
 				<ButtonWrap>
@@ -16,6 +19,7 @@ function Pagination({totalPosts, limit, page, setPage}) {
 								&lt;
 						</Button>
 						<Button
+							active={page === firstNum}
 							onClick= {() => setPage(firstNum)}>
 								{firstNum}
 						</Button>
@@ -24,6 +28,7 @@ function Pagination({totalPosts, limit, page, setPage}) {
 								return (
 									<Button
 										key= {i + 1}
+										active={page === firstNum+i+1}
 										onClick= {() => {setPage(firstNum + 1 + i)}}>
 											{firstNum + 1 + i}
 									</Button>
@@ -32,6 +37,7 @@ function Pagination({totalPosts, limit, page, setPage}) {
 							else if(i >= 3) {
 								return (
 									<Button
+										active={page === lastNum}
 										key= {i + 1}
 										onClick= {() => setPage(lastNum)}>
 											{lastNum}
@@ -68,7 +74,11 @@ const Button = styled.button`
 	padding: 5px;
 	&:hover{
 		color : black;
-	};
-`;
+	}
+	background: ${props => props.active ? "lightgray" : "none"}
+	`;
+
+	
+	
 
 export default Pagination;

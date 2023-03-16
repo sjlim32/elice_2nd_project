@@ -23,6 +23,7 @@ function App() {
           />
           <Route path="/posts" element={<CommunityPage />} />
           <Route path="/posts/:_id" element={<PostPage />} />
+          <Route path="/posts/category/:category" element={<CommunityPage />} />
           <Route path="/counselingcenter" element={<CounselingCenterPage />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
         </Route>
