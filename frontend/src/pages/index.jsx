@@ -1,11 +1,12 @@
-import MainPage from "./mainPage";
-import AboutUsPage from "./aboutUsPage";
-import AboutDomesticeViolencePage from "./aboutDomesticViolencePage";
-import CommunityPage from "./Community/communityMainPage";
-import PostPage from "./Community/postPage";
-import CounselingPage from "./counselingPage";
-import CounselingCenterPage from "./counselingCenterPage";
-import CampaignsPage from "./campaignsPage";
+import MainPage from "./MainPage";
+import AboutUsPage from "./AboutUsPage";
+import AboutDomesticeViolencePage from "./AboutDomesticViolencePage";
+import CommunityPage from "./Community/CommunityMainPage";
+import PostingPage from "./Community/PostingPage";
+import PostPage from "./Community/PostPage";
+import CounselingPage from "./CounselingPage";
+import CounselingCenterPage from "./CounselingCenterPage";
+import CampaignsPage from "./CampaignsPage";
 
 export {
   MainPage,
@@ -14,6 +15,7 @@ export {
   CommunityPage,
   PostPage,
   CounselingPage,
+  PostingPage,
   CounselingCenterPage,
   CampaignsPage,
 };
