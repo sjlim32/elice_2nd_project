@@ -14,7 +14,7 @@ function NavigationBar() {
     },
     {
       name: "이야기 광장",
-      path: "/comunity",
+      path: "/posts",
     },
     {
       name: "온라인 상담",

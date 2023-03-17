@@ -4,7 +4,8 @@ import {
   MainPage,
   AboutUsPage,
   AboutDomesticeViolencePage,
-  ComunityPage,
+  CommunityPage,
+  PostPage,
   CounselingPage,
   CounselingCenterPage,
   CampaignsPage,
@@ -21,7 +22,9 @@ function App() {
             path="/aboutdomesticviolence"
             element={<AboutDomesticeViolencePage />}
           />
-          <Route path="/comunity" element={<ComunityPage />} />
+          <Route path="/posts" element={<CommunityPage />} />
+          <Route path="/posts/:_id" element={<PostPage />} />
+          <Route path="/posts/category/:category" element={<CommunityPage />} />
           <Route path="/counseling" element={<CounselingPage />} />
           <Route path="/counselingcenter" element={<CounselingCenterPage />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
