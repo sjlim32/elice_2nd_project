@@ -1,6 +1,6 @@
 import express from "express";
 import { replyController } from "../controllers";
-import { adminOnly, loginRequired } from "../middlewares";
+import { checkAppjson, adminOnly, loginRequired } from "../middlewares";
 
 const replyRouter = express.Router();
 
@@ -15,12 +15,35 @@ const replyRouter = express.Router();
 7. 선택한 댓글 댓글 삭제
 */
 
-replyRouter.post("/replies", loginRequired, replyController.addReply);
-replyRouter.get("/replies", loginRequired, adminOnly, replyController.getReplies);
+replyRouter.post(
+  "/replies",
+  loginRequired,
+  checkAppjson,
+  replyController.addReply,
+);
+replyRouter.get(
+  "/replies",
+  loginRequired,
+  adminOnly,
+  replyController.getReplies,
+);
 replyRouter.get("/posts/:postId/replies", replyController.getRepliesByPost);
-replyRouter.get("/replies/myreplies", loginRequired, replyController.getMyReplies);
+replyRouter.get(
+  "/replies/myreplies",
+  loginRequired,
+  replyController.getMyReplies,
+);
 replyRouter.get("/replies/:replyId", replyController.getReply);
-replyRouter.patch("/replies/:replyId", loginRequired, replyController.setReply);
-replyRouter.delete("/replies/:replyId", loginRequired, replyController.deleteReply);
+replyRouter.patch(
+  "/replies/:replyId",
+  loginRequired,
+  checkAppjson,
+  replyController.setReply,
+);
+replyRouter.delete(
+  "/replies/:replyId",
+  loginRequired,
+  replyController.deleteReply,
+);
 
 export { replyRouter };
