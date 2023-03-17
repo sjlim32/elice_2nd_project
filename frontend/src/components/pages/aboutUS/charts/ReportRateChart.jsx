@@ -51,7 +51,7 @@ export default function ReportRateChart() {
         margin={{
           top: 10,
           right: 50,
-          left: 0,
+          left: 10,
           bottom: 10,
         }}
       >
