@@ -6,85 +6,64 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
 } from "recharts";
 
 const data = [
   {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
+    name: "2019",
+    "가정폭력 신고 비율": 19.33,
   },
   {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
+    name: "2020",
+    "가정폭력 신고 비율": 19.63,
   },
   {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
+    name: "2021",
+    "가정폭력 신고 비율": 22.77,
   },
 ];
 
-export default class Example extends PureComponent {
-  static demoUrl = "https://codesandbox.io/s/simple-line-chart-kec3v";
+//! Annotation 구현 안됨
+// const Annotation = (props) => {
+//   return (
+//     <text
+//       x={props.x}
+//       y={props.y}
+//       fill="#ff0000"
+//       fontSize="10"
+//       textAnchor="middle"
+//       transform={`rotate(${props.rotation}, ${props.x}, ${props.y})`}
+//     >
+//       {props.text}
+//     </text>
+//   );
+// };
 
-  render() {
-    return (
-      <ResponsiveContainer width={500} height={500}>
-        <LineChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="pv"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-          <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-        </LineChart>
-      </ResponsiveContainer>
-    );
-  }
+export default function RicidivismChart() {
+  return (
+    <BarChart
+      width={600}
+      height={600}
+      data={data}
+      margin={{
+        top: 20,
+        right: 20,
+        left: 20,
+        bottom: 5,
+      }}
+    >
+      <CartesianGrid strokeDasharray="3 3" />
+      <XAxis dataKey="name" 년 />
+      <YAxis />
+      <Tooltip />
+      <Legend verticalAlign="top" height={36} align="center" />
+      <Bar
+        dataKey="가정폭력 신고 비율"
+        fill="#ff8c00"
+        barSize={50}
+        label={{ position: "top" }}
+      />
+      {/* <Annotation rotation={12} x={150} y={150} text="2년간 2.2% 증가" /> */}
+    </BarChart>
+  );
 }

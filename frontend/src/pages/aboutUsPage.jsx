@@ -1,4 +1,4 @@
-// import RicidivismChart from "../components/pages/aboutUS/charts/RicidivismChart";
+import RicidivismChart from "../components/pages/aboutUS/charts/RicidivismChart";
 import Chart3 from "../components/pages/aboutUS/charts/chart3";
 import ArrestedChart from "../components/pages/aboutUS/charts/ArrestedChart";
 import styled from "styled-components";
@@ -12,7 +12,7 @@ function AboutUsPage() {
         <Title>당신과 함께하겠습니다.</Title>
       </BackgroundImgLayout>
       <ChartLayout>
-        {/* <RicidivismChart /> */}
+        <RicidivismChart />
         <ArrestedChart />
         <Chart3 />
       </ChartLayout>

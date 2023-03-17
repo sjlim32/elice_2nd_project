@@ -1,4 +1,11 @@
-import { PieChart, Pie, Cell, Tooltip, Sector } from "recharts";
+import {
+  PieChart,
+  Pie,
+  Cell,
+  Tooltip,
+  Sector,
+  ResponsiveContainer,
+} from "recharts";
 import { useCallback, useState } from "react";
 
 const data = [
@@ -71,7 +78,7 @@ const renderActiveShape = (props) => {
         y={ey}
         textAnchor={textAnchor}
         fill="#333"
-      >{`${(percent * 100).toFixed(2)}%`}</text>
+      >{`${payload.name} ${(percent * 100).toFixed(2)}%`}</text>
       <text
         x={ex + (cos >= 0 ? 1 : -1) * 12}
         y={ey}
@@ -95,25 +102,27 @@ export default function ArrestedChart() {
   );
 
   return (
-    <PieChart width={700} height={550}>
-      <Pie
-        activeIndex={activeIndex}
-        activeShape={renderActiveShape}
-        data={data}
-        cx={360}
-        cy={300}
-        innerRadius={140}
-        outerRadius={190}
-        startAngle={50}
-        endAngle={450}
-        dataKey="value"
-        onMouseEnter={onPieEnter}
-      >
-        {data.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      </Pie>
-      <Tooltip />
-    </PieChart>
+    <ResponsiveContainer width={700} height={550}>
+      <PieChart width={700} height={550}>
+        <Pie
+          activeIndex={activeIndex}
+          activeShape={renderActiveShape}
+          data={data}
+          cx={360}
+          cy={300}
+          innerRadius={140}
+          outerRadius={190}
+          startAngle={50}
+          endAngle={450}
+          dataKey="value"
+          onMouseEnter={onPieEnter}
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Tooltip />
+      </PieChart>
+    </ResponsiveContainer>
   );
 }
