@@ -6,10 +6,11 @@ import {
   AboutDomesticeViolencePage,
   CommunityPage,
   PostPage,
+  CounselingPage,
   CounselingCenterPage,
   CampaignsPage,
 } from "./pages";
-import SuppoterRegisterForm from "./components/SuppoterRegisterForm";
+import SuppoterRegisterForm from "./components/pages/users/SuppoterRegisterForm";
 
 function App() {
   return (
@@ -25,9 +26,10 @@ function App() {
           <Route path="/posts" element={<CommunityPage />} />
           <Route path="/posts/:_id" element={<PostPage />} />
           <Route path="/posts/category/:category" element={<CommunityPage />} />
+          <Route path="/counseling" element={<CounselingPage />} />
           <Route path="/counselingcenter" element={<CounselingCenterPage />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
-          <Route path='/users/register' element={<SuppoterRegisterForm />} />
+          <Route path="/users/register" element={<SuppoterRegisterForm />} />
         </Route>
       </Routes>
     </Router>

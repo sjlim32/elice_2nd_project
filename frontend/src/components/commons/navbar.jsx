@@ -17,6 +17,10 @@ function NavigationBar() {
       path: "/posts",
     },
     {
+      name: "온라인 상담",
+      path: "/counseling",
+    },
+    {
       name: "상담소 찾기",
       path: "/counselingcenter",
     },
@@ -34,10 +38,6 @@ function NavigationBar() {
         <LogoImg src={logo} alt="logo"></LogoImg>
       </Link>
       <Container>
-        {/* <RegisterLoginWrapper>
-          <Link to="/users/register">회원가입</Link>
-          <Link to="/users/login">로그인</Link>
-        </RegisterLoginWrapper> */}
         <MypageLogoutWrapper>
           {token == true ? (
             <>
@@ -74,7 +74,7 @@ const NavContainer = styled.nav`
 
 const MenuWrapper = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 30px;
   margin-top: auto;
   font-size: 30px;
 `;
