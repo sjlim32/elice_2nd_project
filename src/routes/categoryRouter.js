@@ -1,5 +1,5 @@
 import express from "express";
-import { adminOnly } from "../middlewares";
+import { loginRequired, adminOnly } from "../middlewares";
 import { categoryController } from "../controllers";
 
 const categoryRouter = express.Router();
@@ -8,6 +8,7 @@ const categoryRouter = express.Router();
 
 categoryRouter.post(
   "/categories",
+  loginRequired,
   adminOnly,
   categoryController.addCategory,
 );
@@ -15,11 +16,13 @@ categoryRouter.get("/categories", categoryController.getCategories);
 categoryRouter.get("/categories/:categoryId", categoryController.getCategory);
 categoryRouter.patch(
   "/categories/:categoryId",
+  loginRequired,
   adminOnly,
   categoryController.setCategory,
 );
 categoryRouter.delete(
   "/categories/:categoryId",
+  loginRequired,
   adminOnly,
   categoryController.deleteCategory,
 );

@@ -8,7 +8,7 @@ class PostService {
     this.addPost = this.addPost.bind(this);
     this.getPosts = this.getPosts.bind(this);
     this.getPostsByCategory = this.getPostsByCategory.bind(this);
-    this.getPostsByUser = this.getPostsByUser.bind(this);
+    this.getMyPosts = this.getMyPosts.bind(this);
     this.getPostsByTitleSearching = this.getPostsByTitleSearching.bind(this);
     this.getPost = this.getPost.bind(this);
     this.setPost = this.setPost.bind(this);
@@ -53,7 +53,7 @@ class PostService {
     return partialPosts;
   }
 
-  async getPostsByUser(userId) {
+  async getMyPosts(userId) {
     const posts = await this.postModel.findAllByUser(userId);
     const partialPosts = posts.map(post => {
       const { _id, title, categoryId } = post;
