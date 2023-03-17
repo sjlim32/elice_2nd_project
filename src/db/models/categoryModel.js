@@ -25,7 +25,6 @@ class CategoryModel {
   }
 
   async updateById(id, toUpdate) {
-    // runValidators: 검증, omitUndefined: undefined 반영 X
     const opts = { runValidators: true, omitUndefined: true };
     const updated = await Category.updateOne(
       { _id: id },

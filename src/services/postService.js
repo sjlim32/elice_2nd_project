@@ -15,7 +15,6 @@ class PostService {
     this.deletePost = this.deletePost.bind(this);
   }
 
-  // {게시글 제목, 작성자(익명 || 서포터(id)), 카테고리, 게시글 생성일시}만 추출해서 반환
   getPartial(posts) {
     const partialPosts = posts.map(post => {
       const { _id, title, userId, categoryId } = post;
@@ -94,9 +93,6 @@ class PostService {
     }
 
     const { modifiedCount } = await this.postModel.updateById(postId, toUpdate);
-
-    // console.log(modifiedCount);
-    // 왜 수정된 내용이 없는데도 count가 1일까?
     if (modifiedCount === 0) {
       return { result: `수정된 내용이 없습니다.` };
     }

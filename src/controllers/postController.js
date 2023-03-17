@@ -20,7 +20,7 @@ class PostController {
       const createdNewPost = await this.postService.addPost(postInfo);
       res.status(200).json(createdNewPost);
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   }
 
@@ -29,7 +29,7 @@ class PostController {
       const posts = await this.postService.getPosts();
       res.status(200).json(posts);
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   }
 
@@ -39,7 +39,7 @@ class PostController {
       const posts = await this.postService.getPostsByCategory(categoryId);
       res.status(200).json(posts);
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   }
 
@@ -49,7 +49,7 @@ class PostController {
       const posts = await this.postService.getMyPosts(userId);
       res.status(200).json(posts);
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   }
 
@@ -59,7 +59,7 @@ class PostController {
       const posts = await this.postService.getPostsByTitleSearching(search);
       res.status(200).json(posts);
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   }
 
@@ -69,7 +69,7 @@ class PostController {
       const posts = await this.postService.getPost(postId);
       res.status(200).json(posts);
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   }
 
@@ -79,12 +79,14 @@ class PostController {
       const { postId } = req.params;
       const toUpdate = req.body;
       const newToUpdate = Object.fromEntries(
-        Object.entries(toUpdate).filter(([key, value]) => value.trim()),
+        Object.entries(toUpdate).filter(([key, value]) =>
+          value ? toString(value).trim() : false,
+        ),
       );
       const result = await this.postService.setPost(user, postId, newToUpdate);
       res.status(200).json(result);
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   }
 
@@ -95,7 +97,7 @@ class PostController {
       const result = await this.postService.deletePost(user, postId);
       res.status(200).json(result);
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   }
 }

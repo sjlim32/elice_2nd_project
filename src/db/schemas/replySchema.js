@@ -20,7 +20,7 @@ const replySchema = new Schema(
     parentId: {
       type: Schema.Types.ObjectId,
       ref: "Reply",
-      required: true,
+      //required: true,
       default: null,
     },
     contents: {
