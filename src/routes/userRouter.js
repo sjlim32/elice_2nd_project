@@ -23,7 +23,7 @@ userRouter.post("/login", userController.login);
 userRouter.delete("/logout", loginRequired, userController.logout);
 
 /* 관리자 */
-
+// 유저 역할별 조회
 userRouter.get(
   "/admin/users/userRole/:userRole",
   loginRequired,
@@ -31,6 +31,7 @@ userRouter.get(
   userController.getUser,
 );
 
+// 유저 ID로 조회
 userRouter.get(
   "/admin/users/:userId",
   loginRequired,
@@ -38,6 +39,7 @@ userRouter.get(
   userController.getUser,
 );
 
+// 유저 수정
 userRouter.patch(
   "/admin/users/:userId",
   loginRequired,
@@ -45,6 +47,7 @@ userRouter.patch(
   userController.editUser,
 );
 
+// 유저 삭제
 userRouter.delete(
   "/admin/users/:userId",
   loginRequired,

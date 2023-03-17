@@ -24,6 +24,7 @@ class UserController {
     try {
       const { userId, role } = req.user;
       const param = req.params;
+
       let user = null;
 
       if (role !== "admin") {
@@ -43,7 +44,8 @@ class UserController {
 
   async editUser(req, res, next) {
     const { userId } = req.params || req.user;
-    const { formType, currentPassword, ...updateFields } = req.body;
+    const { role } = req.user;
+    const { currentPassword, ...updateFields } = req.body;
 
     const userInfo = { userId, currentPassword };
     const toUpdate = Object.fromEntries(
@@ -52,12 +54,11 @@ class UserController {
 
     try {
       let updatedUser = null;
-      if (formType === "user") {
+
+      if (role !== "admin") {
         updatedUser = await userService.editUser(userInfo, toUpdate);
-      } else if (formType === "support") {
-        updatedUser = await supportUserService.editUser(userInfo, toUpdate);
       } else {
-        throw new Error(`formType 속성을 지정해주세요.`);
+        updatedUser = await supportUserService.editUser(userInfo, toUpdate);
       }
 
       res.status(200).json(updatedUser);
@@ -68,35 +69,47 @@ class UserController {
 
   async deleteUser(req, res, next) {
     try {
-      const user = req.user;
+      const { userId } = req.params || req.user;
 
-      if (user.role !== "admin") {
-        const deletedUser = await userService.deleteUser(user.userId);
-        res.status(200).send(deletedUser);
-      } else {
-        const { userId } = req.params;
-        const deletedUser = await userService.deleteUser(userId);
-        res.status(200).send(deletedUser);
-      }
+      const deletedUser = await userService.deleteUser(userId);
+      res.status(200).send(deletedUser);
     } catch (error) {
       next(error);
     }
   }
 
   async login(req, res, next) {
-    const { email, password } = req.body;
-    const loginInfo = { email, password };
-
     try {
-      const token = await userService.generateToken(loginInfo);
-      res.status(200).send(token);
+      const { email, password } = req.body;
+      const loginInfo = { email, password };
+
+      const { accessToken, refreshToken } = await userService.generateToken(
+        loginInfo,
+      );
+
+      const cookieOptions = {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      };
+
+      res.cookie("refreshToken", refreshToken, cookieOptions);
+
+      res.status(200).send({ accessToken });
     } catch (error) {
       next(error);
     }
   }
 
   async logout(req, res, next) {
-    /* */
+    try {
+      const { userId } = req.user;
+      res.clearCookie("refreshToken");
+      await userService.deleteToken(userId);
+      res.status(200).send(`정상적으로 로그아웃되었습니다.`);
+    } catch (error) {
+      next(error);
+    }
   }
 }
 
