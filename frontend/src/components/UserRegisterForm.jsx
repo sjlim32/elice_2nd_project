@@ -34,6 +34,7 @@ function UserRegisterForm() {
   const handleSubmit = (e) => {
     e.preventDefault()
     const userData = {
+      'formType': 'user',
       email,
       password
     }
