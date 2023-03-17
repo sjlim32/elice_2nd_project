@@ -42,12 +42,20 @@ function SuppoterRegisterForm() {
       validatePassword()
     );
   };
-  //formType 을 추가해서 user/suppoter를 구분
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     const userData = {
+      'formType': 'suppoter',
       email,
-      password
+      password,
+      'userName': name,
+      'phoneNumber': phone,
+      'address': {
+        zonecode,
+        address,
+        detailAddress
+      },
     }
     const validateResult = validateForm()
     if (validateResult) {
