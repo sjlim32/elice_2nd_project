@@ -46,7 +46,10 @@ class CategoryController {
     try {
       const { categoryId } = req.params;
       const toUpdate = req.body;
-      const result = await categoryService.setCategory(categoryId, toUpdate);
+      const newToUpdate = Object.fromEntries(
+        Object.entries(toUpdate).filter(([key, value]) => value.trim()),
+      );
+      const result = await categoryService.setCategory(categoryId, newToUpdate);
       res.status(200).json(result);
     } catch (error) {
       next(error);

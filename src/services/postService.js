@@ -8,7 +8,7 @@ class PostService {
     this.addPost = this.addPost.bind(this);
     this.getPosts = this.getPosts.bind(this);
     this.getPostsByCategory = this.getPostsByCategory.bind(this);
-    this.getPostsByUser = this.getPostsByUser.bind(this);
+    this.getMyPosts = this.getMyPosts.bind(this);
     this.getPostsByTitleSearching = this.getPostsByTitleSearching.bind(this);
     this.getPost = this.getPost.bind(this);
     this.setPost = this.setPost.bind(this);
@@ -18,17 +18,14 @@ class PostService {
   // {게시글 제목, 작성자(익명 || 서포터(id)), 카테고리, 게시글 생성일시}만 추출해서 반환
   getPartial(posts) {
     const partialPosts = posts.map(post => {
-      const { title, userId, categoryId, createdAt } = post;
-      const categoryTitle = categoryId.title;
-      const { email, role } = userId;
-      let writer = "익명";
-      if (role === "support") {
-        const id = email.split("@");
-        writer = `서포터(${id[0]})`;
-      } else if (role === "admin") {
-        writer = "관리자";
-      }
-      return { title, writer, categoryTitle, createdAt };
+      const { _id, title, userId, categoryId } = post;
+      const { id, email, role } = userId;
+      return {
+        _id,
+        title,
+        categoryId: { _id: categoryId.id, title: categoryId.title },
+        userId: { _id: id, email, role },
+      };
     });
     return partialPosts;
   }
@@ -56,12 +53,12 @@ class PostService {
     return partialPosts;
   }
 
-  async getPostsByUser(userId) {
+  async getMyPosts(userId) {
     const posts = await this.postModel.findAllByUser(userId);
     const partialPosts = posts.map(post => {
-      const { title, categoryId, createdAt } = post;
+      const { _id, title, categoryId } = post;
       const categoryTitle = categoryId.title;
-      return { title, categoryTitle, createdAt };
+      return { _id, title, categoryId, categoryTitle };
     });
     return partialPosts;
   }
@@ -79,17 +76,9 @@ class PostService {
       throw new Error(`존재하지 않는 게시글입니다.`);
     }
 
-    const { userId, categoryId, contents, createdAt } = post;
-    const categoryTitle = categoryId.title;
-    const { email, role } = userId;
-    let writer = "익명";
-    if (role === "support") {
-      const id = email.split("@");
-      writer = `서포터(${id[0]})`;
-    } else if (role === "admin") {
-      writer = "관리자";
-    }
-    return { title, categoryTitle, writer, contents, createdAt };
+    const partialPost = this.getPartial([post])[0];
+    partialPost.contents = post.contents;
+    return partialPost;
   }
 
   async setPost(user, postId, toUpdate) {
@@ -107,12 +96,11 @@ class PostService {
     const { modifiedCount } = await this.postModel.updateById(postId, toUpdate);
 
     // console.log(modifiedCount);
-    let result = `수정이 완료 되었습니다.`;
     // 왜 수정된 내용이 없는데도 count가 1일까?
     if (modifiedCount === 0) {
-      result = `수정된 내용이 없습니다.`;
+      return { result: `수정된 내용이 없습니다.` };
     }
-    return result;
+    return { result: `수정이 완료 되었습니다.` };
   }
 
   async deletePost(user, postId) {
@@ -128,11 +116,10 @@ class PostService {
     }
 
     const { modifiedCount } = await this.postModel.softDeleteById(postId);
-    let result = `삭제가 완료 되었습니다.`;
     if (modifiedCount === 0) {
-      result = `삭제된 내용이 없습니다.`;
+      return { result: `게시글 삭제에 실패했습니다.` };
     }
-    return result;
+    return { result: `게시글 삭제를 완료하였습니다.` };
   }
 }
 

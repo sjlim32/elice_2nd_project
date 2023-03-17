@@ -6,7 +6,7 @@ class PostController {
     this.addPost = this.addPost.bind(this);
     this.getPosts = this.getPosts.bind(this);
     this.getPostsByCategory = this.getPostsByCategory.bind(this);
-    this.getPostsByUser = this.getPostsByUser.bind(this);
+    this.getMyPosts = this.getMyPosts.bind(this);
     this.getPostsByTitleSearching = this.getPostsByTitleSearching.bind(this);
     this.getPost = this.getPost.bind(this);
     this.setPost = this.setPost.bind(this);
@@ -43,10 +43,10 @@ class PostController {
     }
   }
 
-  async getPostsByUser(req, res, next) {
+  async getMyPosts(req, res, next) {
     try {
       const { userId } = req.user;
-      const posts = await this.postService.getPostsByUser(userId);
+      const posts = await this.postService.getMyPosts(userId);
       res.status(200).json(posts);
     } catch (error) {
       next(error);
@@ -78,7 +78,10 @@ class PostController {
       const user = req.user;
       const { postId } = req.params;
       const toUpdate = req.body;
-      const result = await this.postService.setPost(user, postId, toUpdate);
+      const newToUpdate = Object.fromEntries(
+        Object.entries(toUpdate).filter(([key, value]) => value.trim()),
+      );
+      const result = await this.postService.setPost(user, postId, newToUpdate);
       res.status(200).json(result);
     } catch (error) {
       next(error);
