@@ -1,12 +1,13 @@
-const checkAppjson = (req, res, next) => {
+const checkAppJson = (req, res, next) => {
   try {
     const contentType = req.headers["content-type"];
-    if (contentType.startsWith("application/json")) {
-      next();
+    if (!contentType || !contentType.startsWith("application/json")) {
+      res.status(400).send("content-type을 json으로 설정해주세요.");
     }
-  } catch (err) {
-    throw new Error("content-type을 json형태로 바꿔주세요.");
+    next();
+  } catch (error) {
+    res.status(400);
   }
 };
 
-export { checkAppjson };
+export { checkAppJson };

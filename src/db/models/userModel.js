@@ -4,13 +4,11 @@ import { userSchema } from "../schemas";
 const User = model("User", userSchema);
 
 class UserModel {
-  // Create
   async create(userInfo) {
     const createdNewUser = await User.create(userInfo);
     return createdNewUser;
   }
 
-  // Read
   async findById(userId) {
     const user = await User.findById(userId);
     return user;
@@ -21,7 +19,7 @@ class UserModel {
     return user;
   }
   async findByRole(role) {
-    const users = await User.findAll({ role });
+    const users = await User.find({ role });
     return users;
   }
   async findAll() {
@@ -29,7 +27,6 @@ class UserModel {
     return users;
   }
 
-  // Update
   async updateById(userId, update) {
     const updatedUser = await User.findByIdAndUpdate(userId, update, {
       new: true,
@@ -37,7 +34,6 @@ class UserModel {
     return updatedUser;
   }
 
-  // Delete
   async deleteById(userId) {
     const deletedUser = await User.findByIdAndDelete(userId);
     return deletedUser;

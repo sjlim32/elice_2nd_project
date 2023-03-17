@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { supportUserModel } from "../db/models";
+import { userModel, supportUserModel } from "../db/models";
 import { UserService } from "./userService";
 
 class SupportUserService extends UserService {
@@ -16,14 +16,20 @@ class SupportUserService extends UserService {
     if (found) {
       throw new Error(`이미 가입된 이메일 입니다.`);
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUserInfo = { ...userInfo, password: hashedPassword };
+
+    const newUserInfo = {
+      ...userInfo,
+      password: hashedPassword,
+    };
 
     const createdNewUser = await this.supportUserModel.create(newUserInfo);
+
     return createdNewUser;
   }
 }
 
-const supportUserService = new SupportUserService(supportUserModel);
+const supportUserService = new SupportUserService(userModel, supportUserModel);
 
 export { supportUserService };
