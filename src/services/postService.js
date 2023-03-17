@@ -96,12 +96,11 @@ class PostService {
     const { modifiedCount } = await this.postModel.updateById(postId, toUpdate);
 
     // console.log(modifiedCount);
-    let result = `수정이 완료 되었습니다.`;
     // 왜 수정된 내용이 없는데도 count가 1일까?
     if (modifiedCount === 0) {
-      result = `수정된 내용이 없습니다.`;
+      return { result: `수정된 내용이 없습니다.` };
     }
-    return result;
+    return { result: `수정이 완료 되었습니다.` };
   }
 
   async deletePost(user, postId) {
@@ -117,11 +116,10 @@ class PostService {
     }
 
     const { modifiedCount } = await this.postModel.softDeleteById(postId);
-    let result = `삭제가 완료 되었습니다.`;
     if (modifiedCount === 0) {
-      result = `삭제된 내용이 없습니다.`;
+      return { result: `게시글 삭제에 실패했습니다.` };
     }
-    return result;
+    return { result: `게시글 삭제를 완료하였습니다.` };
   }
 }
 

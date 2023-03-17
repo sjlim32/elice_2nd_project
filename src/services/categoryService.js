@@ -52,17 +52,16 @@ class CategoryService {
       throw new Error(`해당 카테고리가 존재하지 않습니다.`);
     }
 
-    let result = `수정이 완료 되었습니다.`;
     if (modifiedCount === 0) {
-      result = `수정된 내용이 없습니다.`;
+      return { result: `수정된 내용이 없습니다.` };
     }
-    return result;
+    return { result: `수정이 완료 되었습니다.` };
   }
 
   async deleteCategory(categoryId) {
     const found = await this.postModel.findByCategory(categoryId);
     if (found) {
-      throw new Error(`카테고리에 게시글이 존재해 삭제할 수 없습니다.`)
+      throw new Error(`카테고리에 게시글이 존재해 삭제할 수 없습니다.`);
     }
 
     const { deletedCount } = await this.categoryModel.deleteById(categoryId);
