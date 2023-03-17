@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import mainImg from "../images/main_image.png";
-import CheckListModal from "../components/pages/mainPage/checkListModal";
+import CheckListModal from "../components/pages/mainPage/CheckListModal";
 import { useState } from "react";
 
 function MainPage() {

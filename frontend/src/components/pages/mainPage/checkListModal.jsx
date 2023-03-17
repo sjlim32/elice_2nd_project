@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import CheckboxList from "./checkboxList";
+import CheckboxList from "./CheckboxList";
 
 function CheckListModal({ onClose }) {
   const handleClose = () => {
