@@ -8,6 +8,8 @@ const data = [
 ];
 const COLORS = ["#ff7473", "#47b8e0", "#5e5e5f"];
 
+const percentFormat = (value) => `${value}%`;
+
 export default function SurveyResultsChart() {
   return (
     <>
@@ -23,7 +25,7 @@ export default function SurveyResultsChart() {
           outerRadius={100}
           paddingAngle={5}
           dataKey="value"
-          label={{ value: { data }, position: "insideStart" }}
+          label={({ value }) => `${percentFormat(value)}`}
         >
           {data.map((entry, index) => (
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
