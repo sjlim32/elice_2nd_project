@@ -18,17 +18,14 @@ class PostService {
   // {게시글 제목, 작성자(익명 || 서포터(id)), 카테고리, 게시글 생성일시}만 추출해서 반환
   getPartial(posts) {
     const partialPosts = posts.map(post => {
-      const { title, userId, categoryId, createdAt } = post;
-      const categoryTitle = categoryId.title;
-      const { email, role } = userId;
-      let writer = "익명";
-      if (role === "support") {
-        const id = email.split("@");
-        writer = `서포터(${id[0]})`;
-      } else if (role === "admin") {
-        writer = "관리자";
-      }
-      return { title, writer, categoryTitle, createdAt };
+      const { _id, title, userId, categoryId } = post;
+      const { id, email, role } = userId;
+      return {
+        _id,
+        title,
+        categoryId: { _id: categoryId.id, title: categoryId.title },
+        userId: { _id: id, email, role },
+      };
     });
     return partialPosts;
   }
@@ -59,9 +56,9 @@ class PostService {
   async getPostsByUser(userId) {
     const posts = await this.postModel.findAllByUser(userId);
     const partialPosts = posts.map(post => {
-      const { title, categoryId, createdAt } = post;
+      const { _id, title, categoryId } = post;
       const categoryTitle = categoryId.title;
-      return { title, categoryTitle, createdAt };
+      return { _id, title, categoryId, categoryTitle };
     });
     return partialPosts;
   }
@@ -79,17 +76,9 @@ class PostService {
       throw new Error(`존재하지 않는 게시글입니다.`);
     }
 
-    const { userId, categoryId, contents, createdAt } = post;
-    const categoryTitle = categoryId.title;
-    const { email, role } = userId;
-    let writer = "익명";
-    if (role === "support") {
-      const id = email.split("@");
-      writer = `서포터(${id[0]})`;
-    } else if (role === "admin") {
-      writer = "관리자";
-    }
-    return { title, categoryTitle, writer, contents, createdAt };
+    const partialPost = this.getPartial([post])[0];
+    partialPost.contents = post.contents;
+    return partialPost;
   }
 
   async setPost(user, postId, toUpdate) {

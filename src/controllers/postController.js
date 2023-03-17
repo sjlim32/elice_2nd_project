@@ -78,7 +78,10 @@ class PostController {
       const user = req.user;
       const { postId } = req.params;
       const toUpdate = req.body;
-      const result = await this.postService.setPost(user, postId, toUpdate);
+      const newToUpdate = Object.fromEntries(
+        Object.entries(toUpdate).filter(([key, value]) => value.trim()),
+      );
+      const result = await this.postService.setPost(user, postId, newToUpdate);
       res.status(200).json(result);
     } catch (error) {
       next(error);
