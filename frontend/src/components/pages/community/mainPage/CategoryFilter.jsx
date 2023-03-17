@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios'
 
 // * localStorage 이용하여 새로고침해도 현재 선택한 카테고리 유지
 const LS_KEY_CATEGORY = 'LS_KEY_CATEGORY'

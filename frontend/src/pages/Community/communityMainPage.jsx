@@ -76,6 +76,7 @@ function CommunityMainPage() {
 				setCategory={setCategory}
 			/>
 			<Search></Search>
+			<WriteBtn onClick={'none'}>글쓰기</WriteBtn>
 			</SearchWrap>
 		<BoardWrap>
 			<ContentBar>
@@ -106,10 +107,16 @@ const SearchWrap = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 800px;
-	height: 160px;
-	border: 1px solid gray;
+	width: 1200px;
+	height: 180px;
+	border-bottom: 1px solid gray;
 `
+
+const WriteBtn = styled.button`
+	display: inline;
+	flex-direction: row;
+	margin: 15px;
+`;
 
 const BoardWrap = styled.div`
 
