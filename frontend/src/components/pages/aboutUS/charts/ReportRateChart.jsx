@@ -49,10 +49,10 @@ export default function ReportRateChart() {
         height={600}
         data={data}
         margin={{
-          top: 20,
-          right: 20,
-          left: 20,
-          bottom: 5,
+          top: 10,
+          right: 50,
+          left: 0,
+          bottom: 10,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
