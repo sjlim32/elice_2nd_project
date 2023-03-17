@@ -13,7 +13,7 @@ function UserWithdrawal() {
     e.preventDefault();
     console.log('check');
     axios
-      .delete(`/api/auth/withdrawal`, password)
+      .delete(`/users`, password)
       .then((res) => console.log(res.data))
       .catch(() => console.log('error'));
   };
