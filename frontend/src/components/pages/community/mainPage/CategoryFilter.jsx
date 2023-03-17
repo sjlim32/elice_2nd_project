@@ -43,9 +43,9 @@ const CategoryFilter = ({ categories, category, setCategory }) => {
 const CategoryWrap = styled.div`
 	display: flex;
 	justify-content: space-between;
-	width: 300px;
+	width: 400px;
 	padding: 10px;
-	margin: 25px;
+	margin: 20px 0 20px 5px;
 `
 
 export default CategoryFilter;
