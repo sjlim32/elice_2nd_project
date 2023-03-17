@@ -4,8 +4,6 @@ import { categoryController } from "../controllers";
 
 const categoryRouter = express.Router();
 
-// req.body가 json인지 확인하는 validator middleware 추가하기
-
 categoryRouter.post(
   "/categories",
   loginRequired,

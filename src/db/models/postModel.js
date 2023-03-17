@@ -50,10 +50,8 @@ class PostModel {
   }
 
   async updateById(id, toUpdate) {
-    // runValidators: 검증, omitUndefined: undefined 반영 X
     const opts = { runValidators: true, omitUndefined: true };
     const updated = await Post.updateOne({ _id: id }, { $set: toUpdate }, opts);
-    // err 메시지 따로 못 하나? 콜백함수 추가 안 됨
     return updated;
   }
 

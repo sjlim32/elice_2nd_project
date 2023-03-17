@@ -4,17 +4,6 @@ import { checkAppjson, adminOnly, loginRequired } from "../middlewares";
 
 const replyRouter = express.Router();
 
-/*
-1. 댓글 추가(userId받고, parentId받고..)
-2. 전체 댓글 조회?? admin만
-3. 선택한 게시글의 전체 댓글 조회 (삭제된 건 어떻게 처리?)
-댓글이랑 대댓글 어떻게 나눠서 넘기지?
-4. 내가 쓴 댓글 전체 조회(isDeleted=false)
-5. 선택한 댓글 조회
-6. 선택한 댓글 수정
-7. 선택한 댓글 댓글 삭제
-*/
-
 replyRouter.post(
   "/replies",
   loginRequired,
