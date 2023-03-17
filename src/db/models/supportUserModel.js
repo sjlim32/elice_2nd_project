@@ -1,43 +1,14 @@
 import { model } from "mongoose";
-import { User } from "./userModel";
+import { User, UserModel } from "./userModel";
 import { supportUserSchema } from "../schemas";
 
 const SupportUser = User.discriminator("SupportUser", supportUserSchema);
 
-class SupportUserModel {
+//Support 회원가입을 제외한 나머지 Method는 재활용이 가능하기 때문에 UserModel Class를 상속
+class SupportUserModel extends UserModel {
   async create(userInfo) {
     const createdNewUser = await SupportUser.create(userInfo);
     return createdNewUser;
-  }
-
-  // Read
-  async findById(userId) {
-    const user = await SupportUser.findById(userId);
-    return user;
-  }
-
-  async findByEmail(email) {
-    const user = await SupportUser.findOne({ email });
-    return user;
-  }
-
-  async findAll() {
-    const users = await SupportUser.find({});
-    return users;
-  }
-
-  // Update
-  async updateById(userId, update) {
-    const updatedUser = await SupportUser.findByIdAndUpdate(userId, update, {
-      new: true,
-    });
-    return updatedUser;
-  }
-
-  // Delete
-  async deleteById(userId) {
-    const deletedUser = await SupportUser.findByIdAndDelete(userId);
-    return deletedUser;
   }
 }
 
