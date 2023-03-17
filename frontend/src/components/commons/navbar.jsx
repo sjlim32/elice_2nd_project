@@ -17,6 +17,10 @@ function NavigationBar() {
       path: "/comunity",
     },
     {
+      name: "온라인 상담",
+      path: "/counseling",
+    },
+    {
       name: "상담소 찾기",
       path: "/counselingcenter",
     },
@@ -70,7 +74,7 @@ const NavContainer = styled.nav`
 
 const MenuWrapper = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 30px;
   margin-top: auto;
   font-size: 30px;
 `;
