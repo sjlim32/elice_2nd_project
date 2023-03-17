@@ -1,3 +1,3 @@
 export * from "./loginRequired";
 export * from "./adminOnly";
-export * from "./checkAppjson";
+export * from "./checkAppJson";
