@@ -4,9 +4,9 @@ import AboutDomesticeViolencePage from "./aboutDomesticViolencePage";
 import CommunityPage from "./Community/communityMainPage";
 import PostingPage from "./Community/postingPage";
 import PostPage from "./Community/postPage";
+import CounselingPage from "./counselingPage";
 import CounselingCenterPage from "./counselingCenterPage";
 import CampaignsPage from "./campaignsPage";
-
 
 export {
   MainPage,
@@ -14,6 +14,7 @@ export {
   AboutDomesticeViolencePage,
   CommunityPage,
   PostPage,
+  CounselingPage,
   PostingPage,
   CounselingCenterPage,
   CampaignsPage,

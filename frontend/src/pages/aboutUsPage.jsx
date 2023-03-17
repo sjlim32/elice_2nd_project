@@ -1,20 +1,48 @@
-import Chart1 from "../components/pages/aboutUS/charts/chart1";
-import Chart2 from "../components/pages/aboutUS/charts/chart2";
-import Chart3 from "../components/pages/aboutUS/charts/chart3";
+import ReportRateChart from "../components/pages/aboutUS/charts/ReportRateChart";
+import RicidivismChart from "../components/pages/aboutUS/charts/RicidivismChart";
+import ArrestedChart from "../components/pages/aboutUS/charts/ArrestedChart";
+import SurveyResultsChart from "../components/pages/aboutUS/charts/SurvetResultsChart";
 import styled from "styled-components";
+import bgImg from "../images/aboutus_back_image.png";
 
 function AboutUsPage() {
   return (
-    <Container>
-      <h1> AboutUs 24/7</h1>
-      <Chart1 />
-      <Chart2 />
-      <Chart3 />
-    </Container>
+    <div>
+      <BackgroundImgLayout>
+        <Title>24/7은 언제 어디서나</Title>
+        <Title>당신과 함께하겠습니다.</Title>
+      </BackgroundImgLayout>
+      <ChartLayout>
+        <ReportRateChart />
+        <ArrestedChart />
+        <RicidivismChart />
+        <SurveyResultsChart />
+      </ChartLayout>
+    </div>
   );
 }
 
-const Container = styled.div`
+const BackgroundImgLayout = styled.div`
+  width: auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  background-image: url(${bgImg});
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+
+const Title = styled.div`
+  font-size: 55px;
+  font-weight: 1000;
+  text-align: center;
+  margin-bottom: 30px;
+`;
+
+const ChartLayout = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
