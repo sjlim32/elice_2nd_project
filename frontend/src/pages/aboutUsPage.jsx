@@ -2,6 +2,7 @@ import ReportRateChart from "../components/pages/aboutUS/charts/ReportRateChart"
 import RicidivismChart from "../components/pages/aboutUS/charts/RicidivismChart";
 import ArrestedChart from "../components/pages/aboutUS/charts/ArrestedChart";
 import SurveyResultsChart from "../components/pages/aboutUS/charts/SurvetResultsChart";
+import SupportServicesChart from "../components/pages/aboutUS/charts/SupportServicesChart";
 import styled from "styled-components";
 import bgImg from "../images/aboutus_back_image.png";
 
@@ -17,6 +18,7 @@ function AboutUsPage() {
         <ArrestedChart />
         <RicidivismChart />
         <SurveyResultsChart />
+        <SupportServicesChart />
       </ChartLayout>
     </div>
   );

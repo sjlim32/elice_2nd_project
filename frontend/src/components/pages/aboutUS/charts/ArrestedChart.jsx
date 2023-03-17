@@ -103,8 +103,8 @@ export default function ArrestedChart() {
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
           data={data}
-          cx={360}
-          cy={300}
+          cx={350}
+          cy={250}
           innerRadius={140}
           outerRadius={190}
           startAngle={50}
