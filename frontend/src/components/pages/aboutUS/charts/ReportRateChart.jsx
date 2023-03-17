@@ -59,10 +59,26 @@ export default function ReportRateChart() {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" 년 />
-        <YAxis />
+        <XAxis dataKey="name" dy={5} unit={"년"} />
+        <YAxis
+          domain={[0, 30]}
+          ticks={[0, 5, 10, 15, 20, 25, 30]}
+          label={{
+            value: "단위(%)",
+            position: "insideLeft",
+            angle: -90,
+            dx: -5,
+          }}
+          dx={-7}
+        />
         <Tooltip />
-        <Legend verticalAlign="bottom" height={36} align="center" />
+        <Legend
+          verticalAlign="top"
+          height={36}
+          align="right"
+          iconType={"square"}
+          iconSize={15}
+        />
         <Bar
           dataKey="가정폭력 신고 비율"
           fill="#ff8c00"
