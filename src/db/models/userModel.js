@@ -20,12 +20,10 @@ class UserModel {
     const user = await User.findOne({ email });
     return user;
   }
-
   async findByRole(role) {
-    const users = await User.find({ role });
+    const users = await User.findAll({ role });
     return users;
   }
-
   async findAll() {
     const users = await User.find({});
     return users;
@@ -48,4 +46,4 @@ class UserModel {
 
 const userModel = new UserModel();
 
-export { User, userModel };
+export { User, userModel, UserModel };
