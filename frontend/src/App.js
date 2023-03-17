@@ -3,8 +3,8 @@ import Layout from "./components/commons/layout";
 import {
   MainPage,
   AboutUsPage,
-  AboutDomesticeViolencePage,
-  CommunityPage,
+  AboutDomesticViolencePage,
+  CommunityMainPage,
   PostingPage,
   PostPage,
   CounselingPage,
@@ -22,12 +22,15 @@ function App() {
           <Route path="/aboutus" element={<AboutUsPage />} />
           <Route
             path="/aboutdomesticviolence"
-            element={<AboutDomesticeViolencePage />}
+            element={<AboutDomesticViolencePage />}
           />
-          <Route path="/posts" element={<CommunityPage />} />
+          <Route path="/posts" element={<CommunityMainPage />} />
           <Route path="/Posts/:_id" element={<PostPage />} />
           <Route path="/posts/write" element={<PostingPage />} />
-          <Route path="/posts/category/:category" element={<CommunityPage />} />
+          <Route
+            path="/posts/category/:category"
+            element={<CommunityMainPage />}
+          />
           <Route path="/counseling" element={<CounselingPage />} />
           <Route path="/counselingcenter" element={<CounselingCenterPage />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
