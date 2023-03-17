@@ -27,9 +27,9 @@ function UserWithdrawal() {
         />
         
         <check
-        type="checkbox"
-        label="회원을 탈퇴하시겠습니까?"
-        onClick={handleClick}
+            type="checkbox"
+            label="회원을 탈퇴하시겠습니까?"
+            onClick={handleClick}
         />
         {!isChecked ? (
           <button disabled>
