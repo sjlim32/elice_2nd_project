@@ -7,6 +7,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import styled from "styled-components";
 
 const data = [
   {
@@ -124,20 +125,48 @@ const data = [
 export default function RicidivismChart() {
   return (
     <>
+      <Title>월별 전국 가정폭력 출동 신고 및 재범 여부</Title>
       <BarChart
-        width={600}
+        width={700}
         height={550}
         data={data}
         margin={{
           top: 0,
-          right: 0,
+          right: 50,
           left: 0,
-          bottom: 0,
+          bottom: 50,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
+        <XAxis dataKey="name" angle={-45} tickMargin={30} interval={0} />
+        <YAxis />
+        <Tooltip />
+        <Legend
+          iconType={"square"}
+          iconSize={10}
+          verticalAlign="top"
+          align="right"
+          height={30}
+        />
+        <Bar
+          dataKey="가정폭력 재발 신고건"
+          stackId="a"
+          fill="#3e4e34"
+          animationBegin={0}
+          animationDuration={500}
+        />
+        <Bar
+          dataKey="전체신고건수"
+          stackId="a"
+          fill="#a7c097"
+          animationBegin={0}
+          animationDuration={500}
+        />
       </BarChart>
     </>
   );
 }
+
+const Title = styled.h2`
+  margin-bottom: auto;
+`;

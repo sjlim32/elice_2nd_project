@@ -94,9 +94,6 @@ export default function ArrestedChart() {
     },
     [setActiveIndex]
   );
-  const Title = styled.h2`
-    margin-bottom: auto;
-  `;
 
   return (
     <>
@@ -124,3 +121,7 @@ export default function ArrestedChart() {
     </>
   );
 }
+
+const Title = styled.h2`
+  margin-bottom: auto;
+`;

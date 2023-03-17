@@ -41,9 +41,6 @@ const data = [
 // };
 
 export default function ReportRateChart() {
-  const Title = styled.h2`
-    margin-bottom: auto;
-  `;
   return (
     <>
       <Title>연간 가정폭력 신고 비율</Title>
@@ -74,7 +71,7 @@ export default function ReportRateChart() {
         <Tooltip />
         <Legend
           verticalAlign="top"
-          height={36}
+          height={30}
           align="right"
           iconType={"square"}
           iconSize={15}
@@ -90,3 +87,7 @@ export default function ReportRateChart() {
     </>
   );
 }
+
+const Title = styled.h2`
+  margin-bottom: auto;
+`;
