@@ -3,9 +3,11 @@ import jwt from "jsonwebtoken";
 import { userModel, refreshTokenModel } from "../db/models";
 
 class UserService {
-  constructor(UserModel, RefreshTokenModel) {
-    this.userModel = UserModel;
-    this.refreshTokenModel = RefreshTokenModel;
+  constructor(userModel, refreshTokenModel) {
+    this.userModel = userModel;
+    this.refreshTokenModel = refreshTokenModel;
+    this.addUser = this.addUser.bind(this);
+    this.editUser = this.editUser.bind(this);
   }
 
   async addUser(userInfo) {
@@ -16,6 +18,7 @@ class UserService {
     if (found) {
       throw new Error(`이미 가입된 이메일 입니다.`);
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUserInfo = { ...userInfo, password: hashedPassword };
 
@@ -37,12 +40,16 @@ class UserService {
 
   async getUserByRole(role) {
     const users = await this.userModel.findByRole(role);
-
     return users;
   }
 
+  async getUserByRefreshToken(token) {
+    const user = await this.refreshTokenModel.findByToken(token);
+    return user;
+  }
   async editUser(userInfo, toUpdate) {
     const { userId, currentPassword } = userInfo;
+
     let user = await this.userModel.findById(userId);
 
     if (!user) {
@@ -64,17 +71,15 @@ class UserService {
         throw new Error("비밀번호가 일치하지 않습니다.");
       }
 
-      // 비밀번호 변경 시 변경 비밀번호 hash 처리
-      const { password } = toUpdate;
+      const { password, ...rest } = toUpdate;
 
       if (password) {
         const hashedPassword = await bcrypt.hash(password, 10);
-        newToUpdate = { ...toUpdate, password: hashedPassword };
+        newToUpdate = { ...rest, password: hashedPassword };
       }
     }
 
     user = await this.userModel.updateById(userId, newToUpdate);
-
     return user;
   }
 
@@ -87,6 +92,7 @@ class UserService {
     }
 
     const isPasswordCorrect = await bcrypt.compare(password, user.password);
+
     if (!isPasswordCorrect) {
       throw new Error("패스워드가 일치하지 않습니다.");
     }
@@ -103,7 +109,6 @@ class UserService {
       { expiresIn: "7d" },
     );
 
-    // 기간 7일
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
 
     await this.refreshTokenModel.create({
@@ -114,19 +119,21 @@ class UserService {
 
     return { accessToken, refreshToken };
   }
+
   async deleteToken(userId) {
     await this.refreshTokenModel.deleteByUserId(userId);
   }
+
   async deleteUser(userId) {
     const user = await this.userModel.deleteById(userId);
 
     if (!user) {
       throw new Error(`가입된 정보가 없습니다.`);
     }
+    await this.refreshTokenModel.deleteByUserId(userId);
     return user;
   }
 }
 
 const userService = new UserService(userModel, refreshTokenModel);
-
 export { userService, UserService };

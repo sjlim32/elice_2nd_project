@@ -4,6 +4,11 @@ class UserController {
   async register(req, res, next) {
     try {
       const userInfo = req.body;
+
+      if (!userInfo.role) {
+        throw new Error(`role 속성이 존재하지 않습니다.`);
+      }
+
       let newUser;
 
       if (userInfo.role === "user") {
@@ -11,7 +16,7 @@ class UserController {
       } else if (userInfo.role === "pending") {
         newUser = await supportUserService.addUser(userInfo);
       } else {
-        throw new Error(`role 속성이 존재하지 않습니다.`);
+        throw new Error(`잘못된 role 속성입니다.`);
       }
 
       res.status(200).json(newUser);
@@ -27,7 +32,7 @@ class UserController {
 
       let user = null;
 
-      if (role !== "admin") {
+      if (Object.keys(param).length === 0 && param.constructor === Object) {
         user = await userService.getUserById(userId);
       } else {
         user =
@@ -43,8 +48,8 @@ class UserController {
   }
 
   async editUser(req, res, next) {
-    const { userId } = req.params || req.user;
-    const { role } = req.user;
+    const userId = req.params.userId || req.user.userId;
+
     const { currentPassword, ...updateFields } = req.body;
 
     const userInfo = { userId, currentPassword };
@@ -52,15 +57,14 @@ class UserController {
       Object.entries(updateFields).filter(([_, value]) => value),
     );
 
-    try {
-      let updatedUser = null;
+    let updatedUser = null;
 
-      if (role !== "admin") {
+    try {
+      if (req.user.role === "user") {
         updatedUser = await userService.editUser(userInfo, toUpdate);
       } else {
         updatedUser = await supportUserService.editUser(userInfo, toUpdate);
       }
-
       res.status(200).json(updatedUser);
     } catch (error) {
       next(error);
@@ -69,7 +73,7 @@ class UserController {
 
   async deleteUser(req, res, next) {
     try {
-      const { userId } = req.params || req.user;
+      const userId = req.params.userId || req.user.userId;
 
       const deletedUser = await userService.deleteUser(userId);
       res.status(200).send(deletedUser);
@@ -81,11 +85,11 @@ class UserController {
   async login(req, res, next) {
     try {
       const { email, password } = req.body;
-      const loginInfo = { email, password };
 
-      const { accessToken, refreshToken } = await userService.generateToken(
-        loginInfo,
-      );
+      const { accessToken, refreshToken } = await userService.generateToken({
+        email,
+        password,
+      });
 
       const cookieOptions = {
         httpOnly: true,

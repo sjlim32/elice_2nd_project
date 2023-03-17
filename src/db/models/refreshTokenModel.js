@@ -9,9 +9,9 @@ class RefreshTokenModel {
     return newToken;
   }
 
-  async findByUserId(userId) {
-    const token = await RefreshToken.findOne({ userId });
-    return token;
+  async findByToken(token) {
+    const user = await RefreshToken.findOne({ token });
+    return user;
   }
 
   async updateByUserId(userId, token, expires) {
