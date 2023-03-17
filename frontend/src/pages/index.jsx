@@ -1,15 +1,18 @@
 import MainPage from "./mainPage";
 import AboutUsPage from "./aboutUsPage";
 import AboutDomesticeViolencePage from "./aboutDomesticViolencePage";
-import ComunityPage from "./comunityPage";
+import CommunityPage from "./Community/communityMainPage";
+import PostPage from "./Community/postPage";
 import CounselingCenterPage from "./counselingCenterPage";
 import CampaignsPage from "./campaignsPage";
+
 
 export {
   MainPage,
   AboutUsPage,
   AboutDomesticeViolencePage,
-  ComunityPage,
+  CommunityPage,
+  PostPage,
   CounselingCenterPage,
   CampaignsPage,
 };
