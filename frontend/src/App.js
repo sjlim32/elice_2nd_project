@@ -8,6 +8,7 @@ import {
   CounselingCenterPage,
   CampaignsPage,
 } from "./pages";
+import SuppoterRegisterForm from "./components/SuppoterRegisterForm";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/comunity" element={<ComunityPage />} />
           <Route path="/counselingcenter" element={<CounselingCenterPage />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
+          <Route path='/users/register' element={<SuppoterRegisterForm />} />
         </Route>
       </Routes>
     </Router>

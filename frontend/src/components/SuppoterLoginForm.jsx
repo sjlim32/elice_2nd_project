@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 
-function UserLoginForm() {
+function SuppoterLoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -38,4 +38,4 @@ function UserLoginForm() {
   )
 }
 
-export default UserLoginForm;
+export default SuppoterLoginForm;
