@@ -1,12 +1,6 @@
-import {
-  PieChart,
-  Pie,
-  Cell,
-  Tooltip,
-  Sector,
-  ResponsiveContainer,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Sector } from "recharts";
 import { useCallback, useState } from "react";
+import styled from "styled-components";
 
 const data = [
   { name: "구속", value: 1969, desc: "구속 인원 1,969명" },
@@ -100,9 +94,13 @@ export default function ArrestedChart() {
     },
     [setActiveIndex]
   );
+  const Title = styled.h2`
+    margin-bottom: auto;
+  `;
 
   return (
-    <ResponsiveContainer width={700} height={550}>
+    <>
+      <Title>5년간 가정폭력 사건으로 검거된 인원</Title>
       <PieChart width={700} height={550}>
         <Pie
           activeIndex={activeIndex}
@@ -123,6 +121,6 @@ export default function ArrestedChart() {
         </Pie>
         <Tooltip />
       </PieChart>
-    </ResponsiveContainer>
+    </>
   );
 }

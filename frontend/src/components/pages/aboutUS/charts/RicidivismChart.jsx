@@ -11,33 +11,9 @@ import {
 const data = [
   {
     name: "2019",
-    "가정폭력 신고 비율": 19.33,
-  },
-  {
-    name: "2020",
-    "가정폭력 신고 비율": 19.63,
-  },
-  {
-    name: "2021",
-    "가정폭력 신고 비율": 22.77,
+    전체신고건수: 19.33,
   },
 ];
-
-//! Annotation 구현 안됨
-// const Annotation = (props) => {
-//   return (
-//     <text
-//       x={props.x}
-//       y={props.y}
-//       fill="#ff0000"
-//       fontSize="10"
-//       textAnchor="middle"
-//       transform={`rotate(${props.rotation}, ${props.x}, ${props.y})`}
-//     >
-//       {props.text}
-//     </text>
-//   );
-// };
 
 export default function RicidivismChart() {
   return (

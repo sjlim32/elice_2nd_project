@@ -14,6 +14,7 @@ function AboutUsPage() {
       <ChartLayout>
         <ReportRateChart />
         <ArrestedChart />
+        <RicidivismChart />
       </ChartLayout>
     </div>
   );
