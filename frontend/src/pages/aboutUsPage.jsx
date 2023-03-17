@@ -1,5 +1,5 @@
+import ReportRateChart from "../components/pages/aboutUS/charts/ReportRateChart";
 import RicidivismChart from "../components/pages/aboutUS/charts/RicidivismChart";
-import Chart3 from "../components/pages/aboutUS/charts/chart3";
 import ArrestedChart from "../components/pages/aboutUS/charts/ArrestedChart";
 import styled from "styled-components";
 import bgImg from "../images/aboutus_back_image.png";
@@ -12,9 +12,8 @@ function AboutUsPage() {
         <Title>당신과 함께하겠습니다.</Title>
       </BackgroundImgLayout>
       <ChartLayout>
-        <RicidivismChart />
+        <ReportRateChart />
         <ArrestedChart />
-        <Chart3 />
       </ChartLayout>
     </div>
   );
