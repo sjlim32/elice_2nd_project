@@ -1,4 +1,4 @@
-const checkAppjson = (req, res, next) => {
+const checkAppJson = (req, res, next) => {
   try {
     const contentType = req.headers["content-type"];
     if (!contentType || !contentType.startsWith("application/json")) {
@@ -10,4 +10,4 @@ const checkAppjson = (req, res, next) => {
   }
 };
 
-export { checkAppjson };
+export { checkAppJson };
