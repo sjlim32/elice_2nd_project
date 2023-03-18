@@ -41,7 +41,7 @@ function UserRegisterForm() {
     const validateResult = validateForm()
     if (validateResult) {
       axios
-        .post('/users/register', userData)
+        .post('/users', userData)
         .then((res) => {
           console.log(userData)
         })

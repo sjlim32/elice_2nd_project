@@ -5,6 +5,7 @@ import CommunityPage from "./Community/communityMainPage";
 import PostPage from "./Community/postPage";
 import CounselingCenterPage from "./counselingCenterPage";
 import CampaignsPage from "./campaignsPage";
+import Register from "./register";
 
 
 export {
@@ -15,4 +16,5 @@ export {
   PostPage,
   CounselingCenterPage,
   CampaignsPage,
+  Register
 };

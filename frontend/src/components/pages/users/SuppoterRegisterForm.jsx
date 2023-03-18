@@ -1,7 +1,7 @@
-import React, {useState} from "react"
+import React, {useCallback, useState} from "react"
 import axios from 'axios'
-import DaumPost from "./pages/users/DaumPostcode";
-import PopupDom from './pages/users/PopupDom.jsx'
+import DaumPost from "./DaumPostcode";
+import PopupDom from './PopupDom.jsx'
 
 function SuppoterRegisterForm() {
   const [email, setEmail] = useState('')
@@ -15,9 +15,9 @@ function SuppoterRegisterForm() {
   const [isPopupOpen, setIsPopupOpen] = useState(false)
   const [error, setError] = useState('');
 
-  const openPostcode = () => {
+  const openPostcode = useCallback(() => {
     setIsPopupOpen(!isPopupOpen)
-  }
+  }, [isPopupOpen])
 
   const validateEmail = () => {
     const emailForm = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -60,7 +60,7 @@ function SuppoterRegisterForm() {
     const validateResult = validateForm()
     if (validateResult) {
       axios
-        .post('/users/register', userData)
+        .post('/users', userData)
         .then((res) => {
           console.log(userData)
         })
