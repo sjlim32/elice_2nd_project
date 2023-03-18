@@ -1,13 +1,13 @@
 import express from "express";
 import { replyController } from "../controllers";
-import { checkAppjson, adminOnly, loginRequired } from "../middlewares";
+import { checkAppJson, adminOnly, loginRequired } from "../middlewares";
 
 const replyRouter = express.Router();
 
 replyRouter.post(
   "/replies",
   loginRequired,
-  checkAppjson,
+  checkAppJson,
   replyController.addReply,
 );
 replyRouter.get(
@@ -26,7 +26,7 @@ replyRouter.get("/replies/:replyId", replyController.getReply);
 replyRouter.patch(
   "/replies/:replyId",
   loginRequired,
-  checkAppjson,
+  checkAppJson,
   replyController.setReply,
 );
 replyRouter.delete(
