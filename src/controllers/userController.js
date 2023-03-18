@@ -5,45 +5,50 @@ class UserController {
     try {
       const userInfo = req.body;
 
-      if (!userInfo.role) {
-        throw new Error(`role 속성이 존재하지 않습니다.`);
-      }
-
-      let newUser;
-
-      if (userInfo.role === "user") {
-        newUser = await userService.addUser(userInfo);
-      } else if (userInfo.role === "pending") {
-        newUser = await supportUserService.addUser(userInfo);
-      } else {
+      if (
+        !(
+          userInfo.role &&
+          (userInfo.role === "pending" || userInfo.role === "user")
+        )
+      ) {
         throw new Error(`잘못된 role 속성입니다.`);
       }
 
+      const newUser = await userService.addUser(userInfo);
+
       res.status(200).json(newUser);
     } catch (error) {
-      next(error);
+      next(error.message);
     }
   }
+  async getUserById(req, res, next) {
+    const userId = req.params.userId || req.user.userId;
 
-  async getUser(req, res, next) {
     try {
-      const { userId, role } = req.user;
-      const param = req.params;
-
-      let user = null;
-
-      if (Object.keys(param).length === 0 && param.constructor === Object) {
-        user = await userService.getUserById(userId);
-      } else {
-        user =
-          Object.keys(param)[0] === "userId"
-            ? await userService.getUserById(Object.values(param)[0])
-            : await userService.getUserByRole(Object.values(param)[0]);
-      }
-
-      res.status(200).send(user);
+      const user = await userService.getUserById(userId);
+      res.status(200).json(user);
     } catch (error) {
-      next(error);
+      next(error.message);
+    }
+  }
+  async getUsersByRole(req, res, next) {
+    const role = req.params.userRole;
+    try {
+      const users = await userService.getUsersByRole(role);
+      res.status(200).json(users);
+    } catch (error) {
+      next(error.message);
+    }
+  }
+  async adminEditUserRole(req, res, next) {
+    const userId = req.params.userId;
+    const { role } = req.body;
+
+    try {
+      const updatedUser = await userService.editUserRole(userId, role);
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error.message);
     }
   }
 
@@ -56,15 +61,8 @@ class UserController {
     const toUpdate = Object.fromEntries(
       Object.entries(updateFields).filter(([_, value]) => value),
     );
-
-    let updatedUser = null;
-
     try {
-      if (req.user.role === "user") {
-        updatedUser = await userService.editUser(userInfo, toUpdate);
-      } else {
-        updatedUser = await supportUserService.editUser(userInfo, toUpdate);
-      }
+      const updatedUser = await userService.editUser(userInfo, toUpdate);
       res.status(200).json(updatedUser);
     } catch (error) {
       next(error);
@@ -86,20 +84,20 @@ class UserController {
     try {
       const { email, password } = req.body;
 
-      const { accessToken, refreshToken } = await userService.generateToken({
+      const { accessToken, refreshToken } = await userService.login({
         email,
         password,
       });
 
       const cookieOptions = {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
+        // httpOnly: true,
+        // secure: true,
+        // sameSite: "strict",
       };
 
       res.cookie("refreshToken", refreshToken, cookieOptions);
 
-      res.status(200).send({ accessToken });
+      res.status(200).json({ accessToken });
     } catch (error) {
       next(error);
     }
@@ -109,7 +107,7 @@ class UserController {
     try {
       const { userId } = req.user;
       res.clearCookie("refreshToken");
-      await userService.deleteToken(userId);
+      await userService.deleteRefreshToken(userId);
       res.status(200).send(`정상적으로 로그아웃되었습니다.`);
     } catch (error) {
       next(error);
