@@ -1,28 +1,41 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { userModel, refreshTokenModel } from "../db/models";
+import { userModel, supportUserModel, refreshTokenModel } from "../db/models";
 
 class UserService {
-  constructor(userModel, refreshTokenModel) {
+  constructor(userModel, supportUserModel, refreshTokenModel) {
     this.userModel = userModel;
+    this.supportUserModel = supportUserModel;
     this.refreshTokenModel = refreshTokenModel;
     this.addUser = this.addUser.bind(this);
     this.editUser = this.editUser.bind(this);
   }
 
+  async hashPassword(password) {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    return hashedPassword;
+  }
   async addUser(userInfo) {
     const { email, password } = userInfo;
 
-    const found = await this.userModel.findByEmail(email);
+    // TODO: soft Delete 적용시 수정 필요
+    // isDeleted = true일 때와 false일 때
 
+    const found = await this.userModel.findByEmail(email);
     if (found) {
       throw new Error(`이미 가입된 이메일 입니다.`);
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await this.hashPassword(password);
     const newUserInfo = { ...userInfo, password: hashedPassword };
 
-    const createdNewUser = await this.userModel.create(newUserInfo);
+    let createdNewUser = null;
+    if (userInfo.role === "user") {
+      createdNewUser = await this.userModel.create(newUserInfo);
+    } else {
+      createdNewUser = await this.supportUserModel.create(newUserInfo);
+    }
+
     return createdNewUser;
   }
 
@@ -30,41 +43,44 @@ class UserService {
     const user = await this.userModel.findById(userId);
 
     if (!user) {
-      throw new Error(
-        `존재하지 않는 userId입니다. DB에 해당 _id가 존재하지 않음.`,
-      );
+      throw new Error(`userId가 DB에 존재하지 않습니다`);
     }
 
     return user;
   }
 
-  async getUserByRole(role) {
+  async getUsersByRole(role) {
+    const validRoles = ["user", "pending", "support"];
+    const isValidRole = validRoles.includes(role);
+
+    if (!isValidRole) {
+      throw new Error(`유효한 userRole이 아닙니다.`);
+    }
     const users = await this.userModel.findByRole(role);
     return users;
   }
 
-  async getUserByRefreshToken(token) {
-    const user = await this.refreshTokenModel.findByToken(token);
+  async getTokenByUserId(userId) {
+    const user = await this.refreshTokenModel.findByUserId(userId);
     return user;
   }
+
   async editUser(userInfo, toUpdate) {
     const { userId, currentPassword } = userInfo;
 
-    let user = await this.userModel.findById(userId);
+    const user = await this.userModel.findById(userId);
 
     if (!user) {
-      throw new Error(
-        `존재하지 않는 userId입니다. DB에 해당 _id가 존재하지 않음.`,
-      );
+      throw new Error(`userId가 DB에 존재하지 않습니다`);
     }
 
     let newToUpdate = { ...toUpdate };
 
     if (currentPassword) {
-      const correctPasswordHash = user.password;
+      const correctPassword = user.password;
       const isPasswordCorrect = await bcrypt.compare(
         currentPassword,
-        correctPasswordHash,
+        correctPassword,
       );
 
       if (!isPasswordCorrect) {
@@ -74,17 +90,37 @@ class UserService {
       const { password, ...rest } = toUpdate;
 
       if (password) {
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const hashedPassword = await this.hashPassword(password);
         newToUpdate = { ...rest, password: hashedPassword };
       }
     }
 
-    user = await this.userModel.updateById(userId, newToUpdate);
-    return user;
+    let updatedUser = null;
+
+    if (user.role === "user") {
+      updatedUser = await this.userModel.updateById(userId, newToUpdate);
+    } else {
+      updatedUser = await this.supportUserModel.updateById(userId, newToUpdate);
+    }
+
+    return updatedUser;
+  }
+  async editUserRole(userId, role) {
+    const validRoles = ["support"];
+    const isValidRole = validRoles.includes(role);
+
+    if (!isValidRole) {
+      throw new Error(`유효한 userRole이 아닙니다.`);
+    }
+
+    const updatedUser = await this.supportUserModel.updateById(userId, {
+      role,
+    });
+
+    return updatedUser;
   }
 
-  async generateToken(loginInfo) {
-    const { email, password } = loginInfo;
+  async login({ email, password }) {
     const user = await this.userModel.findByEmail(email);
 
     if (!user) {
@@ -96,31 +132,55 @@ class UserService {
     if (!isPasswordCorrect) {
       throw new Error("패스워드가 일치하지 않습니다.");
     }
-
+    const accessToken = await this.generateAccessToken(user);
+    const refreshToken = await this.generateRefreshToken(user);
+    await this.createRefreshToken(user.id, refreshToken);
+    return { accessToken, refreshToken };
+  }
+  async generateAccessToken(user) {
     const accessToken = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "15m" },
     );
 
+    return accessToken;
+  }
+
+  async generateRefreshToken(user) {
     const refreshToken = jwt.sign(
       { userId: user._id },
       process.env.REFRESH_TOKEN_SECRET,
       { expiresIn: "7d" },
     );
 
+    return refreshToken;
+  }
+  async createRefreshToken(userId, token) {
     const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const found = await this.refreshTokenModel.findByUserId(userId);
 
-    await this.refreshTokenModel.create({
-      userId: user._id,
-      token: refreshToken,
+    if (!found) {
+      await this.refreshTokenModel.create({
+        userId,
+        token: token,
+        expires,
+      });
+    } else {
+      await this.refreshTokenModel.updateByUserId(userId, {
+        token: token,
+        expires,
+      });
+    }
+  }
+  async updateRefreshToken(userId, token) {
+    const expires = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    await this.refreshTokenModel.updateByUserId(userId, {
+      token: token,
       expires,
     });
-
-    return { accessToken, refreshToken };
   }
-
-  async deleteToken(userId) {
+  async deleteRefreshToken(userId) {
     await this.refreshTokenModel.deleteByUserId(userId);
   }
 
@@ -135,5 +195,9 @@ class UserService {
   }
 }
 
-const userService = new UserService(userModel, refreshTokenModel);
+const userService = new UserService(
+  userModel,
+  supportUserModel,
+  refreshTokenModel,
+);
 export { userService, UserService };
