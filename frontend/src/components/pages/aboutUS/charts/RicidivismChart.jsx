@@ -7,13 +7,11 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import styled from "styled-components";
 import { dataOfRicidivism } from "../../../../utils/consts";
 
 export default function RicidivismChart() {
   return (
     <>
-      <Title>월별 전국 가정폭력 출동 신고 및 재범 여부</Title>
       <BarChart
         width={700}
         height={550}
@@ -54,7 +52,3 @@ export default function RicidivismChart() {
     </>
   );
 }
-
-const Title = styled.h2`
-  margin-bottom: auto;
-`;

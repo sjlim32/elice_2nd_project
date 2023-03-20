@@ -1,6 +1,5 @@
 import { PieChart, Pie, Cell, Tooltip, Sector } from "recharts";
 import { useCallback, useState } from "react";
-import styled from "styled-components";
 import { dataOfArrested, colorsOfArrested } from "../../../../utils/consts";
 
 const renderActiveShape = (props) => {
@@ -91,7 +90,6 @@ export default function ArrestedChart() {
 
   return (
     <>
-      <Title>5년간 가정폭력 사건으로 검거된 인원</Title>
       <PieChart width={700} height={550}>
         <Pie
           activeIndex={activeIndex}
@@ -118,7 +116,3 @@ export default function ArrestedChart() {
     </>
   );
 }
-
-const Title = styled.h2`
-  margin-bottom: auto;
-`;
