@@ -13,32 +13,29 @@ class CategoryController {
   async addCategory(req, res, next) {
     try {
       const categoryInfo = req.body;
-      const newCategory = await this.categoryService.addCategory(categoryInfo);
-      res.status(200).json(newCategory);
+      req.data = await this.categoryService.addCategory(categoryInfo);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getCategories(req, res, next) {
     try {
-      const categories = await this.categoryService.getCategories();
-
-      res.status(200).json(categories);
+      req.data = await this.categoryService.getCategories();
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getCategory(req, res, next) {
+    const { categoryId } = req.params;
     try {
-      const { categoryId } = req.params;
-
-      const category = await this.categoryService.getCategory(categoryId);
-
-      res.status(200).json(category);
+      req.data = await this.categoryService.getCategory(categoryId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
@@ -51,20 +48,23 @@ class CategoryController {
           value ? toString(value).trim() : false,
         ),
       );
-      const result = await categoryService.setCategory(categoryId, newToUpdate);
-      res.status(200).json(result);
+      req.data = await categoryService.setCategory(
+        categoryId,
+        newToUpdate,
+      );
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async deleteCategory(req, res, next) {
     try {
       const { categoryId } = req.params;
-      const result = await this.categoryService.deleteCategory(categoryId);
-      res.status(200).json(result);
+      req.data = await this.categoryService.deleteCategory(categoryId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 }

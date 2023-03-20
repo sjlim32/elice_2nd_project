@@ -37,6 +37,8 @@ class PostService {
 
   async getPosts() {
     const posts = await this.postModel.findAll();
+    // test
+    // posts.sort((a, b) => (b.createdAt-a.createdAt))
     const partialPosts = this.getPartial(posts);
     return partialPosts;
   }
@@ -48,6 +50,8 @@ class PostService {
     }
 
     const posts = await this.postModel.findAllByCategory(categoryId);
+    // sort
+    // post.sort()
     const partialPosts = this.getPartial(posts);
     return partialPosts;
   }
