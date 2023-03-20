@@ -3,17 +3,12 @@ import { categoryService } from "../services";
 class CategoryController {
   constructor(CategoryService) {
     this.categoryService = CategoryService;
-    this.addCategory = this.addCategory.bind(this);
-    this.getCategories = this.getCategories.bind(this);
-    this.getCategory = this.getCategory.bind(this);
-    this.setCategory = this.setCategory.bind(this);
-    this.deleteCategory = this.deleteCategory.bind(this);
   }
 
   async addCategory(req, res, next) {
     try {
       const categoryInfo = req.body;
-      req.data = await this.categoryService.addCategory(categoryInfo);
+      req.data = await categoryService.addCategory(categoryInfo);
       next();
     } catch (error) {
       next(error);
@@ -22,7 +17,7 @@ class CategoryController {
 
   async getCategories(req, res, next) {
     try {
-      req.data = await this.categoryService.getCategories();
+      req.data = await categoryService.getCategories();
       next();
     } catch (error) {
       next(error);
@@ -32,7 +27,7 @@ class CategoryController {
   async getCategory(req, res, next) {
     const { categoryId } = req.params;
     try {
-      req.data = await this.categoryService.getCategory(categoryId);
+      req.data = await categoryService.getCategory(categoryId);
       next();
     } catch (error) {
       next(error);
@@ -61,7 +56,7 @@ class CategoryController {
   async deleteCategory(req, res, next) {
     try {
       const { categoryId } = req.params;
-      req.data = await this.categoryService.deleteCategory(categoryId);
+      req.data = await categoryService.deleteCategory(categoryId);
       next();
     } catch (error) {
       next(error);

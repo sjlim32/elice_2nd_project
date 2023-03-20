@@ -4,14 +4,6 @@ class ReplyService {
   constructor(ReplyModel, PostModel) {
     this.replyModel = ReplyModel;
     this.postModel = PostModel;
-    this.getPartial = this.getPartial.bind(this);
-    this.addReply = this.addReply.bind(this);
-    this.getReplies = this.getReplies.bind(this);
-    this.getRepliesByPost = this.getRepliesByPost.bind(this);
-    this.getMyReplies = this.getMyReplies.bind(this);
-    this.getReply = this.getReply.bind(this);
-    this.setReply = this.setReply.bind(this);
-    this.deleteReply = this.deleteReply.bind(this);
   }
 
   getPartial(replies) {
@@ -25,7 +17,7 @@ class ReplyService {
 
   async addReply(replyInfo) {
     // replyInfo : { postId, parentId, contents, userId } + { isWriter }
-    const post = await this.postModel.findById(replyInfo.postId);
+    const post = await postModel.findById(replyInfo.postId);
     if (!post) {
       throw new Error(`댓글을 작성하려는 게시글이 존재하지 않습니다.`);
     }
@@ -34,23 +26,23 @@ class ReplyService {
       replyInfo.isWriter = true;
     }
 
-    const createdNewReply = await this.replyModel.create(replyInfo);
+    const createdNewReply = await replyModel.create(replyInfo);
     return createdNewReply;
   }
 
   async getReplies() {
-    const replies = await this.replyModel.findAll();
+    const replies = await replyModel.findAll();
     const partialReplies = this.getPartial(replies);
     return partialReplies;
   }
 
   async getRepliesByPost(postId) {
-    const post = await this.postModel.findById(postId);
+    const post = await postModel.findById(postId);
     if (!post) {
       throw new Error(`존재하지 않는 게시글입니다.`);
     }
 
-    const replies = await this.replyModel.findAllByPost(postId);
+    const replies = await replyModel.findAllByPost(postId);
 
     // [질문] 이 부분(line56-106)은 백엔드보단 프론트에서 처리하는 게 좋을까요? line56-106
     // [질문] 비동기적이지 않은 부분은 프론트 쪽에서 처리하는 게 좋을까요?
@@ -110,13 +102,13 @@ class ReplyService {
   }
 
   async getMyReplies(userId) {
-    const replies = await this.replyModel.findAllByUser(userId);
+    const replies = await replyModel.findAllByUser(userId);
     const partialReplies = this.getPartial(replies);
     return partialReplies;
   }
 
   async getReply(replyId) {
-    const reply = await this.replyModel.findById(replyId);
+    const reply = await replyModel.findById(replyId);
     if (!reply) {
       throw new Error(`존재하지 않는 댓글입니다.`);
     }
@@ -125,7 +117,7 @@ class ReplyService {
   }
 
   async setReply(user, replyId, toUpdate) {
-    const reply = await this.replyModel.findById(replyId);
+    const reply = await replyModel.findById(replyId);
     if (!reply) {
       throw new Error(`존재하지 않는 댓글입니다.`);
     }
@@ -136,10 +128,7 @@ class ReplyService {
       throw new Error(`댓글을 수정할 권한이 없습니다.`);
     }
 
-    const { modifiedCount } = await this.replyModel.updateById(
-      replyId,
-      toUpdate,
-    );
+    const { modifiedCount } = await replyModel.updateById(replyId, toUpdate);
     if (modifiedCount === 0) {
       return { result: `댓글 수정에 실패했습니다.` };
     }
@@ -147,7 +136,7 @@ class ReplyService {
   }
 
   async deleteReply(user, replyId) {
-    const reply = await this.replyModel.findById(replyId);
+    const reply = await replyModel.findById(replyId);
     if (!reply) {
       throw new Error(`존재하지 않는 댓글입니다.`);
     }
@@ -158,9 +147,9 @@ class ReplyService {
       throw new Error(`댓글을 삭제할 권한이 없습니다.`);
     }
 
-    const { modifiedCount } = await this.replyModel.softDeleteById(replyId);
+    const { modifiedCount } = await replyModel.softDeleteById(replyId);
     if (modifiedCount === 0) {
-      return { result: `댓글 삭제에 실패했습니다.` };
+      throw new Error(`댓글 삭제에 실패했습니다.`);
     }
     return { result: `댓글 삭제를 완료하였습니다.` };
   }
