@@ -44,59 +44,49 @@ class ReplyService {
 
     const replies = await replyModel.findAllByPost(postId);
 
-    // [질문] 이 부분(line56-106)은 백엔드보단 프론트에서 처리하는 게 좋을까요? line56-106
-    // [질문] 비동기적이지 않은 부분은 프론트 쪽에서 처리하는 게 좋을까요?
-    // 삭제된 댓글 중 대댓글이 달려 있는 것은 남기고, 대댓글이 달려있지 않거나 달린 대댓글이 모두 삭제된 경우 안 보냄
-    let arrayReply = [];
-    let arrayBoolean = [];
-    for (let idx = 0; idx < replies.length; idx++) {
-      if (replies[idx].parentId) {
-        break;
-      }
-
-      const isDeleted = replies[idx].isDeleted;
-      const { contents, ...partial } = replies[idx]._doc;
-
-      arrayReply.push([
+    let arrayReply = replies.filter(reply => !reply.parentId);
+    let arrayBoolean = arrayReply.map(reply => [reply.isDeleted]);
+    arrayReply = arrayReply.map(reply => {
+      const { contents, isDeleted, ...partial } = reply._doc;
+      return [
         { ...partial, contents: isDeleted ? "삭제된 댓글입니다." : contents },
-      ]);
-      arrayBoolean.push([isDeleted]);
-    }
+      ];
+    });
 
-    let l = arrayBoolean.length;
-    let temp = 0;
-    for (let j = 0; j < l; j++) {
-      let cnt = 0;
-      for (let i = l + temp; i < replies.length; i++) {
-        const parentId = replies[i].parentId;
-        const replyId = replies[j]._id;
+    const l = arrayBoolean.length;
+    arrayReply = arrayReply.map((originReply, idx) => {
+      const originReplyId = originReply[0]._id;
+      const nestedReply = replies
+        .slice(l)
+        .filter(
+          reply =>
+            JSON.stringify(reply.parentId) === JSON.stringify(originReplyId),
+        );
 
-        if (JSON.stringify(parentId) !== JSON.stringify(replyId)) {
-          break;
-        }
+      arrayBoolean[idx] = nestedReply.reduce((acc, item) => {
+        acc.push(item.isDeleted);
+        return acc;
+      }, arrayBoolean[idx]);
 
-        const isDeleted = replies[i].isDeleted;
-        const { contents, ...partial } = replies[i]._doc;
-
-        arrayReply[j].push({
+      const partialNested = nestedReply.map(reply => {
+        const { contents, isDeleted, ...partial } = reply._doc;
+        return {
           ...partial,
           contents: isDeleted ? "삭제된 댓글입니다." : contents,
-        });
-        arrayBoolean[j].push(isDeleted);
-        cnt++;
-      }
-      temp += cnt;
-    }
+        };
+      });
 
-    l = arrayBoolean.length;
-    for (let idx = 0; idx < l; idx++) {
-      const setBoolean = JSON.stringify(Array.from(new Set(arrayBoolean[idx])));
+      return [...originReply, ...partialNested];
+    });
+
+    arrayBoolean.map((item, idx) => {
+      const setBoolean = JSON.stringify(Array.from(new Set(item)));
       const isTrue = JSON.stringify(Array.from(new Set([true])));
 
       if (setBoolean === isTrue) {
         arrayReply.splice(idx, 1);
       }
-    }
+    });
 
     return arrayReply;
   }
