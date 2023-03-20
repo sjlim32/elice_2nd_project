@@ -8,21 +8,7 @@ import {
   Legend,
 } from "recharts";
 import styled from "styled-components";
-
-const data = [
-  {
-    name: "2019",
-    "가정폭력 신고 비율": 19.33,
-  },
-  {
-    name: "2020",
-    "가정폭력 신고 비율": 19.63,
-  },
-  {
-    name: "2021",
-    "가정폭력 신고 비율": 22.77,
-  },
-];
+import { dataOfReportRate } from "../../../../utils/consts";
 
 //! Annotation 구현 안됨
 // const Annotation = (props) => {
@@ -47,7 +33,7 @@ export default function ReportRateChart() {
       <BarChart
         width={600}
         height={600}
-        data={data}
+        data={dataOfReportRate}
         margin={{
           top: 10,
           right: 50,

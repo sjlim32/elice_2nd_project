@@ -1,13 +1,7 @@
 import { PieChart, Pie, Cell, Tooltip, Sector } from "recharts";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
-
-const data = [
-  { name: "구속", value: 1969, desc: "구속 인원 1,969명" },
-  { name: "불구속", value: 252759, desc: "불구속 252,759명" },
-];
-
-const COLORS = ["#FF3333", "#a3a3a3"];
+import { dataOfArrested, colorsOfArrested } from "../../../../utils/consts";
 
 const renderActiveShape = (props) => {
   const RADIAN = Math.PI / 180;
@@ -102,7 +96,7 @@ export default function ArrestedChart() {
         <Pie
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
-          data={data}
+          data={dataOfArrested}
           cx={350}
           cy={250}
           innerRadius={140}
@@ -112,8 +106,11 @@ export default function ArrestedChart() {
           dataKey="value"
           onMouseEnter={onPieEnter}
         >
-          {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          {dataOfArrested.map((entry, index) => (
+            <Cell
+              key={`cell-${index}`}
+              fill={colorsOfArrested[index % colorsOfArrested.length]}
+            />
           ))}
         </Pie>
         <Tooltip />
