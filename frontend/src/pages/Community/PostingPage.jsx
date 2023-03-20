@@ -57,11 +57,11 @@ function PostingPage() {
 		try {
 			const res = await axios.post('/posts/', { title: title, content: content, category:categoryId })
 			if (res.data && res.data.ok === true) {
-				alert('등록 완료');
+				alert('이야기가 정상적으로 등록되었습니다.');
 			}
 		} catch (error) {	
 			console.error('message :', error)
-			alert('등록에 실패했습니다.')
+			alert('이야기 등록에 실패했습니다.')
 		}
 	}
 

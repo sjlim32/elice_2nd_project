@@ -55,6 +55,7 @@ function CommunityMainPage() {
 			setPosts(res.data)
 		} catch (error) {
 			console.error("message :", error);
+			// alert("게시물 받아오기에 실패했습니다.")
 		}
 	};
 
@@ -83,7 +84,7 @@ function CommunityMainPage() {
 				handleData={fetchCategoryData}
 			/>
 			<Search></Search>
-			<WriteBtn onClick={() => {navigate('/posts/write')}}>글쓰기</WriteBtn>
+			<WriteBtn onClick={() => {navigate('/posts/write')}}>이야기 등록</WriteBtn>
 			</SearchWrap>
 		<BoardWrap>
 			<ContentBar>
@@ -124,6 +125,8 @@ const WriteBtn = styled.button`
 	flex-direction: row;
 	margin: 15px;
 	padding: 3px;
+
+	width: 80px;
 	border: 0.5px solid gray;
 	border-radius: 5px;
 	background-color: white;
