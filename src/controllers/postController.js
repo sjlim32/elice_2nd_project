@@ -17,59 +17,59 @@ class PostController {
     try {
       const postInfo = req.body;
       postInfo.userId = req.user.userId;
-      const createdNewPost = await this.postService.addPost(postInfo);
-      res.status(200).json(createdNewPost);
+      req.data = await this.postService.addPost(postInfo);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getPosts(req, res, next) {
     try {
-      const posts = await this.postService.getPosts();
-      res.status(200).json(posts);
+      req.data = await this.postService.getPosts();
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getPostsByCategory(req, res, next) {
     try {
       const { categoryId } = req.params;
-      const posts = await this.postService.getPostsByCategory(categoryId);
-      res.status(200).json(posts);
+      req.data = await this.postService.getPostsByCategory(categoryId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getMyPosts(req, res, next) {
     try {
       const { userId } = req.user;
-      const posts = await this.postService.getMyPosts(userId);
-      res.status(200).json(posts);
+      req.data = await this.postService.getMyPosts(userId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getPostsByTitleSearching(req, res, next) {
     try {
       const { search } = req.params;
-      const posts = await this.postService.getPostsByTitleSearching(search);
-      res.status(200).json(posts);
+      req.data = await this.postService.getPostsByTitleSearching(search);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getPost(req, res, next) {
     try {
       const { postId } = req.params;
-      const posts = await this.postService.getPost(postId);
-      res.status(200).json(posts);
+      req.data = await this.postService.getPost(postId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
@@ -83,10 +83,10 @@ class PostController {
           value ? toString(value).trim() : false,
         ),
       );
-      const result = await this.postService.setPost(user, postId, newToUpdate);
-      res.status(200).json(result);
+      req.data = await this.postService.setPost(user, postId, newToUpdate);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
@@ -94,10 +94,10 @@ class PostController {
     try {
       const user = req.user;
       const { postId } = req.params;
-      const result = await this.postService.deletePost(user, postId);
-      res.status(200).json(result);
+      req.data = await this.postService.deletePost(user, postId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 }

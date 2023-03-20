@@ -17,52 +17,49 @@ class ReplyController {
       // replyInfo = { postId, parentId, contents}
       const replyInfo = req.body;
       replyInfo.userId = req.user.userId;
-      const createdNewReply = await this.replyService.addReply(replyInfo);
-      res.status(200).json(createdNewReply);
+      req.data = await this.replyService.addReply(replyInfo);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getReplies(req, res, next) {
     try {
-      const replies = await this.replyService.getReplies();
-      res.status(200).json(replies);
+      req.data = await this.replyService.getReplies();
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
-  // :postId
-  // 선택한 게시글의 전체 댓글 조회 (삭제된 건 어떻게 처리?)
-  // 댓글이랑 대댓글 어떻게 나눠서 넘기지?
   async getRepliesByPost(req, res, next) {
     try {
       const { postId } = req.params;
-      const replies = await this.replyService.getRepliesByPost(postId);
-      res.status(200).json(replies);
+      req.data = await this.replyService.getRepliesByPost(postId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getMyReplies(req, res, next) {
     try {
       const user = req.user;
-      const replies = await this.replyService.getMyReplies(user.userId);
-      res.status(200).json(replies);
+      req.data = await this.replyService.getMyReplies(user.userId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
   async getReply(req, res, next) {
     try {
       const { replyId } = req.params;
-      const reply = await this.replyService.getReply(replyId);
-      res.status(200).json(reply);
+      req.data = await this.replyService.getReply(replyId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
@@ -76,14 +73,14 @@ class ReplyController {
           value ? toString(value).trim() : false,
         ),
       );
-      const result = await this.replyService.setReply(
+      req.data = await this.replyService.setReply(
         user,
         replyId,
         newToUpdate,
       );
-      res.status(200).json(result);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
@@ -91,10 +88,10 @@ class ReplyController {
     try {
       const user = req.user;
       const { replyId } = req.params;
-      const result = await this.replyService.deleteReply(user, replyId);
-      res.status(200).json(result);
+      req.data = await this.replyService.deleteReply(user, replyId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 }
