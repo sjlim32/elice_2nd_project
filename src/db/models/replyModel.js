@@ -16,12 +16,13 @@ class ReplyModel {
 
   async findAllByPost(postId) {
     // 일단 삭제된 댓글도 찾아야 함
-    // [질문] sort를 model에서 말고 service에서 하는 게 더 나을까요?
     const replies = await Reply.find({ postId }).sort({ parentId: 1 });
     return replies;
   }
 
   async findAllByUser(userId) {
+    // MyPost처럼 똑같은 ObjectId 입력해야 한다는 에러 발생하넹?
+    // "Cast to ObjectId failed for value \"myreplies\" (type string) at path \"_id\" for model \"Reply\""
     const replies = await Reply.find({ userId, isDeleted: false });
     return replies;
   }
