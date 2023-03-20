@@ -14,26 +14,22 @@ function ChangePassword() {
     return true;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validatePassword()) {
-        axios
-            .get('/users')
-            .then((res) => {
-                const userID = res.data._id
-                axios  
-                    .patch('/users', {
-                        password: password,
-                        newPassword: newPassword
+      try {
+        const res = await axios.get('/users')
+        const userID = res.data._id
+
+        const res2 = await axios.patch('/users', {
+                      password: password,
+                      newPassword: newPassword
                     })
-                    .then((res) => {
-                        console.log(res.data)
-                        alert('update success')
-                    })
-            })
-            .catch((err) => {
-                alert('error')
-            })
+        console.log(res2.data)
+        alert('update success')
+      } catch(err) {
+        alert('error')
+      }
     }
   };
 

@@ -9,6 +9,10 @@ function UserInfo() {
             </button>
 
             <button>
+                회원 탈퇴
+            </button>
+
+            <button>
                 나의 상담 내역
             </button>
 

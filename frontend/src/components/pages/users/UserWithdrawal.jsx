@@ -9,13 +9,15 @@ function UserWithdrawal() {
     setIsChecked(!isChecked);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('check');
-    axios
-      .delete(`/users`, password)
-      .then((res) => console.log(res.data))
-      .catch(() => console.log('error'));
+    try {
+      const res = await axios.delete(`/users`, password)
+      console.log(res.data)
+    } catch(err) {
+      alert('error')
+    }
   };
 
   return (

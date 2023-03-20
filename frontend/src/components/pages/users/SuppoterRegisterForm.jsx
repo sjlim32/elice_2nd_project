@@ -19,22 +19,22 @@ function SuppoterRegisterForm() {
     setIsPopupOpen(!isPopupOpen)
   }, [isPopupOpen])
 
-  const validateEmail = () => {
+  const validateEmail = useCallback(() => {
     const emailForm = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     if (emailForm.test(email) == false) {
       setError('invalide Email Address');
       return false;
     }
     return true;
-  };
+  }, [email]);
 
-  const validatePassword = () => {
+  const validatePassword = useCallback(() => {
     if (password !== confirmPassword) {
       setError('password is not confirmed');
       return false;
     }
     return true;
-  };
+  }, [password, confirmPassword]);
 
   const validateForm = () => {
     return (
@@ -43,7 +43,7 @@ function SuppoterRegisterForm() {
     );
   };
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const userData = {
       'formType': 'suppoter',
@@ -59,14 +59,12 @@ function SuppoterRegisterForm() {
     }
     const validateResult = validateForm()
     if (validateResult) {
-      axios
-        .post('/users', userData)
-        .then((res) => {
-          console.log(userData)
-        })
-        .catch((err) => {
-          alert(error)
-        })
+      try {
+        const res = await axios.post('/users', userData)
+        console.log(res.data)
+      } catch(err) {
+        alert(error)
+      }
     }
   }
 

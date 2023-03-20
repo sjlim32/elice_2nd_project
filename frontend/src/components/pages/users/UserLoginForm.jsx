@@ -5,17 +5,15 @@ function UserLoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = { email, password };
-    axios
-        .post('/users/login', userData)
-        .then((res) => {
-            console.log(res.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    try {
+      const res = await axios.post('/users/login', userData)
+      console.log(res.data)
+    } catch(err) {
+      alert('error')
+    }
   };
 
   return (
