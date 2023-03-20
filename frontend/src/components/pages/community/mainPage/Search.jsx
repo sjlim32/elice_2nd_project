@@ -34,14 +34,21 @@ const SearchForm = styled.form`
 
 const SearchBox = styled.input`
 	display: flex;
-	width: 400px;
+	width: 500px;
 	height: 30px;
-	border: 1px solid gray;
-	margin-right: 15px;
+	border: 1px solid lightgray;
+	padding-left: 10px;
+	margin: 0px 20px 0 30px;
 `
 
 const SearchBtn = styled.button`
 	height: 25px;
+	border: 0.5px solid gray;
+	border-radius: 5px;
+	background-color: white;
+	&:active {
+	background-color: lightgray;
+	}
 `
 
 export default Search;
