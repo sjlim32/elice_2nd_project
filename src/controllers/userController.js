@@ -1,26 +1,17 @@
-import { userService, supportUserService } from "../services";
+import { userService } from "../services";
 
 class UserController {
   async register(req, res, next) {
+    const userInfo = req.body;
+
     try {
-      const userInfo = req.body;
-
-      if (
-        !(
-          userInfo.role &&
-          (userInfo.role === "pending" || userInfo.role === "user")
-        )
-      ) {
-        throw new Error(`잘못된 role 속성입니다.`);
-      }
-
       const newUser = await userService.addUser(userInfo);
-
       res.status(200).json(newUser);
     } catch (error) {
       next(error.message);
     }
   }
+
   async getUserById(req, res, next) {
     const userId = req.params.userId || req.user.userId;
 
@@ -31,8 +22,10 @@ class UserController {
       next(error.message);
     }
   }
+
   async getUsersByRole(req, res, next) {
     const role = req.params.userRole;
+
     try {
       const users = await userService.getUsersByRole(role);
       res.status(200).json(users);
@@ -40,6 +33,7 @@ class UserController {
       next(error.message);
     }
   }
+
   async adminEditUserRole(req, res, next) {
     const userId = req.params.userId;
     const { role } = req.body;
@@ -54,9 +48,7 @@ class UserController {
 
   async editUser(req, res, next) {
     const userId = req.params.userId || req.user.userId;
-
     const { currentPassword, ...updateFields } = req.body;
-
     const userInfo = { userId, currentPassword };
     const toUpdate = Object.fromEntries(
       Object.entries(updateFields).filter(([_, value]) => value),
@@ -70,9 +62,9 @@ class UserController {
   }
 
   async deleteUser(req, res, next) {
-    try {
-      const userId = req.params.userId || req.user.userId;
+    const userId = req.params.userId || req.user.userId;
 
+    try {
       const deletedUser = await userService.deleteUser(userId);
       res.status(200).send(deletedUser);
     } catch (error) {
@@ -81,22 +73,21 @@ class UserController {
   }
 
   async login(req, res, next) {
-    try {
-      const { email, password } = req.body;
+    const { email, password } = req.body;
 
+    try {    
       const { accessToken, refreshToken } = await userService.login({
         email,
         password,
       });
 
       const cookieOptions = {
-        // httpOnly: true,
+        httpOnly: true,
         // secure: true,
-        // sameSite: "strict",
+        sameSite: "strict",
       };
 
       res.cookie("refreshToken", refreshToken, cookieOptions);
-
       res.status(200).json({ accessToken });
     } catch (error) {
       next(error);
@@ -104,10 +95,12 @@ class UserController {
   }
 
   async logout(req, res, next) {
+    const { userId } = req.user;
+
     try {
-      const { userId } = req.user;
-      res.clearCookie("refreshToken");
       await userService.deleteRefreshToken(userId);
+
+      res.clearCookie("refreshToken");
       res.status(200).send(`정상적으로 로그아웃되었습니다.`);
     } catch (error) {
       next(error);

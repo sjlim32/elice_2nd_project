@@ -18,7 +18,7 @@ class RefreshTokenModel {
     const updatedToken = await RefreshToken.findOneAndUpdate(
       { userId },
       { token, expires },
-      { new: true },
+      { new: true, upsert: true },
     );
     return updatedToken;
   }
