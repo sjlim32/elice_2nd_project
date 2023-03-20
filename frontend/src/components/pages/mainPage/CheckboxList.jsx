@@ -48,7 +48,7 @@ function CheckboxList() {
     }
     // 이미 체크되어있고 배열에 있다면 해당 배열에서 제거
     if (!isChecked && checkList.includes(value)) {
-      setCheckedList(checkedList.filter((item) => item !== value));
+      setCheckedList((prev) => prev.filter((item) => item !== value));
       return;
     }
   };
