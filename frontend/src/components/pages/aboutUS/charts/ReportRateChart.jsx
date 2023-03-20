@@ -7,7 +7,6 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import styled from "styled-components";
 import { dataOfReportRate } from "../../../../utils/consts";
 
 //! Annotation 구현 안됨
@@ -29,7 +28,6 @@ import { dataOfReportRate } from "../../../../utils/consts";
 export default function ReportRateChart() {
   return (
     <>
-      <Title>연간 가정폭력 신고 비율</Title>
       <BarChart
         width={600}
         height={600}
@@ -73,7 +71,3 @@ export default function ReportRateChart() {
     </>
   );
 }
-
-const Title = styled.h2`
-  margin-bottom: auto;
-`;

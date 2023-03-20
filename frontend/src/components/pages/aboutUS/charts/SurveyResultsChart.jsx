@@ -1,5 +1,4 @@
 import { PieChart, Pie, Cell, Legend } from "recharts";
-import styled from "styled-components";
 import {
   dataOfSurveyResults,
   colorsOfSurveyResults,
@@ -10,7 +9,6 @@ const percentFormat = (value) => `${value}%`;
 export default function SurveyResultsChart() {
   return (
     <>
-      <Title>가정폭력 감소를 위한 정책 설문 결과</Title>
       <PieChart width={600} height={300}>
         <Pie
           data={dataOfSurveyResults}
@@ -36,7 +34,3 @@ export default function SurveyResultsChart() {
     </>
   );
 }
-
-const Title = styled.h2`
-  margin-bottom: auto;
-`;

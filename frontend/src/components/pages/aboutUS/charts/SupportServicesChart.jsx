@@ -9,7 +9,6 @@ import {
   Legend,
 } from "recharts";
 import { useCallback, useState } from "react";
-import styled from "styled-components";
 import { dataOfSupportServices } from "../../../../utils/consts";
 
 export default function SupportServicesChart() {
@@ -23,7 +22,6 @@ export default function SupportServicesChart() {
   );
   return (
     <>
-      <Title>가정폭력 관련 지원기관 인지 여부</Title>
       <BarChart
         width={600}
         height={550}
@@ -70,7 +68,3 @@ export default function SupportServicesChart() {
     </>
   );
 }
-
-const Title = styled.h2`
-  margin-bottom: auto;
-`;
