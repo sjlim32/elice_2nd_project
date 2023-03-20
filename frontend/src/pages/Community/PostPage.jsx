@@ -29,6 +29,7 @@ function PostPage() {
 			} catch (error) {
 				console.error("ErrorMessage :", error);
 				alert("이야기 불러오기에 실패했습니다.")
+				navigate(`/posts`)
 			}
 		}
 		fetchPost();
