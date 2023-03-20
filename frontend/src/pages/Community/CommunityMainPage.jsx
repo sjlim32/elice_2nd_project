@@ -54,8 +54,8 @@ function CommunityMainPage() {
 			const res = await axios.get(`https://jsonplaceholder.typicode.com/${category}`)	
 			setPosts(res.data)
 		} catch (error) {
-			console.error("message :", error);
-			// alert("게시물 받아오기에 실패했습니다.")
+			console.error("ErrorMessage :", error);
+			alert("이야기를 불러오지 못했습니다.")
 		}
 	};
 
@@ -130,6 +130,10 @@ const WriteBtn = styled.button`
 	border: 0.5px solid gray;
 	border-radius: 5px;
 	background-color: white;
+
+	&:active {
+		background-color: lightgray;
+	}	
 `;
 
 const BoardWrap = styled.div`

@@ -19,13 +19,13 @@ function Posts({contents}){
 					contents !== undefined ? contents.map((post, idx) => { 
 						return (
 							<Content key={idx}>
-								<SpanNo subject="no">{post.id}</SpanNo>
-								<SpanCate subject="category">{post.username}</SpanCate>
-								<SpanTitle subject="title">
+								<SpanNo className="no">{post.id}</SpanNo>
+								<SpanCate className="category">{post.username}</SpanCate>
+								<SpanTitle className="title">
 									<Link to={`/posts/${post.id}`}>{post.email}</Link>
 								</SpanTitle>
-								<SpanWriter subject="writer">{post.username}</SpanWriter>
-								<SpanDate subject="date">{post.name}</SpanDate>
+								<SpanWriter className="writer">{post.username}</SpanWriter>
+								<SpanDate className="date">{post.name}</SpanDate>
 							</Content>
 						)
 					})

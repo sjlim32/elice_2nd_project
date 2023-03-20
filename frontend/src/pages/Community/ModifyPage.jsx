@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -17,7 +18,11 @@ const categories = [
 	},
 ]
 
-function PostingPage() {
+function ModifyPages() {
+
+	const navigate = useNavigate();
+	const { _id } = useParams();
+	const postId = Number(_id)
 
 	const [ title, setTitle ] = useState('')
 	const [ content, setContent ] = useState('')
@@ -43,6 +48,16 @@ function PostingPage() {
 		)
 	}	
 
+	useEffect(() => {
+		const fetchData = async () => {
+			const res = await axios.get('https://jsonplaceholder.typicode.com/users')
+				setTitle(res.data[postId].email)
+				setCategoryId(res.data[postId].id)
+				setContent(res.data[postId].company.catchPhrase)
+		}
+		fetchData();
+	}, [])
+
 	const handleSubmit = async () => {
 		// console.log(title, content, categoryId)
 		if (title.trim() === '') {
@@ -55,19 +70,19 @@ function PostingPage() {
 			return;
 		}	
 		try {
-			const res = await axios.post('/posts/', { title: title, content: content, category:categoryId })
+			const res = await axios.patch(`/posts/modify/${postId}`, { title: title, content: content, category:categoryId })
 			if (res.data && res.data.ok === true) {
-				alert('이야기가 정상적으로 등록되었습니다.');
+				alert('이야기가 정상적으로 수정되었습니다.');
 			}
 		} catch (error) {	
 			console.error('ErrorMessage :', error)
-			alert('이야기를 등록하지 못했습니다.')
+			alert('이야기 수정을 하지 못했습니다.')
 		}
 	}
 
 	return (
 		<WriteContainer>
-			<MainHead>{'이야기 전달'}</MainHead>
+			<MainHead>{'이야기 바꾸기'}</MainHead>
 			<TitleWrap>
 				<CategoryContainer categories={categories}/>
 				<TitleInput type='text' value={title} placeholder={'제목'} onChange={(e) => {setTitle(e.target.value)}} />
@@ -75,7 +90,10 @@ function PostingPage() {
 			<ContentWrap>
 				<ContentInput type='text' value={content} placeholder={'본문'} onChange={(e) => {setContent(e.target.value)}} />
 			</ContentWrap>
-			<SubmitBtn onClick={handleSubmit}>{'등록하기'}</SubmitBtn>		
+			<BottomWrap>
+				<SubmitBtn onClick={handleSubmit}>수정하기</SubmitBtn>
+				<SubmitBtn onClick={() => navigate(-1)}>취소하기</SubmitBtn>		
+			</BottomWrap>
 		</WriteContainer>
 	)
 
@@ -121,6 +139,14 @@ const ContentInput = styled.input`
 	padding-left: 5px;
 `;
 
+const BottomWrap = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+
+	width: 200px;
+`
+
 const SubmitBtn = styled.button`
 	border: 1px solid lightgray;
 	border-radius: 5px;
@@ -130,4 +156,4 @@ const SubmitBtn = styled.button`
 	}
 `;
 
-export default PostingPage;
+export default ModifyPages;

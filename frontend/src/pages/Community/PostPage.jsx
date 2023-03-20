@@ -9,7 +9,7 @@ function PostPage() {
 	const navigate = useNavigate();
 	
 	const { _id } = useParams();
-	const pageId = Number(_id)
+	const postId = Number(_id)
 
 	const [ title, setTitle ] = useState("제목")
 	const [ category, setCategory ] = useState("말머리")
@@ -21,17 +21,18 @@ function PostPage() {
 		const fetchPost = async () => {
 			try {
 				const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-				setTitle(res.data[pageId].email)
-				setCategory(res.data[pageId].id)
-				setContent(res.data[pageId].company.catchPhrase)
-				setWriter(res.data[pageId].name)
-				setDate(res.data[pageId].address.zipcode)
+				setTitle(res.data[postId].email)
+				setCategory(res.data[postId].id)
+				setContent(res.data[postId].company.catchPhrase)
+				setWriter(res.data[postId].name)
+				setDate(res.data[postId].address.zipcode)
 			} catch (error) {
-				
+				console.error("ErrorMessage :", error);
+				alert("이야기 불러오기에 실패했습니다.")
 			}
 		}
 		fetchPost();
-		}, [pageId]);
+		}, [postId]);
 
 	return (
 		<Container>
@@ -48,12 +49,13 @@ function PostPage() {
 				<BottomWrap>
 					<BtnWrap>
 						<Btn onClick={() => navigate(-1)}>뒤로가기</Btn>
-						<Btn>수정하기</Btn>
+						<Btn onClick={() => navigate(`/posts/modify/${postId}`)}>수정하기</Btn>
 					</BtnWrap>
 				</BottomWrap>
-
-				<Comment />
 			</PostCotainer>
+			<CommentContainer>
+				<Comment post_id={postId}/>
+			</CommentContainer>
 		</Container>	
 	)
 
@@ -72,9 +74,16 @@ const PostCotainer = styled.div`
 	justify-content: space-around;
 	margin: 50px;
 
-	width: 1200px;
+	width: 1210px;
 	height: 800px;
 	border: 1px solid lightgray;
+`;
+
+const CommentContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
 `;
 
 const TitleWrap = styled.div`
@@ -107,7 +116,7 @@ const Title = styled.div`
 	padding-left: 10px;
 	line-height: 30px;
 
-	font-size: 25px;
+	font-size: 20px;
 
 	width: 540px;
 	height: 30px;
@@ -119,7 +128,7 @@ const Writer = styled.div`
 	justify-content: space-around;
 	align-items: center;
 
-	width: 150px;
+	width: 200px;
 	height: 30px;
 	padding-right: 15px;
 	border-right: 1px solid lightgray;
@@ -183,6 +192,10 @@ const Btn = styled.button`
 	background-color: white;
 	border-radius: 5px;
 	border: 1px solid lightgray;
+
+	&:active {
+		background-color: lightgray;
+	}	
 `;
 
 export default PostPage;
