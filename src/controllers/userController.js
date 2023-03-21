@@ -5,10 +5,10 @@ class UserController {
     const userInfo = req.body;
 
     try {
-      const newUser = await userService.addUser(userInfo);
-      res.status(200).json(newUser);
+      req.data = await userService.addUser(userInfo);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
@@ -16,10 +16,10 @@ class UserController {
     const userId = req.params.userId || req.user.userId;
 
     try {
-      const user = await userService.getUserById(userId);
-      res.status(200).json(user);
+      req.data = await userService.getUserById(userId);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
@@ -27,10 +27,10 @@ class UserController {
     const role = req.params.userRole;
 
     try {
-      const users = await userService.getUsersByRole(role);
-      res.status(200).json(users);
+      req.data = await userService.getUsersByRole(role);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
@@ -39,10 +39,10 @@ class UserController {
     const { role } = req.body;
 
     try {
-      const updatedUser = await userService.editUserRole(userId, role);
-      res.status(200).json(updatedUser);
+      req.data = await userService.editUserRole(userId, role);
+      next();
     } catch (error) {
-      next(error.message);
+      next(error);
     }
   }
 
@@ -54,8 +54,8 @@ class UserController {
       Object.entries(updateFields).filter(([_, value]) => value),
     );
     try {
-      const updatedUser = await userService.editUser(userInfo, toUpdate);
-      res.status(200).json(updatedUser);
+      req.data = await userService.editUser(userInfo, toUpdate);
+      next();
     } catch (error) {
       next(error);
     }
@@ -65,8 +65,8 @@ class UserController {
     const userId = req.params.userId || req.user.userId;
 
     try {
-      const deletedUser = await userService.deleteUser(userId);
-      res.status(200).send(deletedUser);
+      req.data = await userService.deleteUser(userId);
+      next();
     } catch (error) {
       next(error);
     }
@@ -75,11 +75,12 @@ class UserController {
   async login(req, res, next) {
     const { email, password } = req.body;
 
-    try {    
-      const { accessToken, refreshToken } = await userService.login({
-        email,
-        password,
-      });
+    try {
+      const { accessToken, refreshToken, role } =
+        await userService.login({
+          email,
+          password,
+        });
 
       const cookieOptions = {
         httpOnly: true,
@@ -88,7 +89,8 @@ class UserController {
       };
 
       res.cookie("refreshToken", refreshToken, cookieOptions);
-      res.status(200).json({ accessToken });
+      req.data = { accessToken , role, email};
+      next();
     } catch (error) {
       next(error);
     }
@@ -101,7 +103,8 @@ class UserController {
       await userService.deleteRefreshToken(userId);
 
       res.clearCookie("refreshToken");
-      res.status(200).send(`정상적으로 로그아웃되었습니다.`);
+      req.data = { result: `정상적으로 로그아웃되었습니다.` };
+      next();
     } catch (error) {
       next(error);
     }
