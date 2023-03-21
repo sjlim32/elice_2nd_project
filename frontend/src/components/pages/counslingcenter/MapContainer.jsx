@@ -10,7 +10,12 @@ function MapContainer() {
       center: new kakao.maps.LatLng(35.9424, 128.1135947),
       level: 13,
     };
+    // 지도 생성
     const map = new kakao.maps.Map(mapContainer, mapOption);
+    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    const zoomControl = new kakao.maps.ZoomControl();
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    // 주소-좌표 변환 객체 생성
     const geocoder = new kakao.maps.services.Geocoder();
 
     centerAddresses.forEach((data) => {
