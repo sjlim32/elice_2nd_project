@@ -62,7 +62,7 @@ function MapContainer() {
       id="myMap"
       style={{
         width: "700px",
-        height: "600px",
+        height: "700px",
       }}
     ></div>
   );
