@@ -116,7 +116,9 @@ class UserService {
     const refreshToken = await this.generateRefreshToken(user);
     await this.storeRefreshToken(user.id, refreshToken);
 
-    return { accessToken, refreshToken };
+    const {role} = user;
+
+    return { accessToken, refreshToken, email, role };
   }
 
   async getTokenByUserId(userId) {
