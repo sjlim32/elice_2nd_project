@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import * as API from '../../utils/api';
+
 import styled from 'styled-components';
 import CategoryFilter from '../../components/pages/community/mainPage/CategoryFilter';
 import Search from '../../components/pages/community/mainPage/Search';
@@ -8,32 +10,17 @@ import Posts from '../../components/pages/community/mainPage/Posts';
 import Pagination from '../../components/pages/community/mainPage/Pagination';
 
 const categories = [
-	{
-		name: '전체',
-		value: 'users'
-	},
-	{
-		name: '소통공감',
-		value: '소통공감'
-	},
-	{
-		name: '좋은정보',
-		value: '좋은정보'
-	},
-	{
-		name: '고민상담',
-		value: '고민상담'
-	},
+	{ title: '전체', _id: '' },	
+	{ title: '소통공감', _id: '6411719e1410804b9b58697d' },
+	{ title: '좋은정보', _id: '641171971410804b9b58697a' },
+	{ title: '고민거리', _id: '641171911410804b9b586977' },
 ]
 
 function CommunityMainPage() {
 
 	const navigate = useNavigate();
 
-	// 게시글의 카테고리 선택
-	const [category, setCategory] = useState('all');
-
-	// 조건에 따른 DB의 게시글 조회
+	const [category, setCategory] = useState('전체');
 	const [ posts, setPosts ] = useState([]);
 
 	// pagination 구현을 위한 변수
@@ -48,29 +35,33 @@ function CommunityMainPage() {
 	}
 
 	// ? 카테고리 별 게시물 받아오기
-	const fetchCategoryData = async (category) => {
+	const getCategoryPost = async (categoryId) => {
 		try {
-			// const res = await axios.get(`/category/${category}`)
-			const res = await axios.get(`https://jsonplaceholder.typicode.com/${category}`)	
-			setPosts(res.data)
+			if (categoryId === '') {
+				const res = await API.get('/posts');
+				setPosts(res.data)
+			} else {
+				const res = await API.get(`/posts/category/${categoryId}`)
+				setPosts(res.data)
+			}
 		} catch (error) {
 			console.error("ErrorMessage :", error);
+			console.log(category)
 			alert("이야기를 불러오지 못했습니다.")
 		}
 	};
 
 	// ? 최초 전체포스트 받아오기
 	useEffect(() => {
-		const fetchData = async () => {
+		const getPost = async () => {
 			try {
-				// const res = await axios.get(`/category/${category}`)
-				const res = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+				const res = await API.get('/posts');
 				setPosts(res.data)
 			} catch (error) {
 				console.error(error);
 			}
 		}
-		fetchData();
+		getPost();
 	}, [])
 
   return (
@@ -79,9 +70,9 @@ function CommunityMainPage() {
 		<SearchWrap>
 			<CategoryFilter
 				categories={categories}
-				category={category}
+				categoryTitle={category}
 				setCategory={setCategory}
-				handleData={fetchCategoryData}
+				setPosts={getCategoryPost}
 			/>
 			<Search></Search>
 			<WriteBtn onClick={() => {navigate('/posts/write')}}>이야기 등록</WriteBtn>
