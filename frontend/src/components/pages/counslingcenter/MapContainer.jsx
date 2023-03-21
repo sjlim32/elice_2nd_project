@@ -20,18 +20,24 @@ function MapContainer() {
         // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
           const coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
           // 결과값으로 받은 위치를 마커로 표시합니다
           const marker = new kakao.maps.Marker({
             map: map,
             position: coords,
           });
+
           // 인포윈도우로 상담소명을 표시합니다
           const infowindow = new kakao.maps.InfoWindow({
             content:
-              '<div style="width:160px;text-align:center;padding:6px 0;">' +
+              '<div style="width:160px;text-align:center;padding:6px 0;border-bottom: 2px solid #ccc">' +
               `${상담소명}` +
+              "</div>" +
+              '<div style="width:160px;text-align:center;padding:6px 0;">' +
+              `${주소}` +
               "</div>",
           });
+
           kakao.maps.event.addListener(marker, "click", function () {
             infowindow.open(map, marker);
           });
