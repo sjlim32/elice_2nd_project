@@ -4,6 +4,7 @@ import CenterSelect from "../components/pages/counslingcenter/CenterSelect";
 // import { useState } from "react";
 import centerAddresses from "../datas/counseling_center.json";
 import { sido } from "../utils/consts";
+import styled from "styled-components";
 
 function CounselingCenterPage() {
   const sidoName = centerAddresses.map((data) => data.시도명);
@@ -19,11 +20,19 @@ function CounselingCenterPage() {
   return (
     <div>
       <h1>상담소 찾기</h1>
-      <MapContainer />
-      <SidoSelect sido={sido} defaultValue="seoul"></SidoSelect>
-      <CenterSelect centerName={centerName}></CenterSelect>
+      <ContentContainer>
+        <MapContainer />
+        <SidoSelect sido={sido} defaultValue="seoul"></SidoSelect>
+        <CenterSelect centerName={centerName}></CenterSelect>
+      </ContentContainer>
     </div>
   );
 }
+
+const ContentContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+`;
 
 export default CounselingCenterPage;
