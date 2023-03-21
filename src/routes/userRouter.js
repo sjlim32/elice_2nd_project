@@ -10,6 +10,13 @@ userRouter.post("/users", checkAppJson, userController.register);
 // 회원 정보 조회
 userRouter.get("/users", loginRequired, userController.getUserById);
 
+// 유저별 회원 정보 조회
+userRouter.get(
+  "/users/userRole/:userRole",
+  loginRequired,
+  userController.getUsersByRole,
+);
+
 // 회원 수정
 userRouter.patch(
   "/users",

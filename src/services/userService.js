@@ -48,7 +48,7 @@ class UserService {
   }
 
   async getUsersByRole(role) {
-    const validRoles = ["user", "support"];
+    const validRoles = ["user", "pending", "support"];
     const isValidRole = validRoles.includes(role);
 
     if (!isValidRole) throw new Error(`유효한 userRole이 아닙니다.`);
@@ -116,7 +116,7 @@ class UserService {
     const refreshToken = await this.generateRefreshToken(user);
     await this.storeRefreshToken(user.id, refreshToken);
 
-    const {role} = user;
+    const { role } = user;
 
     return { accessToken, refreshToken, email, role };
   }
