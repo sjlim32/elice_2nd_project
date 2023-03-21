@@ -54,7 +54,7 @@ function NavigationBar() {
         </MypageLogoutWrapper>
         <MenuWrapper>
           {menuObj.map(({ name, path }) => (
-            <StyledLink to={path}>
+            <StyledLink to={path} key={path}>
               <div key={name}>{name}</div>
             </StyledLink>
           ))}

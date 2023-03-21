@@ -1,4 +1,4 @@
-function AddressSelect(props) {
+function SidoSelect(props) {
   return (
     <div>
       <select>
@@ -6,6 +6,7 @@ function AddressSelect(props) {
           <option
             value={sido.value}
             defaultValue={props.defaultValue === sido.value}
+            key={sido.name}
           >
             {sido.name}
           </option>
@@ -15,4 +16,4 @@ function AddressSelect(props) {
   );
 }
 
-export default AddressSelect;
+export default SidoSelect;
