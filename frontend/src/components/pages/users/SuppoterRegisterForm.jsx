@@ -43,7 +43,7 @@ function SuppoterRegisterForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const userData = {
-      role: "suppoter",
+      role: "pending",
       email,
       password,
       userName: name,
@@ -57,7 +57,7 @@ function SuppoterRegisterForm() {
     const validateResult = validateForm();
     if (validateResult) {
       try {
-        const res = await axios.post('/users', userData)
+        const res = await axios.post('/api/users', userData)
         console.log(res.data)
       } catch(err) {
         alert(error)

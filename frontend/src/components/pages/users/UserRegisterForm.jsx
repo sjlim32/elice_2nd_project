@@ -41,7 +41,7 @@ function UserRegisterForm() {
     const validateResult = validateForm()
     if (validateResult) {
       try {
-        const res = await axios.post('/users', userData)
+        const res = await axios.post('/api/users', userData)
         console.log(res.data)
       } catch(err) {
         alert(error)

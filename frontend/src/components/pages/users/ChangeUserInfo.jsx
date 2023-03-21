@@ -20,7 +20,7 @@ function ChangeUserInfo() {
 
   useEffect(() => {
     axios
-      .get(`/users/:userId`)
+      .get(`/api/users/:userId`)
       .then((res) => {
         setUsers(res.data);
         if (res.data.address) {
@@ -45,10 +45,10 @@ function ChangeUserInfo() {
     e.preventDefault();
     if (validatePassword()) {
       try {
-        const res = await axios.get('/users')
+        const res = await axios.get('/api/users')
         const userID = res.data._id
 
-        const res2 = await axios.patch('/users', {
+        const res2 = await axios.patch('/api/users', {
                     password: password,
                     newPassword: newPassword,
                     phone: phone,

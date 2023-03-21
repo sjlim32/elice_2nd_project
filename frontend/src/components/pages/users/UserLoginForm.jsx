@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function UserLoginForm() {
   const [email, setEmail] = useState('');
@@ -9,7 +9,8 @@ function UserLoginForm() {
     e.preventDefault();
     const userData = { email, password };
     try {
-      const res = await axios.post('/users/login', userData)
+      const res = await axios.post('/api/login', userData)
+      localStorage.setItem('jwt', res.data)
       console.log(res.data)
     } catch(err) {
       alert('error')
