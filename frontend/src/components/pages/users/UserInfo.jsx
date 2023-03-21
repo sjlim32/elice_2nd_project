@@ -1,23 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function UserInfo() {
 
     return (
         <div>
             <button>
-                비밀번호 변경
+                <Link to='/users/changepassword'>비밀번호 변경</Link>
             </button>
 
             <button>
-                회원 탈퇴
+                <Link to='/users/userwithdrawal'>회원 탈퇴</Link>
             </button>
 
             <button>
-                나의 상담 내역
+                <Link >나의 상담 내역</Link>
             </button>
 
             <button>
-                나의 활동 내역
+                <Link >나의 활동 내역</Link>
             </button>
         </div>
     )

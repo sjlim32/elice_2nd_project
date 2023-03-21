@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 import React, {useCallback, useState} from "react"
 import axios from 'axios'
 import DaumPost from "./DaumPostcode";
 import PopupDom from './PopupDom.jsx'
-=======
-import React, { useState } from "react";
-import axios from "axios";
-import DaumPost from "./DaumPostcode.jsx";
-import PopupDom from "./PopupDom.jsx";
->>>>>>> 5c8f4f9e84c00f1db820d6b528b35a5f5e092629
 
 function SuppoterRegisterForm() {
   const [email, setEmail] = useState("");
@@ -22,15 +15,9 @@ function SuppoterRegisterForm() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [error, setError] = useState("");
 
-<<<<<<< HEAD
   const openPostcode = useCallback(() => {
     setIsPopupOpen(!isPopupOpen)
   }, [isPopupOpen])
-=======
-  const openPostcode = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
->>>>>>> 5c8f4f9e84c00f1db820d6b528b35a5f5e092629
 
   const validateEmail = useCallback(() => {
     const emailForm = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -52,17 +39,11 @@ function SuppoterRegisterForm() {
   const validateForm = () => {
     return validateEmail() && validatePassword();
   };
-<<<<<<< HEAD
   
   const handleSubmit = async (e) => {
     e.preventDefault()
-=======
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
->>>>>>> 5c8f4f9e84c00f1db820d6b528b35a5f5e092629
     const userData = {
-      formType: "suppoter",
+      role: "suppoter",
       email,
       password,
       userName: name,
@@ -75,23 +56,12 @@ function SuppoterRegisterForm() {
     };
     const validateResult = validateForm();
     if (validateResult) {
-<<<<<<< HEAD
       try {
         const res = await axios.post('/users', userData)
         console.log(res.data)
       } catch(err) {
         alert(error)
       }
-=======
-      axios
-        .post("/users/register", userData)
-        .then((res) => {
-          console.log(userData);
-        })
-        .catch((err) => {
-          alert(error);
-        });
->>>>>>> 5c8f4f9e84c00f1db820d6b528b35a5f5e092629
     }
   };
 

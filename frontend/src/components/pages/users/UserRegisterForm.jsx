@@ -34,7 +34,7 @@ function UserRegisterForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     const userData = {
-      'formType': 'user',
+      role: 'user',
       email,
       password
     }

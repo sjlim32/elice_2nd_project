@@ -21,7 +21,7 @@ function SuppoterLoginForm() {
             console.log(res.data)
         })
         .catch((err) => {
-            console.log(err)
+            alert('error')
         })
   };
 

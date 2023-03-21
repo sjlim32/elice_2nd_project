@@ -1,23 +1,24 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function SuppoterInfo() {
 
     return (
         <div>
             <button>
-                개인 정보 수정
+                <Link to='users/changeuserinfo'>개인 정보 수정</Link>
             </button>
 
             <button>
-                회원 탈퇴
+                <Link to='/users/userwithdrawal'>회원 탈퇴</Link>
             </button>
 
             <button>
-                나의 상담 내역
+                <Link >나의 상담 내역</Link>
             </button>
 
             <button>
-                나의 활동 내역
+                <Link >나의 활동 내역</Link>
             </button>
         </div>
     )

@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/commons/layout";
+import ChangeUserInfo from "./components/pages/users/ChangeUserInfo";
 import {
   MainPage,
   AboutUsPage,
@@ -12,10 +13,7 @@ import {
   CampaignsPage,
   Register,
 } from "./pages";
-<<<<<<< HEAD
-=======
-import SuppoterRegisterForm from "./components/pages/users/SuppoterRegisterForm";
->>>>>>> 5c8f4f9e84c00f1db820d6b528b35a5f5e092629
+import UserLoginForm from './components/pages/users/UserLoginForm'
 
 function App() {
   return (
@@ -38,11 +36,9 @@ function App() {
           <Route path="/counseling" element={<CounselingPage />} />
           <Route path="/counselingcenter" element={<CounselingCenterPage />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
-<<<<<<< HEAD
           <Route path='/users/register' element={<Register />} />
-=======
-          <Route path="/users/register" element={<SuppoterRegisterForm />} />
->>>>>>> 5c8f4f9e84c00f1db820d6b528b35a5f5e092629
+          <Route path='/users/changeuserinfo' element={<ChangeUserInfo />} />
+          <Route path='/users/login' element={<UserLoginForm />} />
         </Route>
       </Routes>
     </Router>

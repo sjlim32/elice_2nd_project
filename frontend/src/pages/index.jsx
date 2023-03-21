@@ -16,5 +16,5 @@ export {
   PostPage,
   CounselingCenterPage,
   CampaignsPage,
-  Register
+  Register,
 };
