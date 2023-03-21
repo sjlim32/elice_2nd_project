@@ -10,7 +10,7 @@ postRouter.get(
   "/posts/category/:categoryId",
   postController.getPostsByCategory,
 );
-postRouter.get("/posts/myposts", loginRequired, postController.getMyPosts);
+postRouter.get("/myposts", loginRequired, postController.getMyPosts);
 postRouter.get(
   "/posts/search/:search",
   postController.getPostsByTitleSearching,

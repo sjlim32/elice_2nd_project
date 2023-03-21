@@ -1,6 +1,5 @@
 import { model, mongoose } from "mongoose";
 import { postSchema } from "../schemas";
-import { ObjectId } from "bson";
 
 const Post = model("Post", postSchema);
 
@@ -38,7 +37,7 @@ class PostModel {
   // ObjectId로 바꿔줘야 하는 에러 뜨는데, 바꿔주면 class 어쩌구 에러 뜸, 해결 필요
   async findAllByUser(userId) {
     const posts = await Post.find({
-      userId: ObjectId(userId),
+      userId,
       isDeleted: false,
     }).populate("categoryId");
     return posts;
