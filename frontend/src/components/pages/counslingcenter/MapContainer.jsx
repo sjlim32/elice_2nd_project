@@ -30,10 +30,10 @@ function MapContainer() {
 
           // 인포윈도우에 들어갈 내용
           const iwContent =
-              '<div style="width:200px;text-align:center;padding:20px 0;border-bottom: 2px solid #ccc">' +
+              '<div style="width:280px;text-align:center;padding:20px 0;font-weight:bold;border-bottom: 2px solid #ccc">' +
               `${상담소명}` +
               "</div>" +
-              '<div style="width:200px;text-align:center;padding:10px 0;">' +
+              '<div style="width:280px;text-align:center;padding:10px 0;">' +
               `${주소}` +
               "</div>",
             iwRemoveable = true;
