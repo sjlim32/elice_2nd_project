@@ -15,12 +15,12 @@ class UserService {
   }
 
   async addUser(userInfo) {
+    const { email, password, role } = userInfo;
+
     const validRoles = ["user", "pending"];
     const isValidRole = validRoles.includes(role);
 
     if (!isValidRole) throw new Error(`유효한 userRole이 아닙니다.`);
-
-    const { email, password } = userInfo;
 
     // TODO: soft Delete 적용시 수정 필요
     // isDeleted = true일 때와 false일 때
