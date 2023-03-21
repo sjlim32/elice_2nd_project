@@ -24,18 +24,18 @@ class CategoryModel {
     return categories;
   }
 
-  async updateById(id, toUpdate) {
+  async updateById(_id, toUpdate) {
     const opts = { runValidators: true, omitUndefined: true };
     const updated = await Category.updateOne(
-      { _id: id },
+      { _id },
       { $set: toUpdate },
       opts,
     );
     return updated;
   }
 
-  async deleteById(id) {
-    const deleted = await Category.deleteOne({ _id: id });
+  async deleteById(_id) {
+    const deleted = await Category.deleteOne({ _id });
     return deleted;
   }
 }

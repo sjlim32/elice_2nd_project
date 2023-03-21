@@ -21,30 +21,28 @@ class ReplyModel {
   }
 
   async findAllByUser(userId) {
-    // MyPost처럼 똑같은 ObjectId 입력해야 한다는 에러 발생하넹?
-    // "Cast to ObjectId failed for value \"myreplies\" (type string) at path \"_id\" for model \"Reply\""
     const replies = await Reply.find({ userId, isDeleted: false });
     return replies;
   }
 
-  async findById(id) {
-    const reply = await Reply.findOne({ _id: id, isDeleted: false });
+  async findById(_id) {
+    const reply = await Reply.findOne({ _id, isDeleted: false });
     return reply;
   }
 
-  async updateById(id, toUpdate) {
+  async updateById(_id, toUpdate) {
     const opts = { runValidators: true, omitUndefined: true };
     const updated = await Reply.updateOne(
-      { _id: id },
+      { _id },
       { $set: toUpdate },
       opts,
     );
     return updated;
   }
 
-  async softDeleteById(id) {
+  async softDeleteById(_id) {
     const deleted = await Reply.updateOne(
-      { _id: id },
+      { _id },
       { $set: { isDeleted: true, deletedAt: Date.now() } },
     );
     return deleted;

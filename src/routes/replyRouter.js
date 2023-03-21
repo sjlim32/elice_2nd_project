@@ -18,7 +18,7 @@ replyRouter.get(
 );
 replyRouter.get("/posts/:postId/replies", replyController.getRepliesByPost);
 replyRouter.get(
-  "/replies/myreplies",
+  "//myreplies",
   loginRequired,
   replyController.getMyReplies,
 );
