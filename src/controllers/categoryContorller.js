@@ -43,10 +43,7 @@ class CategoryController {
           value ? toString(value).trim() : false,
         ),
       );
-      req.data = await categoryService.setCategory(
-        categoryId,
-        newToUpdate,
-      );
+      req.data = await categoryService.setCategory(categoryId, newToUpdate);
       next();
     } catch (error) {
       next(error);
