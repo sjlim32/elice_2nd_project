@@ -26,11 +26,7 @@ class CategoryModel {
 
   async updateById(_id, toUpdate) {
     const opts = { runValidators: true, omitUndefined: true };
-    const updated = await Category.updateOne(
-      { _id },
-      { $set: toUpdate },
-      opts,
-    );
+    const updated = await Category.updateOne({ _id }, { $set: toUpdate }, opts);
     return updated;
   }
 

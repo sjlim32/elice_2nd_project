@@ -35,7 +35,7 @@ class UserController {
   }
 
   async adminEditUserRole(req, res, next) {
-    const userId = req.params.userId;
+    const { userId } = req.params;
     const { role } = req.body;
 
     try {
@@ -76,11 +76,10 @@ class UserController {
     const { email, password } = req.body;
 
     try {
-      const { accessToken, refreshToken, role } =
-        await userService.login({
-          email,
-          password,
-        });
+      const { accessToken, refreshToken, role } = await userService.login({
+        email,
+        password,
+      });
 
       const cookieOptions = {
         httpOnly: true,
@@ -89,7 +88,7 @@ class UserController {
       };
 
       res.cookie("refreshToken", refreshToken, cookieOptions);
-      req.data = { accessToken , role, email};
+      req.data = { accessToken, role, email };
       next();
     } catch (error) {
       next(error);

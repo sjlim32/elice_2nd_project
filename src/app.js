@@ -1,7 +1,13 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import { userRouter, categoryRouter, postRouter, replyRouter } from "./routes";
+import {
+  userRouter,
+  categoryRouter,
+  postRouter,
+  replyRouter,
+  chatRouter,
+} from "./routes";
 import { responseHandler, errorHandler } from "./middlewares";
 
 const app = express();
@@ -15,6 +21,7 @@ app.use("/api", userRouter);
 app.use("/api", categoryRouter);
 app.use("/api", postRouter);
 app.use("/api", replyRouter);
+app.use("/api", chatRouter);
 
 app.use(responseHandler);
 app.use(errorHandler);
