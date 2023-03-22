@@ -4,9 +4,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import * as API from '../../../../utils/api';
 import styled from 'styled-components';
 
-function Comment() {
+function Comment({post_id}) {
 
-		const { _id } = useParams(); 
+		// const { _id } = useParams(); 
 
 	const [ comments, setComments ] = useState([])
 	const [ commentary, setCommentary] = useState('')
@@ -14,15 +14,17 @@ function Comment() {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const res = await API.get(`/posts/${_id}/replies`)
+				const res = await API.get(`/posts/${post_id}/replies`)
+				console.log({post_id})
 				setComments(res.data)
+				console.log(res.data)
 			} catch (error) {
 				console.error("ErrorMessage: ", error)
 				setComments("소통마당을 불러오지 못했습니다.")
 			}
 		}
 		fetchData();
-	})
+	}, [])
 
 	const CommentList = () => {
 		
@@ -33,7 +35,8 @@ function Comment() {
 				parent={comment.parentId}
 			>
 				<CommentBox className="Writer">{comment.isWriter ? "작성자" : "익명"}</CommentBox>
-				<Commentary> : {CommentContainer.isDeleted ? "삭제된 말입니다" : comment.contents}</Commentary>
+				{/* <Commentary> : {CommentContainer.isDeleted ? "삭제된 말입니다" : comment.contents}</Commentary> */}
+				<Commentary> : {comment.contents}</Commentary>
 				<CommentBox className="CreateAt" style={{textAlign:"right"}}>{comment.createdAt.split('T')[0]}</CommentBox>
 			</CommentContainer>
 		))
@@ -48,7 +51,7 @@ function Comment() {
 		}	
 
 		try {
-			const res = await API.post(`/replies`, {postId: _id, userId: 'none', contents: commentary})
+			const res = await API.post(`/replies`, {postId: post_id, userId: 'none', parentId: 'none', contents: commentary})
 			if (res.data && res.data.ok === true) {
 				alert('공감의 말이 정상적으로 등록되었습니다.');
 			}
