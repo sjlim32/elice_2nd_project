@@ -1,15 +1,16 @@
-import { postModel, categoryModel } from "../db";
+import { postModel, categoryModel, replyModel } from "../db";
 
 class PostService {
-  constructor(PostModel, CategoryModel) {
+  constructor(PostModel, CategoryModel, ReplyModel) {
     this.postModel = PostModel;
     this.categoryModel = CategoryModel;
+    this.replyModel = ReplyModel;
   }
 
   async Parameter(option, page, perPage) {
     const count = await postModel.countDocuments(option);
     const pageNumber = Number(page) || 1;
-    const perPageNumber = 0 < Number(perPage) ? Number(perPage) : count;
+    const perPageNumber = Number(perPage) > 0 ? Number(perPage) : count;
 
     const totalPage = Math.ceil(count / perPageNumber);
     if (pageNumber > totalPage) {
@@ -126,10 +127,14 @@ class PostService {
     if (modifiedCount === 0) {
       throw new Error(`게시글 삭제에 실패했습니다.`);
     }
+
+    // 해당 게시글의 댓글도 삭제 처리
+    await replyModel.softDeleteByPost(postId);
+
     return { result: `게시글 삭제를 완료하였습니다.` };
   }
 }
 
-const postService = new PostService(postModel, categoryModel);
+const postService = new PostService(postModel, categoryModel, replyModel);
 
 export { postService };

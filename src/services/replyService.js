@@ -9,8 +9,9 @@ class ReplyService {
   getPartial(replies) {
     const partialReplies = replies.map(reply => {
       const { _doc } = reply;
-      const { isDeleted, deletedAt, ...partial } = _doc;
-      return partial;
+      const { isDeleted, deletedAt, userId, ...partial } = _doc;
+      const { id, email, role } = userId;
+      return { ...partial, userId: { _id: id, email, role } };
     });
     return partialReplies;
   }
@@ -45,11 +46,16 @@ class ReplyService {
     const replies = await replyModel.findAllByPost(postId);
 
     let arrayReply = replies.filter(reply => !reply.parentId);
-    let arrayBoolean = arrayReply.map(reply => [reply.isDeleted]);
+    const arrayBoolean = arrayReply.map(reply => [reply.isDeleted]);
     arrayReply = arrayReply.map(reply => {
-      const { contents, isDeleted, ...partial } = reply._doc;
+      const { contents, isDeleted, userId, ...partial } = reply._doc;
+      const { id, email, role } = userId;
       return [
-        { ...partial, contents: isDeleted ? "삭제된 댓글입니다." : contents },
+        {
+          ...partial,
+          contents: isDeleted ? "삭제된 댓글입니다." : contents,
+          userId: { _id: id, email, role },
+        },
       ];
     });
 
@@ -69,10 +75,12 @@ class ReplyService {
       }, arrayBoolean[idx]);
 
       const partialNested = nestedReply.map(reply => {
-        const { contents, isDeleted, ...partial } = reply._doc;
+        const { contents, isDeleted, userId, ...partial } = reply._doc;
+        const { id, email, role } = userId;
         return {
           ...partial,
           contents: isDeleted ? "삭제된 댓글입니다." : contents,
+          userId: { _id: id, email, role },
         };
       });
 
