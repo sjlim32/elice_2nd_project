@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
+import * as API from '../../../utils/api'
 
 async function postDB() {
     const [postList, setPostList] = useState([])
 
     try {
-        const res = await axios.get('/users/:userId')
+        const res = await API.get('/api/users/:userId')
         setPostList(res.data)
     } catch(err) {
         alert('error')

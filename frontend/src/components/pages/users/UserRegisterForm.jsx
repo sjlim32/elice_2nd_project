@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import axios from 'axios'
+import * as API from '../../../utils/api'
 
 function UserRegisterForm() {
   const [email, setEmail] = useState('')
@@ -41,7 +41,7 @@ function UserRegisterForm() {
     const validateResult = validateForm()
     if (validateResult) {
       try {
-        const res = await axios.post('/api/users', userData)
+        const res = await API.post('/api/users', userData)
         console.log(res.data)
       } catch(err) {
         alert(error)
@@ -73,7 +73,7 @@ function UserRegisterForm() {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
-      <button id='submit' onSubmit={handleSubmit}>가입하기</button>
+      <button id='submit' onClick={handleSubmit}>가입하기</button>
     </div>
   )
 }

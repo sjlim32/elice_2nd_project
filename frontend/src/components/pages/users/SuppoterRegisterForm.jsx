@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from "react"
-import axios from 'axios'
 import DaumPost from "./DaumPostcode";
 import PopupDom from './PopupDom.jsx'
+import * as API from '../../../utils/api'
 
 function SuppoterRegisterForm() {
   const [email, setEmail] = useState("");
@@ -57,7 +57,7 @@ function SuppoterRegisterForm() {
     const validateResult = validateForm();
     if (validateResult) {
       try {
-        const res = await axios.post('/api/users', userData)
+        const res = await API.post('/api/users', userData)
         console.log(res.data)
       } catch(err) {
         alert(error)
