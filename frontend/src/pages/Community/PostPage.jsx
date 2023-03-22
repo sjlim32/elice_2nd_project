@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
+import * as API from '../../utils/api';
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Comment from '../../components/pages/community/postPage/Comment';
@@ -9,7 +10,6 @@ function PostPage() {
 	const navigate = useNavigate();
 	
 	const { _id } = useParams();
-	const postId = Number(_id)
 
 	const [ title, setTitle ] = useState("제목")
 	const [ category, setCategory ] = useState("말머리")
@@ -20,12 +20,12 @@ function PostPage() {
 	useEffect(() => {
 		const fetchPost = async () => {
 			try {
-				const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-				setTitle(res.data[postId].email)
-				setCategory(res.data[postId].id)
-				setContent(res.data[postId].company.catchPhrase)
-				setWriter(res.data[postId].name)
-				setDate(res.data[postId].address.zipcode)
+				const res = await API.get(`/posts/${_id}`)
+				setTitle(res.data.title)
+				setCategory(res.data.categoryId.title)
+				setContent(res.data.contents)
+				setWriter(res.data.userId.role)
+				setDate(res.data.createdAt.split('T')[0])
 			} catch (error) {
 				console.error("ErrorMessage :", error);
 				alert("이야기 불러오기에 실패했습니다.")
@@ -33,7 +33,7 @@ function PostPage() {
 			}
 		}
 		fetchPost();
-		}, [postId]);
+		}, [_id]);
 
 	return (
 		<Container>
@@ -50,12 +50,12 @@ function PostPage() {
 				<BottomWrap>
 					<BtnWrap>
 						<Btn onClick={() => navigate(-1)}>뒤로가기</Btn>
-						<Btn onClick={() => navigate(`/posts/modify/${postId}`)}>수정하기</Btn>
+						<Btn onClick={() => navigate(`/posts/modify/${_id}`)}>수정하기</Btn>
 					</BtnWrap>
 				</BottomWrap>
 			</PostCotainer>
 			<CommentContainer>
-				<Comment post_id={postId}/>
+				<Comment post_id={_id}/>
 			</CommentContainer>
 		</Container>	
 	)

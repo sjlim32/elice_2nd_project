@@ -1,20 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import * as API from '../../utils/api';
 import styled from 'styled-components';
 
 const categories = [
 	{
-		name: '소통공감',
-		value: '소통공감'
+		title: '소통공감',
+		_id: '6411719e1410804b9b58697d'
 	},
 	{
-		name: '좋은정보',
-		value: '좋은정보'
+		title: '좋은정보',
+		_id: '641171971410804b9b58697a'
 	},
 	{
-		name: '고민상담',
-		value: '고민상담'
+		title: '고민거리',
+		_id: '641171911410804b9b586977'
 	},
 ]
 
@@ -22,11 +23,10 @@ function ModifyPages() {
 
 	const navigate = useNavigate();
 	const { _id } = useParams();
-	const postId = Number(_id)
 
 	const [ title, setTitle ] = useState('')
-	const [ content, setContent ] = useState('')
-	const [ categoryId, setCategoryId ] = useState('소통공감')
+	const [ contents, setContents ] = useState('')
+	const [ categoryId, setCategoryId ] = useState('6411719e1410804b9b58697d')
 
 	const CategoryContainer = ({categories}) => {
 		const handleCategory = (e) => {
@@ -38,9 +38,9 @@ function ModifyPages() {
 				{categories.map((category, idx) => (
 					<option
 						key = {idx}
-						value = {category.value}
+						value = {category._id}
 					>
-						{category.name}
+						{category.title}
 					</option>
 					)
 				)}
@@ -50,10 +50,10 @@ function ModifyPages() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-				setTitle(res.data[postId].email)
-				setCategoryId(res.data[postId].id)
-				setContent(res.data[postId].company.catchPhrase)
+			const res = await API.get(`/posts/${_id}`)
+				setTitle(res.data.title)
+				setCategoryId(res.data.categoryId)
+				setContents(res.data.contents)
 		}
 		fetchData();
 	}, [])
@@ -65,15 +65,13 @@ function ModifyPages() {
 			return;
 		}
 
-		if (content.trim() === '') {
+		if (contents.trim() === '') {
 			alert('내용을 입력해주세요.');
 			return;
 		}	
 		try {
-			const res = await axios.patch(`/posts/modify/${postId}`, { title: title, content: content, category:categoryId })
-			if (res.data && res.data.ok === true) {
-				alert('이야기가 정상적으로 수정되었습니다.');
-			}
+			const res = await API.patch(`/posts/${_id}`, { title: title, contents: contents, categoryId:categoryId })
+			alert(res.data);
 		} catch (error) {	
 			console.error('ErrorMessage :', error)
 			alert('이야기 수정을 하지 못했습니다.')
@@ -88,7 +86,7 @@ function ModifyPages() {
 				<TitleInput type='text' value={title} placeholder={'제목'} onChange={(e) => {setTitle(e.target.value)}} />
 			</TitleWrap>
 			<ContentWrap>
-				<ContentInput type='text' value={content} placeholder={'본문'} onChange={(e) => {setContent(e.target.value)}} />
+				<ContentInput type='text' value={contents} placeholder={'본문'} onChange={(e) => {setContents(e.target.value)}} />
 			</ContentWrap>
 			<BottomWrap>
 				<SubmitBtn onClick={handleSubmit}>수정하기</SubmitBtn>

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+// import axios from 'axios';
+import * as API from '../../../../utils/api';
 import styled from 'styled-components';
 
-function Comment({postId}) {
+function Comment({post_id}) {
+
+		// const { _id } = useParams(); 
 
 	const [ comments, setComments ] = useState([])
 	const [ commentary, setCommentary] = useState('')
@@ -11,28 +14,30 @@ function Comment({postId}) {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				// const res = await axios.get(`/posts/${postId}`)
-				const res = await axios.get(`https://jsonplaceholder.typicode.com/users`)
+				const res = await API.get(`/posts/${post_id}/replies`)
+				console.log({post_id})
 				setComments(res.data)
+				console.log(res.data)
 			} catch (error) {
 				console.error("ErrorMessage: ", error)
 				setComments("소통마당을 불러오지 못했습니다.")
 			}
 		}
 		fetchData();
-	})
+	}, [])
 
-	const Comments = () => {
+	const CommentList = () => {
 		
 		return comments.map((comment, idx) => (
 			<CommentContainer
 				key={idx}
-				isDeleted={ comment.deleted ? true : false }
-				isChild={ comment.child ? true : false }
+				isDeleted={comment.isDeleted}
+				parent={comment.parentId}
 			>
-				<CommentBox className="Writer">{comment.name}</CommentBox>
-				<Commentary> : {comment.email}</Commentary>
-				<CommentBox className="CreateAt" style={{textAlign:"right"}}>{comment.id}</CommentBox>
+				<CommentBox className="Writer">{comment.isWriter ? "작성자" : "익명"}</CommentBox>
+				{/* <Commentary> : {CommentContainer.isDeleted ? "삭제된 말입니다" : comment.contents}</Commentary> */}
+				<Commentary> : {comment.contents}</Commentary>
+				<CommentBox className="CreateAt" style={{textAlign:"right"}}>{comment.createdAt.split('T')[0]}</CommentBox>
 			</CommentContainer>
 		))
 	}
@@ -46,7 +51,7 @@ function Comment({postId}) {
 		}	
 
 		try {
-			const res = await axios.post(`/posts/${postId}`, {writer: 'none', content: commentary})
+			const res = await API.post(`/replies`, {postId: post_id, userId: 'none', parentId: 'none', contents: commentary})
 			if (res.data && res.data.ok === true) {
 				alert('공감의 말이 정상적으로 등록되었습니다.');
 			}
@@ -66,9 +71,9 @@ function Comment({postId}) {
 				<Btn type="submit">등록</Btn>
 			</CommentRegisterBox>
 				<TextBox>공감 공간</TextBox>
-				<Comments comments={comments}>
+				<CommentList commentList={comments}>
 					{comments}
-				</Comments>
+				</CommentList>
 		</Container>
 	)
 }
