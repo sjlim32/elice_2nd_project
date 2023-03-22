@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useParams, useNavigate } from 'react-router-dom';
+// import axios from 'axios';
+import * as API from '../../utils/api';
 import styled from 'styled-components';
 
 const categories = [
 	{
-		name: '소통공감',
-		value: '소통공감'
+		title: '소통공감',
+		_id: '6411719e1410804b9b58697d'
 	},
 	{
-		name: '좋은정보',
-		value: '좋은정보'
+		title: '좋은정보',
+		_id: '641171971410804b9b58697a'
 	},
 	{
-		name: '고민상담',
-		value: '고민상담'
+		title: '고민거리',
+		_id: '641171911410804b9b586977'
 	},
 ]
 
-function PostingPage() {
+function ModifyPages() {
+
+	const navigate = useNavigate();
+	const { _id } = useParams();
 
 	const [ title, setTitle ] = useState('')
-	const [ content, setContent ] = useState('')
-	const [ categoryId, setCategoryId ] = useState('소통공감')
+	const [ contents, setContents ] = useState('')
+	const [ categoryId, setCategoryId ] = useState('6411719e1410804b9b58697d')
 
 	const CategoryContainer = ({categories}) => {
 		const handleCategory = (e) => {
@@ -33,15 +38,25 @@ function PostingPage() {
 				{categories.map((category, idx) => (
 					<option
 						key = {idx}
-						value = {category.value}
+						value = {category._id}
 					>
-						{category.name}
+						{category.title}
 					</option>
 					)
 				)}
 			</CategorySelector> 
 		)
 	}	
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const res = await API.get(`/posts/${_id}`)
+				setTitle(res.data.title)
+				setCategoryId(res.data.categoryId)
+				setContents(res.data.contents)
+		}
+		fetchData();
+	}, [])
 
 	const handleSubmit = async () => {
 		// console.log(title, content, categoryId)
@@ -50,32 +65,33 @@ function PostingPage() {
 			return;
 		}
 
-		if (content.trim() === '') {
+		if (contents.trim() === '') {
 			alert('내용을 입력해주세요.');
 			return;
 		}	
 		try {
-			const res = await axios.post('/posts/', { title: title, content: content, category:categoryId })
-			if (res.data && res.data.ok === true) {
-				alert('이야기가 정상적으로 등록되었습니다.');
-			}
+			const res = await API.patch(`/posts/${_id}`, { title: title, contents: contents, categoryId:categoryId })
+			alert(res.data);
 		} catch (error) {	
 			console.error('ErrorMessage :', error)
-			alert('이야기를 등록하지 못했습니다.')
+			alert('이야기 수정을 하지 못했습니다.')
 		}
 	}
 
 	return (
 		<WriteContainer>
-			<MainHead>{'이야기 전달'}</MainHead>
+			<MainHead>{'이야기 바꾸기'}</MainHead>
 			<TitleWrap>
 				<CategoryContainer categories={categories}/>
 				<TitleInput type='text' value={title} placeholder={'제목'} onChange={(e) => {setTitle(e.target.value)}} />
 			</TitleWrap>
 			<ContentWrap>
-				<ContentInput type='text' value={content} placeholder={'본문'} onChange={(e) => {setContent(e.target.value)}} />
+				<ContentInput type='text' value={contents} placeholder={'본문'} onChange={(e) => {setContents(e.target.value)}} />
 			</ContentWrap>
-			<SubmitBtn onClick={handleSubmit}>{'등록하기'}</SubmitBtn>		
+			<BottomWrap>
+				<SubmitBtn onClick={handleSubmit}>수정하기</SubmitBtn>
+				<SubmitBtn onClick={() => navigate(-1)}>취소하기</SubmitBtn>		
+			</BottomWrap>
 		</WriteContainer>
 	)
 
@@ -121,6 +137,14 @@ const ContentInput = styled.input`
 	padding-left: 5px;
 `;
 
+const BottomWrap = styled.div`
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+
+	width: 200px;
+`
+
 const SubmitBtn = styled.button`
 	border: 1px solid lightgray;
 	border-radius: 5px;
@@ -130,4 +154,4 @@ const SubmitBtn = styled.button`
 	}
 `;
 
-export default PostingPage;
+export default ModifyPages;
