@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Layout from "./components/commons/layout";
+import ChangeUserInfo from "./components/pages/users/ChangeUserInfo";
 import {
   MainPage,
   AboutUsPage,
@@ -11,8 +12,9 @@ import {
   CounselingPage,
   CounselingCenterPage,
   CampaignsPage,
+  Register,
 } from "./pages";
-import SuppoterRegisterForm from "./components/pages/users/SuppoterRegisterForm";
+import UserLoginForm from './components/pages/users/UserLoginForm'
 
 function App() {
   return (
@@ -36,7 +38,9 @@ function App() {
           <Route path="/counseling" element={<CounselingPage />} />
           <Route path="/counselingcenter" element={<CounselingCenterPage />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
-          <Route path="/users/register" element={<SuppoterRegisterForm />} />
+          <Route path='/users/register' element={<Register />} />
+          <Route path='/users/changeuserinfo' element={<ChangeUserInfo />} />
+          <Route path='/users/login' element={<UserLoginForm />} />
         </Route>
       </Routes>
     </Router>

@@ -1,7 +1,7 @@
-import React, { useState } from "react";
-import axios from "axios";
-import DaumPost from "./DaumPostcode.jsx";
-import PopupDom from "./PopupDom.jsx";
+import React, {useCallback, useState} from "react"
+import axios from 'axios'
+import DaumPost from "./DaumPostcode";
+import PopupDom from './PopupDom.jsx'
 
 function SuppoterRegisterForm() {
   const [email, setEmail] = useState("");
@@ -15,35 +15,35 @@ function SuppoterRegisterForm() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [error, setError] = useState("");
 
-  const openPostcode = () => {
-    setIsPopupOpen(!isPopupOpen);
-  };
+  const openPostcode = useCallback(() => {
+    setIsPopupOpen(!isPopupOpen)
+  }, [isPopupOpen])
 
-  const validateEmail = () => {
+  const validateEmail = useCallback(() => {
     const emailForm = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     if (emailForm.test(email) == false) {
       setError("invalide Email Address");
       return false;
     }
     return true;
-  };
+  }, [email]);
 
-  const validatePassword = () => {
+  const validatePassword = useCallback(() => {
     if (password !== confirmPassword) {
       setError("password is not confirmed");
       return false;
     }
     return true;
-  };
+  }, [password, confirmPassword]);
 
   const validateForm = () => {
     return validateEmail() && validatePassword();
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     const userData = {
-      formType: "suppoter",
+      role: "pending",
       email,
       password,
       userName: name,
@@ -56,14 +56,12 @@ function SuppoterRegisterForm() {
     };
     const validateResult = validateForm();
     if (validateResult) {
-      axios
-        .post("/users/register", userData)
-        .then((res) => {
-          console.log(userData);
-        })
-        .catch((err) => {
-          alert(error);
-        });
+      try {
+        const res = await axios.post('/api/users', userData)
+        console.log(res.data)
+      } catch(err) {
+        alert(error)
+      }
     }
   };
 
