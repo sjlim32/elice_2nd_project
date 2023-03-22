@@ -8,10 +8,6 @@
     "start": "nodemon --experimental-modules --es-module-specifier-resolution=node index.js"
   },
   "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "git@kdt-gitlab.elice.io:elice6hj/backend.git"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
