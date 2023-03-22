@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function SuppoterLoginForm() {
   const [email, setEmail] = useState('');
@@ -16,12 +16,12 @@ function SuppoterLoginForm() {
     e.preventDefault();
     const userData = { email, password };
     axios
-        .post('/users/login', userData)
+        .post('http://localhost:8080/api/login', userData)
         .then((res) => {
             console.log(res.data)
         })
         .catch((err) => {
-            console.log(err)
+            alert('error')
         })
   };
 

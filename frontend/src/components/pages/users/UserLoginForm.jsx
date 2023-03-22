@@ -1,21 +1,20 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 function UserLoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = { email, password };
-    axios
-        .post('/users/login', userData)
-        .then((res) => {
-            console.log(res.data)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    try {
+      const res = await axios.post('http://localhost:8080/api/login', userData)
+      localStorage.setItem('jwt', res.data)
+      console.log(res.data)
+    } catch(err) {
+      alert('error')
+    }
   };
 
   return (

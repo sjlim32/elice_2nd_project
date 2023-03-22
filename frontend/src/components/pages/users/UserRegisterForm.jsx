@@ -31,23 +31,21 @@ function UserRegisterForm() {
     );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     const userData = {
-      'formType': 'user',
+      role: 'user',
       email,
       password
     }
     const validateResult = validateForm()
     if (validateResult) {
-      axios
-        .post('/users/register', userData)
-        .then((res) => {
-          console.log(userData)
-        })
-        .catch((err) => {
-          alert(error)
-        })
+      try {
+        const res = await axios.post('/api/users', userData)
+        console.log(res.data)
+      } catch(err) {
+        alert(error)
+      }
     }
   }
 
