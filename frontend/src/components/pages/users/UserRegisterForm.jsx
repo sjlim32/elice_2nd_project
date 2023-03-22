@@ -1,5 +1,6 @@
 import React, {useState} from "react"
-import axios from 'axios'
+// import axios from 'axios'
+import * as API from '../../../utils/api';
 
 function UserRegisterForm() {
   const [email, setEmail] = useState('')
@@ -9,7 +10,7 @@ function UserRegisterForm() {
 
   const validateEmail = () => {
     const emailForm = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-    if (emailForm.test(email) == false) {
+    if (emailForm.test(email) === false) {
       setError('invalide Email Address');
       return false;
     }
@@ -38,19 +39,17 @@ function UserRegisterForm() {
       email,
       password
     }
-    const validateResult = validateForm()
-    if (validateResult) {
       try {
-        const res = await axios.post('/api/users', userData)
+        const res = await API.post('/users', {userData})
         console.log(res.data)
+        alert("성공")
       } catch(err) {
-        alert(error)
+        alert("실패")
       }
-    }
   }
 
   return (
-    <div>
+    <form>
       <input
         id='email'
         value={email}
@@ -73,8 +72,8 @@ function UserRegisterForm() {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
-      <button id='submit' onSubmit={handleSubmit}>가입하기</button>
-    </div>
+      <button id='submit' onClick={handleSubmit}>가입하기</button>
+    </form>
   )
 }
 

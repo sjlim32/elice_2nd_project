@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 // import axios from 'axios';
 import * as API from '../../utils/api';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -17,6 +17,7 @@ function PostPage() {
 	const [ writer, setWriter ] = useState("작성자")
 	const [ date, setDate ] = useState("작성일")
 
+
 	useEffect(() => {
 		const fetchPost = async () => {
 			try {
@@ -32,8 +33,20 @@ function PostPage() {
 				navigate(`/posts`)
 			}
 		}
-		fetchPost();
-		}, [_id]);
+		fetchPost()
+	}, [_id])
+	// useMemo(() => fetchPost(), [_id])
+
+	const handleModify = () => {
+		
+		navigate(`/posts/modify/${_id}`)
+	}
+
+	const handleDelete = () => {
+
+	return
+}
+
 
 	return (
 		<Container>
@@ -50,7 +63,8 @@ function PostPage() {
 				<BottomWrap>
 					<BtnWrap>
 						<Btn onClick={() => navigate(-1)}>뒤로가기</Btn>
-						<Btn onClick={() => navigate(`/posts/modify/${_id}`)}>수정하기</Btn>
+						<Btn onClick={handleModify}>수정하기</Btn>
+						<Btn onClick={handleDelete}>삭제하기</Btn>
 					</BtnWrap>
 				</BottomWrap>
 			</PostCotainer>
