@@ -5,20 +5,21 @@
     "node": true
   },
   // "extends": ["airbnb-base", "prettier", "plugin:node/recommended"],
-  "extends": ["airbnb-base", "plugin:node/recommended", "prettier"],
+  "extends": ["airbnb", "prettier", "plugin:node/recommended"],
 
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
     "__dirname": true
   },
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
     "ecmaVersion": 11,
     "sourceType": "module",
-    "allowImportExportEverywhere": true
+    "allowImportExportEverywhere": true,
+    "requireConfigFile": false
   },
-  "plugins": ["prettier", "javascript-react"],
+  "plugins": ["prettier"],
 
   "rules": {
     // "linebreak-style": ["error", "windows"], // window 환경
