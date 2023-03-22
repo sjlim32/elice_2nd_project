@@ -9,7 +9,7 @@ function UserLoginForm() {
     e.preventDefault();
     const userData = { email, password };
     try {
-      const res = await axios.post('/api/login', userData)
+      const res = await axios.post('http://localhost:8080/api/login', userData)
       localStorage.setItem('jwt', res.data)
       console.log(res.data)
     } catch(err) {

@@ -16,7 +16,7 @@ function SuppoterLoginForm() {
     e.preventDefault();
     const userData = { email, password };
     axios
-        .post('/api/login', userData)
+        .post('http://localhost:8080/api/login', userData)
         .then((res) => {
             console.log(res.data)
         })

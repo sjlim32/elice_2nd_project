@@ -11,11 +11,31 @@ async function chatDB() {
         alert('error')
     }
 
+    const chatingList = ({chat}) => {
+
+        return (
+            <tr key={chat.date}>
+                <td>{chat.date}</td>
+                <td>{chat.time}</td>
+            </tr>
+        )
+    }
+
     return (
         <div>
-            {chatList.map((chat) => {
-                return chat.date + chat.time
-            })}
+            <table>
+                <thead>
+                    <tr>
+                        <th>date</th>
+                        <th>time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {chatList.map((chat) => {
+                        return <chatingList chat={chat} />
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 }

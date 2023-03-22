@@ -11,11 +11,31 @@ async function postDB() {
         alert('error')
     }
 
+    const postingList = ({post}) => {
+
+        return (
+            <tr key={post.title}>
+                <td>{post.title}</td>
+                <td>{post.date}</td>
+            </tr>
+        )
+    }
+
     return (
         <div>
-            {postList.map((post) => {
-                return post.title + post.date
-            })}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Role</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {postList.map((post) => {
+                        return <postingList post={post} />
+                    })}
+                </tbody>
+            </table>
         </div>
     )
 }
