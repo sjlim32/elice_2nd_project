@@ -10,13 +10,15 @@ class ReplyModel {
   }
 
   async findAll() {
-    const replies = await Reply.find({ isDeleted: false });
+    const replies = await Reply.find({ isDeleted: false }).populate("userId");
     return replies;
   }
 
   async findAllByPost(postId) {
     // 일단 삭제된 댓글도 찾아야 함
-    const replies = await Reply.find({ postId }).sort({ parentId: 1 });
+    const replies = await Reply.find({ postId })
+      .sort({ parentId: 1 })
+      .populate("userId");
     return replies;
   }
 
@@ -26,23 +28,29 @@ class ReplyModel {
   }
 
   async findById(_id) {
-    const reply = await Reply.findOne({ _id, isDeleted: false });
+    const reply = await Reply.findOne({ _id, isDeleted: false }).populate(
+      "userId",
+    );
     return reply;
   }
 
   async updateById(_id, toUpdate) {
     const opts = { runValidators: true, omitUndefined: true };
-    const updated = await Reply.updateOne(
-      { _id },
-      { $set: toUpdate },
-      opts,
-    );
+    const updated = await Reply.updateOne({ _id }, { $set: toUpdate }, opts);
     return updated;
   }
 
   async softDeleteById(_id) {
     const deleted = await Reply.updateOne(
       { _id },
+      { $set: { isDeleted: true, deletedAt: Date.now() } },
+    );
+    return deleted;
+  }
+
+  async softDeleteByPost(postId) {
+    const deleted = await Reply.updateMany(
+      { postId },
       { $set: { isDeleted: true, deletedAt: Date.now() } },
     );
     return deleted;
