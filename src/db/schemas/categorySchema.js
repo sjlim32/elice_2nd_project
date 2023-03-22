@@ -1,10 +1,11 @@
 import { Schema } from "mongoose";
 
 const categorySchema = new Schema({
-  categoryName: {
+  title: {
     type: String,
     required: true,
     unique: true,
+    trim: true,
   },
 });
 

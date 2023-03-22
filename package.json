@@ -8,16 +8,11 @@
     "start": "nodemon --experimental-modules --es-module-specifier-resolution=node index.js"
   },
   "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "git@kdt-gitlab.elice.io:elice6hj/backend.git"
-  },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@sindresorhus/is": "^5.3.0",
     "bcrypt": "^5.1.0",
-    "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
@@ -31,11 +26,14 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
+    "babel-eslint": "^10.1.0",
     "eslint": "^8.36.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-node": "^4.1.0",
     "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prefer-object-spread": "^1.2.1",
     "eslint-plugin-prettier": "^4.2.1",
     "nodemon": "^2.0.21",
     "prettier": "^2.8.4"

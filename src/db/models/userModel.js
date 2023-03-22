@@ -4,29 +4,29 @@ import { userSchema } from "../schemas";
 const User = model("User", userSchema);
 
 class UserModel {
-  // Create
   async create(userInfo) {
     const createdNewUser = await User.create(userInfo);
     return createdNewUser;
   }
 
-  // Read
-  async readById(userId) {
+  async findById(userId) {
     const user = await User.findById(userId);
     return user;
   }
 
-  async readByEmail(email) {
+  async findByEmail(email) {
     const user = await User.findOne({ email });
     return user;
   }
-
-  async readAll() {
+  async findByRole(role) {
+    const users = await User.find({ role });
+    return users;
+  }
+  async findAll() {
     const users = await User.find({});
     return users;
   }
 
-  // Update
   async updateById(userId, update) {
     const updatedUser = await User.findByIdAndUpdate(userId, update, {
       new: true,
@@ -34,13 +34,12 @@ class UserModel {
     return updatedUser;
   }
 
-  // Delete
   async deleteById(userId) {
-    const deletedUser = await User.findByIdAndDelte(userId);
+    const deletedUser = await User.findByIdAndDelete(userId);
     return deletedUser;
   }
 }
 
 const userModel = new UserModel();
 
-export { userModel };
+export { User, userModel, UserModel };

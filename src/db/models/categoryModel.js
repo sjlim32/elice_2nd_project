@@ -5,8 +5,38 @@ const Category = model("Category", categorySchema);
 
 class CategoryModel {
   async create(categoryInfo) {
-    const createdCategory = await Category.create(categoryInfo);
-    return createdCategory;
+    const createdNewCategory = await Category.create(categoryInfo);
+    return createdNewCategory;
+  }
+
+  async findById(id) {
+    const category = await Category.findById(id);
+    return category;
+  }
+
+  async findByTitle(title) {
+    const category = await Category.findOne({ title });
+    return category;
+  }
+
+  async findAll() {
+    const categories = await Category.find({});
+    return categories;
+  }
+
+  async updateById(_id, toUpdate) {
+    const opts = { runValidators: true, omitUndefined: true };
+    const updated = await Category.updateOne(
+      { _id },
+      { $set: toUpdate },
+      opts,
+    );
+    return updated;
+  }
+
+  async deleteById(_id) {
+    const deleted = await Category.deleteOne({ _id });
+    return deleted;
   }
 }
 
