@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios'
+import * as API from '../../../utils/api'
 
 function ChangePassword() {
   const [password, setPassword] = useState('');
@@ -18,10 +18,10 @@ function ChangePassword() {
     e.preventDefault();
     if (validatePassword()) {
       try {
-        const res = await axios.get('/users')
+        const res = await API.get('/api/users')
         const userID = res.data._id
 
-        const res2 = await axios.patch('/users', {
+        const res2 = await API.patch('/api/users', {
                       password: password,
                       newPassword: newPassword
                     })

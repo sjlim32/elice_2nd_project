@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import axios from 'axios'
 import DaumPost from "./DaumPostcode";
 import PopupDom from './PopupDom.jsx'
+import * as API from '../../../utils/api'
 
 function ChangeUserInfo() {
   const [users, setUsers] = useState([]);
@@ -19,7 +19,7 @@ function ChangeUserInfo() {
   }, [isPopupOpen])
 
   useEffect(() => {
-    axios
+    API
       .get(`/api/users/:userId`)
       .then((res) => {
         setUsers(res.data);
@@ -45,10 +45,10 @@ function ChangeUserInfo() {
     e.preventDefault();
     if (validatePassword()) {
       try {
-        const res = await axios.get('/api/users')
+        const res = await API.get('/api/users')
         const userID = res.data._id
 
-        const res2 = await axios.patch('/api/users', {
+        const res2 = await API.patch('/api/users', {
                     password: password,
                     newPassword: newPassword,
                     phone: phone,
@@ -131,7 +131,7 @@ function ChangeUserInfo() {
             onChange={(e) => setDetailAddress(e.target.value)}
         />
 
-        <button id='submit' onSubmit={handleSubmit}>수정하기</button>
+        <button id='submit' onClick={handleSubmit}>수정하기</button>
     </div>
   )
 }

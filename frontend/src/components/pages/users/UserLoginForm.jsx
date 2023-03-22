@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import * as API from '../../../utils/api'
 
 function UserLoginForm() {
   const [email, setEmail] = useState('');
@@ -9,7 +9,7 @@ function UserLoginForm() {
     e.preventDefault();
     const userData = { email, password };
     try {
-      const res = await axios.post('http://localhost:8080/api/login', userData)
+      const res = await API.post('/api/login', userData)
       localStorage.setItem('jwt', res.data)
       console.log(res.data)
     } catch(err) {
@@ -32,7 +32,7 @@ function UserLoginForm() {
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button id='submit' onSubmit={handleSubmit}>로그인</button>
+      <button id='submit' onClick={handleSubmit}>로그인</button>
     </div>
   )
 }
