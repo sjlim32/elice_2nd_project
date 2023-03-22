@@ -1,6 +1,5 @@
 import React, {useState} from "react"
-// import axios from 'axios'
-import * as API from '../../../utils/api';
+import * as API from '../../../utils/api'
 
 function UserRegisterForm() {
   const [email, setEmail] = useState('')

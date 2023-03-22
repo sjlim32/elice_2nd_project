@@ -1,5 +1,5 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import * as API from '../../../utils/api'
 
 function SuppoterLoginForm() {
   const [email, setEmail] = useState('');
@@ -15,8 +15,8 @@ function SuppoterLoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = { email, password };
-    axios
-        .post('http://localhost:8080/api/login', userData)
+    API
+        .post('/api/login', userData)
         .then((res) => {
             console.log(res.data)
         })

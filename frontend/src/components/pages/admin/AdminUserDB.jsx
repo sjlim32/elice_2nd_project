@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
+import * as API from '../../../utils/api'
 
 async function AdminUserDB() {
     const [users, setUsers] = useState([])
     
     try {
-        const res = await axios.get('/admin/users/userRole')
+        const res = await API.get('/api/admin/users/userRole')
         setUsers(res.data)
     } catch(err) {
         alert('error')

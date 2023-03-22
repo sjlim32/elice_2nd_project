@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import * as API from '../../../utils/api'
 
 function UserWithdrawal() {
   const [isChecked, setIsChecked] = useState(false);
@@ -13,7 +13,7 @@ function UserWithdrawal() {
     e.preventDefault();
     console.log('check');
     try {
-      const res = await axios.delete(`/users`, password)
+      const res = await API.delete(`/api/users`, password)
       console.log(res.data)
     } catch(err) {
       alert('error')
