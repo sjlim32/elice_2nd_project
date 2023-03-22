@@ -48,7 +48,7 @@ function CheckboxList() {
     }
     // 이미 체크되어있고 배열에 있다면 해당 배열에서 제거
     if (!isChecked && checkList.includes(value)) {
-      setCheckedList(checkedList.filter((list) => list !== value));
+      setCheckedList((prev) => prev.filter((item) => item !== value));
       return;
     }
   };
@@ -82,15 +82,15 @@ function CheckboxList() {
   return (
     <>
       <form onSubmit={onSubmitHandler}>
-        {checkList.map((list, i) => (
+        {checkList.map((item, i) => (
           <ListWrapper key={i}>
             <input
               type="checkbox"
-              id={list}
-              checked={checkedList.includes(list)}
-              onChange={(evt) => checkHandler(evt, list)}
+              id={item}
+              checked={checkedList.includes(item)}
+              onChange={(evt) => checkHandler(evt, item)}
             />
-            <label htmlFor={list}>{list}</label>
+            <label htmlFor={item}>{item}</label>
           </ListWrapper>
         ))}
         <SubmitButtonWrapper>
