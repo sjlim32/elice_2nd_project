@@ -1,5 +1,5 @@
-import React, {useState} from "react"
-import * as API from '../../../utils/api'
+import React, {useState, useCallback} from "react"
+import * as API from '../../../utils/api';
 
 function UserRegisterForm() {
   const [email, setEmail] = useState('')
@@ -9,7 +9,7 @@ function UserRegisterForm() {
 
   const validateEmail = () => {
     const emailForm = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
-    if (emailForm.test(email) == false) {
+    if (emailForm.test(email) === false) {
       setError('invalide Email Address');
       return false;
     }
@@ -24,12 +24,12 @@ function UserRegisterForm() {
     return true;
   };
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     return (
       validateEmail() &&
       validatePassword()
     );
-  };
+  }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -41,7 +41,7 @@ function UserRegisterForm() {
     const validateResult = validateForm()
     if (validateResult) {
       try {
-        const res = await API.post('/api/users', userData)
+        const res = await API.post('/users', userData)
         console.log(res.data)
       } catch(err) {
         alert(error)
@@ -50,7 +50,7 @@ function UserRegisterForm() {
   }
 
   return (
-    <div>
+    <form>
       <input
         id='email'
         value={email}
@@ -74,7 +74,7 @@ function UserRegisterForm() {
       />
 
       <button id='submit' onClick={handleSubmit}>가입하기</button>
-    </div>
+    </form>
   )
 }
 
