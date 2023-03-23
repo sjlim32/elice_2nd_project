@@ -22,6 +22,9 @@ const ChangeUserInfo = lazy(() =>
 const UserLoginForm = lazy(() =>
   import("./components/pages/users/UserLoginForm")
 );
+const UserWithdrawal = lazy(() =>
+  import("./components/pages/users/UserWithdrawal")
+);
 
 function App() {
   return (
@@ -51,6 +54,7 @@ function App() {
             <Route path="/users/register" element={<Register />} />
             <Route path="/users/changeuserinfo" element={<ChangeUserInfo />} />
             <Route path="/users/login" element={<UserLoginForm />} />
+            <Route path="/users/userwithdrawal" element={<UserWithdrawal />} />
           </Route>
         </Routes>
       </Suspense>

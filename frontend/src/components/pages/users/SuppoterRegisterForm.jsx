@@ -65,7 +65,7 @@ function SuppoterRegisterForm() {
       } catch (err) {
         alert(error);
       }
-    }
+    } else alert(error);
   };
 
   return (
@@ -129,7 +129,7 @@ function SuppoterRegisterForm() {
         onChange={(e) => setDetailAddress(e.target.value)}
       />
 
-      <button id="submit" onSubmit={handleSubmit}>
+      <button id="submit" onClick={handleSubmit}>
         가입하기
       </button>
     </div>
