@@ -22,7 +22,8 @@ function SuppoterLoginForm() {
       localStorage.setItem("token", res.data.accessToken);
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("email", res.data.email);
-      Navigate("/");
+      navigate("/");
+      window.location.reload();
     } catch (err) {
       alert("error");
     }

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import * as API from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function UserWithdrawal() {
   const [isChecked, setIsChecked] = useState(false);
-  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleClick = () => {
     setIsChecked(!isChecked);
@@ -12,21 +13,20 @@ function UserWithdrawal() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await API.delete(`/users`, password);
+      const res = await API.delete(`/users`);
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      localStorage.removeItem("email");
       console.log(res.data);
+      navigate("/");
+      window.location.reload();
     } catch (err) {
-      alert("error");
+      alert(err);
     }
   };
 
   return (
     <div>
-      <input
-        type="password"
-        placeholder="password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
       <input
         type="checkbox"
         label="회원을 탈퇴하시겠습니까?"
