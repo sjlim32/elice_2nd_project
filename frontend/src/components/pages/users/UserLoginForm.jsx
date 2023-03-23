@@ -9,8 +9,10 @@ function UserLoginForm() {
     e.preventDefault();
     const userData = { email, password };
     try {
-      const res = await API.post('/api/login', userData)
-      localStorage.setItem('jwt', res.data)
+      const res = await API.post('/login', userData)
+      localStorage.setItem('token', res.data.accessToken)
+      localStorage.setItem('role', res.data.role)
+      localStorage.setItem('email', res.data.email)
       console.log(res.data)
     } catch(err) {
       alert('error')

@@ -35,9 +35,9 @@ function CommunityMainPage() {
 		}
 	}
 
-	// useEffect(() => {
-	// 	localStorage.getItem('accessToken') === null ? setIsLogin(false) : setIsLogin(true)
-	// }, [])
+	useEffect(() => {
+		localStorage.getItem('token') === null ? setIsLogin(false) : setIsLogin(true)
+	}, [])
 
 	// ? 카테고리 별 게시물 받아오기
 	const getCategoryPost = async (categoryId) => {

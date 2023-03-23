@@ -17,9 +17,6 @@ function PostPage() {
 	const [ writer, setWriter ] = useState("작성자")
 	const [ date, setDate ] = useState("작성일")
 
-	const token = localStorage.getItem("token")
-
-
 	useEffect(() => {
 		const fetchPost = async () => {
 			try {
@@ -28,7 +25,7 @@ function PostPage() {
 				setCategory(res.data.categoryId.title)
 				setContent(res.data.contents)
 				setWriter(res.data.userId.role)
-				setDate(res.data.createdAt.split('T')[0])
+				setDate((res.data.createdAt).split('T')[0])
 			} catch (error) {
 				console.error("ErrorMessage :", error);
 				alert("이야기 불러오기에 실패했습니다.")
@@ -46,16 +43,11 @@ function PostPage() {
 
 	const handleDelete = async () => {
 			try {
-				const res = await API.delete(
-					`/posts/${_id}`, {
-					header : {
-						'Content-Type' : 'application/json',
-						'Authorization' : `Bearer ${token}`
-					} }
-				)
+				const res = await API.delete(`/posts/${_id}`)
 
-				if (res.data && res.data.ok === true) {
+				if (res.data) {
 				alert('이야기가 정상적으로 삭제되었습니다.')
+				navigate('/posts')
 				}
 			} catch (error) {
 				console.error("ErrorMessage : ", error)
