@@ -17,10 +17,6 @@ function NavigationBar() {
       path: "/posts",
     },
     {
-      name: "온라인 상담",
-      path: "/counseling",
-    },
-    {
       name: "상담소 찾기",
       path: "/counselingcenter",
     },
@@ -30,7 +26,7 @@ function NavigationBar() {
     },
   ];
 
-  const token = false;
+  const token = localStorage.getItem("token");
 
   return (
     <NavContainer>
@@ -39,14 +35,13 @@ function NavigationBar() {
       </Link>
       <Container>
         <MypageLogoutWrapper>
-          {token == true ? (
+          {token ? (
             <>
               <StyledLink to="/users/mypage">마이페이지</StyledLink>
               <StyledLink to="/users/logout">로그아웃</StyledLink>
             </>
           ) : (
             <>
-              {" "}
               <StyledLink to="/users/register">회원가입</StyledLink>
               <StyledLink to="/users/login">로그인</StyledLink>
             </>
