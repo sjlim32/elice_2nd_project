@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from "react";
 import DaumPost from "./DaumPostcode";
-import PopupDom from './PopupDom.jsx'
-import * as API from '../../../utils/api'
+import PopupDom from "./PopupDom.jsx";
+import * as API from "../../../utils/api";
 
 function ChangeUserInfo() {
   const [users, setUsers] = useState([]);
-  const [password, setPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [zonecode, setZonecode] = useState("");
   const [address, setAddress] = useState("");
@@ -15,12 +15,11 @@ function ChangeUserInfo() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const openPostcode = useCallback(() => {
-    setIsPopupOpen(!isPopupOpen)
-  }, [isPopupOpen])
+    setIsPopupOpen(!isPopupOpen);
+  }, [isPopupOpen]);
 
   useEffect(() => {
-    API
-      .get(`/api/users/:userId`)
+    API.get(`/users/:userId`)
       .then((res) => {
         setUsers(res.data);
         if (res.data.address) {
@@ -29,13 +28,12 @@ function ChangeUserInfo() {
           setDetailAddress(res.data.address.detailAddress);
         }
       })
-      .catch(() => alert('error'));
+      .catch(() => alert("error"));
   }, []);
-
 
   const validatePassword = () => {
     if (newPassword !== confirmPassword) {
-      console.log('password is not confirmed');
+      console.log("password is not confirmed");
       return false;
     }
     return true;
@@ -45,95 +43,89 @@ function ChangeUserInfo() {
     e.preventDefault();
     if (validatePassword()) {
       try {
-        const res = await API.get('/api/users')
-        const userID = res.data._id
+        const res = await API.get("/users");
+        const userID = res.data._id;
 
-        const res2 = await API.patch('/api/users', {
-                    password: password,
-                    newPassword: newPassword,
-                    phone: phone,
-                    address: {
-                        zonecode,
-                        address,
-                        detailAddress,
-                    },
-                })
-        console.log(res2.data)
-        alert('update success')
-      } catch(err) {
-        alert('error')
+        const res2 = await API.patch("/users", {
+          password: password,
+          newPassword: newPassword,
+          phone: phone,
+          address: {
+            zonecode,
+            address,
+            detailAddress,
+          },
+        });
+        console.log(res2.data);
+        alert("update success");
+      } catch (err) {
+        alert("error");
       }
     }
   };
 
   return (
     <div>
-        <input
-            id='email'
-            placeholder={users.email}
-            disabled
-        />
+      <input id="email" placeholder={users.email} disabled />
 
-        <input
-            id='password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-        />
+      <input
+        id="password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
-        <input
-            id='newPassword'
-            type='password'
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-        />
+      <input
+        id="newPassword"
+        type="password"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+      />
 
-        <input 
-            id='confirmPassword'
-            type='password'
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+      <input
+        id="confirmPassword"
+        type="password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
 
-        <input 
-            id='username'
-            placeholder={users.userName}
-            disabled
-        />
+      <input id="username" placeholder={users.userName} disabled />
 
-        <input
-            id="phone"
-            type="text"
-            placeholder={users.phone}
-            onChange={(e) => setPhone(e.target.value)}
-        />
+      <input
+        id="phone"
+        type="text"
+        placeholder={users.phone}
+        onChange={(e) => setPhone(e.target.value)}
+      />
 
-        <button id="postcode" onClick={openPostcode}>
-            우편번호 검색
-        </button>
-        <div id="popupDom">
-            {isPopupOpen && (
-            <PopupDom>
-                <DaumPost
-                done={(data) => {
-                    setZonecode(data.zonecode);
-                    setAddress(data.address);
-                }}
-                />
-            </PopupDom>
-            )}
-        </div>
-        <input id="zonecode" placeholder={zonecode} disabled />
-        <input id="address" placeholder={address} disabled />
-        <input
-            id="detailAddress"
-            placeholder={detailAddress}
-            onChange={(e) => setDetailAddress(e.target.value)}
-        />
+      <button id="postcode" onClick={openPostcode}>
+        우편번호 검색
+      </button>
+      <div id="popupDom">
+        {isPopupOpen && (
+          <PopupDom>
+            <DaumPost
+              done={(data) => {
+                setZonecode(data.zonecode);
+                setAddress(data.address);
+              }}
+            />
+          </PopupDom>
+        )}
+      </div>
+      <input id="zonecode" placeholder={zonecode} disabled />
+      <input id="address" placeholder={address} disabled />
+      <input
+        id="detailAddress"
+        placeholder={detailAddress}
+        onChange={(e) => setDetailAddress(e.target.value)}
+      />
 
-        <button id='submit' onClick={handleSubmit}>수정하기</button>
+      <button id="submit" onClick={handleSubmit}>
+        수정하기
+      </button>
     </div>
-  )
+  );
 }
 
-export default ChangeUserInfo
+export default ChangeUserInfo;

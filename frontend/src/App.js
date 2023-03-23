@@ -15,7 +15,7 @@ const PostingPage = lazy(() => import("./pages/Community/PostingPage"));
 const ModifyPage = lazy(() => import("./pages/Community/ModifyPage"));
 const CounselingCenterPage = lazy(() => import("./pages/CounselingCenterPage"));
 const CampaignsPage = lazy(() => import("./pages/CampaignsPage"));
-const Register = lazy(() => import("./pages/register"));
+const Register = lazy(() => import("./pages/Register"));
 const ChangeUserInfo = lazy(() =>
   import("./components/pages/users/ChangeUserInfo")
 );

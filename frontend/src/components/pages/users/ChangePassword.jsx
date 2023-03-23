@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import * as API from '../../../utils/api'
+import React, { useState } from "react";
+import * as API from "../../../utils/api";
 
 function ChangePassword() {
-  const [password, setPassword] = useState('');
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const validatePassword = () => {
     if (newPassword !== confirmPassword) {
-      console.log('password is not confirmed');
+      console.log("password is not confirmed");
       return false;
     }
     return true;
@@ -18,47 +18,49 @@ function ChangePassword() {
     e.preventDefault();
     if (validatePassword()) {
       try {
-        const res = await API.get('/api/users')
-        const userID = res.data._id
+        const res = await API.get("/users");
+        const userID = res.data._id;
 
-        const res2 = await API.patch('/api/users', {
-                      password: password,
-                      newPassword: newPassword
-                    })
-        console.log(res2.data)
-        alert('update success')
-      } catch(err) {
-        alert('error')
+        const res2 = await API.patch("/users", {
+          password: password,
+          newPassword: newPassword,
+        });
+        console.log(res2.data);
+        alert("update success");
+      } catch (err) {
+        alert("error");
       }
     }
   };
 
   return (
     <div>
-        <input
-            id='password'
-            type='password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-        />
+      <input
+        id="password"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
 
-        <input
-            id='newPassword'
-            type='password'
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-        />
+      <input
+        id="newPassword"
+        type="password"
+        value={newPassword}
+        onChange={(e) => setNewPassword(e.target.value)}
+      />
 
-        <input 
-            id='confirmPassword'
-            type='password'
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-        />
+      <input
+        id="confirmPassword"
+        type="password"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+      />
 
-      <button id='submit' onSubmit={handleSubmit}>수정하기</button>
+      <button id="submit" onSubmit={handleSubmit}>
+        수정하기
+      </button>
     </div>
-  )
+  );
 }
 
-export default ChangePassword
+export default ChangePassword;

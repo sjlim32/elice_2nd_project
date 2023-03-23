@@ -1,7 +1,8 @@
-import React, {useCallback, useState} from "react"
+import React, { useCallback, useState } from "react";
 import DaumPost from "./DaumPostcode";
-import PopupDom from './PopupDom.jsx'
-import * as API from '../../../utils/api'
+import PopupDom from "./PopupDom.jsx";
+import * as API from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function SuppoterRegisterForm() {
   const [email, setEmail] = useState("");
@@ -14,10 +15,11 @@ function SuppoterRegisterForm() {
   const [detailAddress, setDetailAddress] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const openPostcode = useCallback(() => {
-    setIsPopupOpen(!isPopupOpen)
-  }, [isPopupOpen])
+    setIsPopupOpen(!isPopupOpen);
+  }, [isPopupOpen]);
 
   const validateEmail = useCallback(() => {
     const emailForm = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -39,9 +41,9 @@ function SuppoterRegisterForm() {
   const validateForm = () => {
     return validateEmail() && validatePassword();
   };
-  
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const userData = {
       role: "pending",
       email,
@@ -57,10 +59,11 @@ function SuppoterRegisterForm() {
     const validateResult = validateForm();
     if (validateResult) {
       try {
-        const res = await API.post('/api/users', userData)
-        console.log(res.data)
-      } catch(err) {
-        alert(error)
+        const res = await API.post("/users", userData);
+        console.log(res.data);
+        navigate("/");
+      } catch (err) {
+        alert(error);
       }
     }
   };
@@ -73,7 +76,6 @@ function SuppoterRegisterForm() {
         placeholder="abc@abc.com"
         onChange={(e) => setEmail(e.target.value)}
       />
-      <button id="checkEmail">중복 확인</button>
 
       <input
         id="password"
