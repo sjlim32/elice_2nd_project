@@ -8,7 +8,6 @@ function AboutDomesticViolencePage() {
   const AboutViolence = () => {
     return (
       <DivStyle>
-        {" "}
         남편과 아내, 부모와 자녀, 형제자매 및 기타 동거가족을 포함한 가족구성원
         중의 한사람이 다른 구성원에게 의도적으로 물리적인 힘을 사용하거나,
         정신적인 학대를 통하여 고통을 주는 행위입니다.
