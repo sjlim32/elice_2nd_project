@@ -50,7 +50,7 @@ function UserRegisterForm() {
   }
 
   return (
-    <form>
+    <div>
       <input
         id='email'
         value={email}
@@ -74,7 +74,7 @@ function UserRegisterForm() {
       />
 
       <button id='submit' onClick={handleSubmit}>가입하기</button>
-    </form>
+    </div>
   )
 }
 
