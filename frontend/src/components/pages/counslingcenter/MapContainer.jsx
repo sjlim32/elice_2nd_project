@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import centerAddresses from "../../../datas/counseling_center.json";
 
 const { kakao } = window;
-
+const _sleep = async () =>
+  await new Promise((resolve) => setTimeout(() => resolve(), 10));
 function MapContainer() {
-  useEffect(() => {
+  const setmarker = async () => {
     const mapContainer = document.getElementById("myMap");
     const mapOption = {
       center: new kakao.maps.LatLng(35.9424, 128.1135947),
@@ -18,8 +19,9 @@ function MapContainer() {
     // 주소-좌표 변환 객체 생성
     const geocoder = new kakao.maps.services.Geocoder();
 
-    centerAddresses.forEach((data) => {
-      const { 상담소명, 주소 } = data;
+    for (const addr of centerAddresses) {
+      await _sleep();
+      const { 상담소명, 주소 } = addr;
       // 주소로 좌표를 검색합니다
       geocoder.addressSearch(주소, function (result, status) {
         // 정상적으로 검색이 완료됐으면
@@ -54,7 +56,10 @@ function MapContainer() {
           });
         }
       });
-    });
+    }
+  };
+  useEffect(() => {
+    setmarker();
   }, []);
 
   return (
@@ -62,7 +67,7 @@ function MapContainer() {
       id="myMap"
       style={{
         width: "700px",
-        height: "700px",
+        height: "750px",
       }}
     ></div>
   );
