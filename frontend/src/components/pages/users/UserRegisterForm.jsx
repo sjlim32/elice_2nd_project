@@ -1,5 +1,5 @@
-import React, {useState} from "react"
-import * as API from '../../../utils/api'
+import React, {useState, useCallback} from "react"
+import * as API from '../../../utils/api';
 
 function UserRegisterForm() {
   const [email, setEmail] = useState('')
@@ -24,12 +24,12 @@ function UserRegisterForm() {
     return true;
   };
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     return (
       validateEmail() &&
       validatePassword()
     );
-  };
+  }, [email, password]);
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -38,13 +38,15 @@ function UserRegisterForm() {
       email,
       password
     }
+    const validateResult = validateForm()
+    if (validateResult) {
       try {
-        const res = await API.post('/users', {userData})
+        const res = await API.post('/users', userData)
         console.log(res.data)
-        alert("성공")
       } catch(err) {
-        alert("실패")
+        alert(error)
       }
+    }
   }
 
   return (

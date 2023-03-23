@@ -17,6 +17,8 @@ function PostPage() {
 	const [ writer, setWriter ] = useState("작성자")
 	const [ date, setDate ] = useState("작성일")
 
+	const token = localStorage.getItem("token")
+
 
 	useEffect(() => {
 		const fetchPost = async () => {
@@ -42,8 +44,24 @@ function PostPage() {
 		navigate(`/posts/modify/${_id}`)
 	}
 
-	const handleDelete = () => {
+	const handleDelete = async () => {
+			try {
+				const res = await API.delete(
+					`/posts/${_id}`, {
+					header : {
+						'Content-Type' : 'application/json',
+						'Authorization' : `Bearer ${token}`
+					} }
+				)
 
+				if (res.data && res.data.ok === true) {
+				alert('이야기가 정상적으로 삭제되었습니다.')
+				}
+			} catch (error) {
+				console.error("ErrorMessage : ", error)
+				alert(error)
+				navigate(-1)
+			}
 	return
 }
 
