@@ -28,6 +28,14 @@ function NavigationBar() {
 
   const token = localStorage.getItem("token");
 
+  const handleLogout = (e) => {
+    e.preventDefault();
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("email");
+    window.location.reload();
+  };
+
   return (
     <NavContainer>
       <Link to="/">
@@ -38,7 +46,7 @@ function NavigationBar() {
           {token ? (
             <>
               <StyledLink to="/users/mypage">마이페이지</StyledLink>
-              <StyledLink to="/users/logout">로그아웃</StyledLink>
+              <StyledLink onClick={handleLogout}>로그아웃</StyledLink>
             </>
           ) : (
             <>
