@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import * as API from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 function UserRegisterForm() {
   const [email, setEmail] = useState("");
@@ -42,7 +43,12 @@ function UserRegisterForm() {
       try {
         const res = await API.post("/users", userData);
         console.log(res.data);
+        const res2 = await API.post("/login", userData);
+        localStorage.setItem("token", res2.data.accessToken);
+        localStorage.setItem("role", res2.data.role);
+        localStorage.setItem("email", res2.data.email);
         navigate("/");
+        window.location.reload();
       } catch (err) {
         alert(error);
       }
@@ -50,34 +56,57 @@ function UserRegisterForm() {
   };
 
   return (
-    <div>
-      <input
-        id="email"
-        value={email}
-        placeholder="abc@abc.com"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <button id="checkEmail">중복 확인</button>
-
-      <input
-        id="password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <input
-        id="confirmPassword"
-        type="password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-
-      <button id="submit" onClick={handleSubmit}>
-        가입하기
-      </button>
-    </div>
+    <RegisterContainer>
+      <div>
+        이메일
+        <input
+          id="email"
+          value={email}
+          placeholder="abc@abc.com"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+      <div>
+        비밀번호
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <div>
+        비밀번호 확인
+        <input
+          id="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+      </div>
+      <RegisterButton onClick={handleSubmit}>가입하기</RegisterButton>
+    </RegisterContainer>
   );
 }
+
+const RegisterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const RegisterButton = styled.button`
+  width: 100px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: #3e4e34;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+`;
 
 export default UserRegisterForm;
