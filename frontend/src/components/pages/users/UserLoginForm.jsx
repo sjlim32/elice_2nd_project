@@ -17,6 +17,7 @@ function UserLoginForm() {
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("email", res.data.email);
       navigate("/");
+      window.location.reload();
     } catch (err) {
       alert("error");
     }
