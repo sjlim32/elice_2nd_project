@@ -3,6 +3,7 @@ import DaumPost from "./DaumPostcode";
 import PopupDom from "./PopupDom.jsx";
 import * as API from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
 function SuppoterRegisterForm() {
   const [email, setEmail] = useState("");
@@ -69,71 +70,107 @@ function SuppoterRegisterForm() {
   };
 
   return (
-    <div>
-      <input
-        id="email"
-        value={email}
-        placeholder="abc@abc.com"
-        onChange={(e) => setEmail(e.target.value)}
-      />
-
-      <input
-        id="password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-
-      <input
-        id="confirmPassword"
-        type="password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
-
-      <input
-        id="name"
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
-
-      <input
-        id="phone"
-        type="text"
-        placeholder="-없이 숫자로만 입력해 주세요"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value)}
-      />
-
-      <button id="postcode" onClick={openPostcode}>
-        우편번호 검색
-      </button>
-      <div id="popupDom">
-        {isPopupOpen && (
-          <PopupDom>
-            <DaumPost
-              done={(data) => {
-                setZonecode(data.zonecode);
-                setAddress(data.address);
-              }}
-            />
-          </PopupDom>
-        )}
+    <RegisterContainer>
+      <div>
+        이메일
+        <input
+          id="email"
+          value={email}
+          placeholder="abc@abc.com"
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </div>
-      <input id="zonecode" value={zonecode} disabled />
-      <input id="address" value={address} disabled />
-      <input
-        id="detailAddress"
-        value={detailAddress}
-        onChange={(e) => setDetailAddress(e.target.value)}
-      />
-
-      <button id="submit" onClick={handleSubmit}>
-        가입하기
-      </button>
-    </div>
+      <div>
+        비밀번호
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
+      <div>
+        비밀번호 확인
+        <input
+          id="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+      </div>
+      <div>
+        이름
+        <input
+          id="name"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </div>
+      <div>
+        연락처
+        <input
+          id="phone"
+          type="text"
+          placeholder="-없이 숫자로만 입력해 주세요"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+        />
+      </div>
+      <div>
+        주소
+        <PostButton id="postcode" onClick={openPostcode}>
+          우편번호 검색
+        </PostButton>
+        <div id="popupDom">
+          {isPopupOpen && (
+            <PopupDom>
+              <DaumPost
+                done={(data) => {
+                  setZonecode(data.zonecode);
+                  setAddress(data.address);
+                }}
+              />
+            </PopupDom>
+          )}
+        </div>
+        <input id="zonecode" value={zonecode} disabled />
+        <input id="address" value={address} disabled />
+        <input
+          id="detailAddress"
+          value={detailAddress}
+          onChange={(e) => setDetailAddress(e.target.value)}
+        />
+      </div>
+      <RegisterButton onSubmit={handleSubmit}>가입하기</RegisterButton>
+    </RegisterContainer>
   );
 }
+
+const RegisterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const PostButton = styled.button`
+  border-radius: 15px;
+  background-color: #3e4e34;
+  color: #ffffff;
+`;
+
+const RegisterButton = styled.button`
+  width: 100px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: #3e4e34;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+`;
 
 export default SuppoterRegisterForm;
