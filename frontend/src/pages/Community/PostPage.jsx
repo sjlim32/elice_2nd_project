@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 // import axios from 'axios';
 import * as API from '../../utils/api';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -17,6 +17,9 @@ function PostPage() {
 	const [ writer, setWriter ] = useState("작성자")
 	const [ date, setDate ] = useState("작성일")
 
+	const token = localStorage.getItem("token")
+
+
 	useEffect(() => {
 		const fetchPost = async () => {
 			try {
@@ -32,8 +35,36 @@ function PostPage() {
 				navigate(`/posts`)
 			}
 		}
-		fetchPost();
-		}, [_id]);
+		fetchPost()
+	}, [_id])
+	// useMemo(() => fetchPost(), [_id])
+
+	const handleModify = () => {
+		
+		navigate(`/posts/modify/${_id}`)
+	}
+
+	const handleDelete = async () => {
+			try {
+				const res = await API.delete(
+					`/posts/${_id}`, {
+					header : {
+						'Content-Type' : 'application/json',
+						'Authorization' : `Bearer ${token}`
+					} }
+				)
+
+				if (res.data && res.data.ok === true) {
+				alert('이야기가 정상적으로 삭제되었습니다.')
+				}
+			} catch (error) {
+				console.error("ErrorMessage : ", error)
+				alert(error)
+				navigate(-1)
+			}
+	return
+}
+
 
 	return (
 		<Container>
@@ -50,7 +81,8 @@ function PostPage() {
 				<BottomWrap>
 					<BtnWrap>
 						<Btn onClick={() => navigate(-1)}>뒤로가기</Btn>
-						<Btn onClick={() => navigate(`/posts/modify/${_id}`)}>수정하기</Btn>
+						<Btn onClick={handleModify}>수정하기</Btn>
+						<Btn onClick={handleDelete}>삭제하기</Btn>
 					</BtnWrap>
 				</BottomWrap>
 			</PostCotainer>
