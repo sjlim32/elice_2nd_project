@@ -3,6 +3,7 @@ import * as API from '../../../../utils/api';
 import styled from 'styled-components';
 
 const CommentList = ({commentList}) => {
+	// const [ visible, setVisible ] = useState(false);
 
 // .filter(writer => {
 // 									if (writer === true) {
@@ -24,7 +25,12 @@ const CommentList = ({commentList}) => {
 								<CommentContainer key={idx} >
 								<CommentBox className='Writer'>{reReply.isWriter ? '작성자' : '익명'} </CommentBox>
 								<Commentary>{reReply.parentId ? ` ㄴ : ${reReply.contents}` : ` : ${reReply.contents}`}</Commentary>
-								<CommentBox className='CreateAt' style={{textAlign:'right'}}>{(reReply.createdAt).split("T")[0]}</CommentBox>
+								{/* <Btn onClick={() => setVisible(!visible)}>공감의 말</Btn> */}
+								<CommentBox className='CreateAt' style={{textAlign:'right'}}>{reReply.createdAt.split("T")[0]}</CommentBox>
+								{/* { visible && (
+									<input placeholder='공감의 대댓글을 입력해주세요.'></input>
+									)
+								} */}
 								</CommentContainer>
 							)
 						})
@@ -72,7 +78,7 @@ function Comment({post_id}) {
 			const res = await API.post(`/replies`, { postId: post_id, parentId: null, contents: commentary })
 			if (res.data) {
 				alert('공감의 말이 정상적으로 등록되었습니다.');
-				// 리프레시 필요
+				window.location.reload();
 			}
 		} catch (error) {
 			console.error('ErrorMessage : ', error)
@@ -87,7 +93,7 @@ function Comment({post_id}) {
 		<Container>
 			<CommentRegisterBox onSubmit={handleSubmit}>
 				<TextBox>공감의 말 달기</TextBox>
-				<CommentInput value={commentary} placeholder={'공감의 말을 입력해주세요.'} onChange={e=>{setCommentary(e.target.value)}}></CommentInput>
+				<CommentInput value={commentary} placeholder={'공감의 말을 입력해주세요.'} onChange={e => setCommentary(e.target.value)}></CommentInput>
 				<Btn type='submit'>등록</Btn>
 			</CommentRegisterBox>
 				<TextBox>공감 공간</TextBox>
@@ -143,11 +149,11 @@ const CommentInput = styled.input`
 const Btn = styled.button`
 	display: flex;
 	flex-direction: column;
+	flex: 0 1 75px;
 	justify-content: center;
 	align-items: center;
 
-	width: 50px;
-	height: 25px;
+	height: 30px;
 
 	background-color: white;
 	border: 1px solid lightgray;

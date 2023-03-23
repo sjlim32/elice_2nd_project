@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import * as API from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 function UserLoginForm() {
   const [email, setEmail] = useState("");
@@ -19,7 +18,7 @@ function UserLoginForm() {
       navigate("/");
       window.location.reload();
     } catch (err) {
-      alert("error");
+      alert(err);
     }
   };
 
