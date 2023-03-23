@@ -13,12 +13,10 @@ function UserLoginForm() {
     const userData = { email, password };
     try {
       const res = await API.post("/login", userData);
-      localStorage.setItem("jwt", res.data);
+      localStorage.setItem("token", res.data.accessToken);
+      localStorage.setItem("role", res.data.role);
+      localStorage.setItem("email", res.data.email);
       console.log(res.data);
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${res.data.access_token}`;
-      navigate("/");
     } catch (err) {
       alert("error");
     }

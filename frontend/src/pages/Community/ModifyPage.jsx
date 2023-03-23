@@ -27,8 +27,6 @@ function ModifyPages() {
 	const [ contents, setContents ] = useState('')
 	const [ categoryId, setCategoryId ] = useState('6411719e1410804b9b58697d')
 
-	const token = localStorage.getItem('token')
-
 	const CategoryContainer = ({categories}) => {
 		const handleCategory = (e) => {
 			setCategoryId(e.target.value);
@@ -71,15 +69,11 @@ function ModifyPages() {
 			return;
 		}	
 		try {
-			const res = await API.patch(
-				`/posts/${_id}`, 
-				{ title: title, contents: contents, categoryId:categoryId },
-				{ headers : {
-					'Content-Type' : 'application/json',
-					'Authorization' : `Bearer ${token}`
-				}}
-			)
-			alert(res.data);
+			const res = await API.patch(`/posts/${_id}` , {title, contents, categoryId})
+			if (res.data){
+				alert("수정 되었습니다.")
+				navigate(`/posts/${_id}`)
+			}
 		} catch (error) {	
 			console.error('ErrorMessage :', error)
 			alert(error)

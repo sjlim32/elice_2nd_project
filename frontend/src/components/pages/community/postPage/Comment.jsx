@@ -24,7 +24,7 @@ const CommentList = ({commentList}) => {
 								<CommentContainer key={idx} >
 								<CommentBox className='Writer'>{reReply.isWriter ? '작성자' : '익명'} </CommentBox>
 								<Commentary>{reReply.parentId ? ` ㄴ : ${reReply.contents}` : ` : ${reReply.contents}`}</Commentary>
-								<CommentBox className='CreateAt' style={{textAlign:'right'}}>{reReply.createdAt}</CommentBox>
+								<CommentBox className='CreateAt' style={{textAlign:'right'}}>{(reReply.createdAt).split("T")[0]}</CommentBox>
 								</CommentContainer>
 							)
 						})
@@ -37,8 +37,6 @@ function Comment({post_id}) {
 
 	const [ comments, setComments ] = useState([])
 	const [ commentary, setCommentary] = useState('')
-
-	const token = localStorage.getItem('token')
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -71,22 +69,17 @@ function Comment({post_id}) {
 		e.preventDefault();
 
 		try {
-			const res = await API.post(
-				`/replies`, 
-				{ postId: post_id, userId: 'none', parentId: 'none', contents: commentary } ,
-				{headers: { 
-					'Content-Type': 'application/json',
-					'Authorization': `Bearer ${token}` }}
-			)
-			if (res.data && res.data.ok === true) {
+			const res = await API.post(`/replies`, { postId: post_id, parentId: null, contents: commentary })
+			if (res.data) {
 				alert('공감의 말이 정상적으로 등록되었습니다.');
+				// 리프레시 필요
 			}
 		} catch (error) {
 			console.error('ErrorMessage : ', error)
 			alert('공감의 말을 등록하지 못했습니다.')
 			}
 		}
-	, []);
+	, [commentary]);
 
 	const CommentListComp = useMemo(() => <CommentList commentList={comments}/>, [comments])
 
@@ -94,7 +87,7 @@ function Comment({post_id}) {
 		<Container>
 			<CommentRegisterBox onSubmit={handleSubmit}>
 				<TextBox>공감의 말 달기</TextBox>
-				<CommentInput placeholder={'공감의 말을 입력해주세요.'} onChange={e=>{setCommentary(e.target.value)}}></CommentInput>
+				<CommentInput value={commentary} placeholder={'공감의 말을 입력해주세요.'} onChange={e=>{setCommentary(e.target.value)}}></CommentInput>
 				<Btn type='submit'>등록</Btn>
 			</CommentRegisterBox>
 				<TextBox>공감 공간</TextBox>
