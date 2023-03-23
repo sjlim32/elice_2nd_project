@@ -43,6 +43,7 @@ function UserRegisterForm() {
         const res = await API.post("/users", userData);
         console.log(res.data);
         navigate("/");
+        window.location.reload();
       } catch (err) {
         alert(error);
       }

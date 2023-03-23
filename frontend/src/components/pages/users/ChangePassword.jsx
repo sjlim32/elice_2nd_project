@@ -18,17 +18,14 @@ function ChangePassword() {
     e.preventDefault();
     if (validatePassword()) {
       try {
-        const res = await API.get("/users");
-        const userID = res.data._id;
-
-        const res2 = await API.patch("/users", {
+        const res = await API.patch("/users", {
           password: password,
           newPassword: newPassword,
         });
-        console.log(res2.data);
+        console.log(res.data);
         alert("update success");
       } catch (err) {
-        alert("error");
+        alert(err);
       }
     }
   };
@@ -56,7 +53,7 @@ function ChangePassword() {
         onChange={(e) => setConfirmPassword(e.target.value)}
       />
 
-      <button id="submit" onSubmit={handleSubmit}>
+      <button id="submit" onClick={handleSubmit}>
         수정하기
       </button>
     </div>

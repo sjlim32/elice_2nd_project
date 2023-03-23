@@ -19,7 +19,7 @@ function UserLoginForm() {
       navigate("/");
       window.location.reload();
     } catch (err) {
-      alert("error");
+      alert(err);
     }
   };
 
