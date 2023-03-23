@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import * as API from '../../utils/api'
 import styled from 'styled-components';
 
 const categories = [
-	{
-		name: '소통공감',
-		value: '소통공감'
-	},
-	{
-		name: '좋은정보',
-		value: '좋은정보'
-	},
-	{
-		name: '고민상담',
-		value: '고민상담'
-	},
+	{ title: '소통공감', _id: '6411719e1410804b9b58697d' },
+	{ title: '좋은정보', _id: '641171971410804b9b58697a' },
+	{ title: '고민거리', _id: '641171911410804b9b586977' },
 ]
 
 function PostingPage() {
 
 	const [ title, setTitle ] = useState('')
 	const [ content, setContent ] = useState('')
-	const [ categoryId, setCategoryId ] = useState('소통공감')
+	const [ categoryId, setCategoryId ] = useState('6411719e1410804b9b58697d')
+
+	const navigate = useNavigate();
 
 	const CategoryContainer = ({categories}) => {
 		const handleCategory = (e) => {
@@ -33,9 +27,9 @@ function PostingPage() {
 				{categories.map((category, idx) => (
 					<option
 						key = {idx}
-						value = {category.value}
+						value = {category._id}
 					>
-						{category.name}
+						{category.title}
 					</option>
 					)
 				)}
@@ -55,13 +49,18 @@ function PostingPage() {
 			return;
 		}	
 		try {
-			const res = await axios.post('/posts/', { title: title, content: content, category:categoryId })
-			if (res.data && res.data.ok === true) {
+			const res = await API.post(
+				'/posts', 
+				{ title: title, contents: content, categoryId:categoryId }	
+			)
+			if (res.data) {
 				alert('이야기가 정상적으로 등록되었습니다.');
-			}
+				navigate('/posts')
+				}
 		} catch (error) {	
 			console.error('ErrorMessage :', error)
-			alert('이야기를 등록하지 못했습니다.')
+			alert(error)
+			navigate('/posts')
 		}
 	}
 

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import axios from "axios";
-import DaumPost from "./DaumPostcode.jsx";
+import React, { useCallback, useState } from "react";
+import DaumPost from "./DaumPostcode";
 import PopupDom from "./PopupDom.jsx";
+import * as API from "../../../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function SuppoterRegisterForm() {
   const [email, setEmail] = useState("");
@@ -14,36 +15,37 @@ function SuppoterRegisterForm() {
   const [detailAddress, setDetailAddress] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
-  const openPostcode = () => {
+  const openPostcode = useCallback(() => {
     setIsPopupOpen(!isPopupOpen);
-  };
+  }, [isPopupOpen]);
 
-  const validateEmail = () => {
+  const validateEmail = useCallback(() => {
     const emailForm = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
     if (emailForm.test(email) == false) {
       setError("invalide Email Address");
       return false;
     }
     return true;
-  };
+  }, [email]);
 
-  const validatePassword = () => {
+  const validatePassword = useCallback(() => {
     if (password !== confirmPassword) {
       setError("password is not confirmed");
       return false;
     }
     return true;
-  };
+  }, [password, confirmPassword]);
 
   const validateForm = () => {
     return validateEmail() && validatePassword();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = {
-      formType: "suppoter",
+      role: "pending",
       email,
       password,
       userName: name,
@@ -56,14 +58,13 @@ function SuppoterRegisterForm() {
     };
     const validateResult = validateForm();
     if (validateResult) {
-      axios
-        .post("/users/register", userData)
-        .then((res) => {
-          console.log(userData);
-        })
-        .catch((err) => {
-          alert(error);
-        });
+      try {
+        const res = await API.post("/users", userData);
+        console.log(res.data);
+        navigate("/");
+      } catch (err) {
+        alert(error);
+      }
     }
   };
 
@@ -75,7 +76,6 @@ function SuppoterRegisterForm() {
         placeholder="abc@abc.com"
         onChange={(e) => setEmail(e.target.value)}
       />
-      <button id="checkEmail">중복 확인</button>
 
       <input
         id="password"

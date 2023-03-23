@@ -9,38 +9,11 @@ import {
   Legend,
 } from "recharts";
 import { useCallback, useState } from "react";
-import styled from "styled-components";
-
-const data = [
-  {
-    name: "가정폭력 상담소",
-    인지율: 74.9,
-  },
-  {
-    name: "가정폭력 피해자 보호시설",
-    인지율: 58.2,
-  },
-  {
-    name: "1366",
-    인지율: 43.3,
-  },
-  {
-    name: "긴급신고 112",
-    인지율: 65.1,
-  },
-  {
-    name: "아동보호전문기관",
-    인지율: 59.7,
-  },
-  {
-    name: "노인보호전문기관",
-    인지율: 48.6,
-  },
-];
+import { dataOfSupportServices } from "../../../../utils/consts";
 
 export default function SupportServicesChart() {
   const [activeIndex, setActiveIndex] = useState(2);
-  const activeItem = data[activeIndex];
+  const activeItem = dataOfSupportServices[activeIndex];
   const handleClick = useCallback(
     (_, index) => {
       setActiveIndex(index);
@@ -49,11 +22,10 @@ export default function SupportServicesChart() {
   );
   return (
     <>
-      <Title>가정폭력 관련 지원기관 인지 여부</Title>
       <BarChart
         width={600}
         height={550}
-        data={data}
+        data={dataOfSupportServices}
         margin={{
           top: 10,
           right: 50,
@@ -83,7 +55,7 @@ export default function SupportServicesChart() {
           iconSize={15}
         />
         <Bar dataKey="인지율" label={{ position: "top" }} onClick={handleClick}>
-          {data.map((entry, index) => (
+          {dataOfSupportServices.map((entry, index) => (
             <Cell
               cursor="pointer"
               fill={index === activeIndex ? "#3e4e34" : "#a7c097"}
@@ -96,7 +68,3 @@ export default function SupportServicesChart() {
     </>
   );
 }
-
-const Title = styled.h2`
-  margin-bottom: auto;
-`;

@@ -20,8 +20,9 @@ function CommunityMainPage() {
 
 	const navigate = useNavigate();
 
-	const [category, setCategory] = useState('전체');
+	const [ category, setCategory ] = useState('전체');
 	const [ posts, setPosts ] = useState([]);
+	const [ isLogin, setIsLogin ] = useState(false);
 
 	// pagination 구현을 위한 변수
 	const [ page, setPage ] = useState(1);
@@ -33,6 +34,10 @@ function CommunityMainPage() {
 			return res;
 		}
 	}
+
+	useEffect(() => {
+		localStorage.getItem('token') === null ? setIsLogin(false) : setIsLogin(true)
+	}, [])
 
 	// ? 카테고리 별 게시물 받아오기
 	const getCategoryPost = async (categoryId) => {
@@ -75,7 +80,9 @@ function CommunityMainPage() {
 				setPosts={getCategoryPost}
 			/>
 			<Search></Search>
-			<WriteBtn onClick={() => {navigate('/posts/write')}}>이야기 등록</WriteBtn>
+			<WriteBtn 
+				style={ isLogin ? { display:'' }: { display:'none'} }
+				onClick={() => {navigate('/posts/write')}}>이야기 등록</WriteBtn>
 			</SearchWrap>
 		<BoardWrap>
 			<ContentBar>

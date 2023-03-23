@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 // import axios from 'axios';
 import * as API from '../../utils/api';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -25,15 +25,38 @@ function PostPage() {
 				setCategory(res.data.categoryId.title)
 				setContent(res.data.contents)
 				setWriter(res.data.userId.role)
-				setDate(res.data.createdAt.split('T')[0])
+				setDate((res.data.createdAt).split('T')[0])
 			} catch (error) {
 				console.error("ErrorMessage :", error);
 				alert("이야기 불러오기에 실패했습니다.")
 				navigate(`/posts`)
 			}
 		}
-		fetchPost();
-		}, [_id]);
+		fetchPost()
+	}, [_id])
+	// useMemo(() => fetchPost(), [_id])
+
+	const handleModify = () => {
+		
+		navigate(`/posts/modify/${_id}`)
+	}
+
+	const handleDelete = async () => {
+			try {
+				const res = await API.delete(`/posts/${_id}`)
+
+				if (res.data) {
+				alert('이야기가 정상적으로 삭제되었습니다.')
+				navigate('/posts')
+				}
+			} catch (error) {
+				console.error("ErrorMessage : ", error)
+				alert(error)
+				navigate(-1)
+			}
+	return
+}
+
 
 	return (
 		<Container>
@@ -50,7 +73,8 @@ function PostPage() {
 				<BottomWrap>
 					<BtnWrap>
 						<Btn onClick={() => navigate(-1)}>뒤로가기</Btn>
-						<Btn onClick={() => navigate(`/posts/modify/${_id}`)}>수정하기</Btn>
+						<Btn onClick={handleModify}>수정하기</Btn>
+						<Btn onClick={handleDelete}>삭제하기</Btn>
 					</BtnWrap>
 				</BottomWrap>
 			</PostCotainer>

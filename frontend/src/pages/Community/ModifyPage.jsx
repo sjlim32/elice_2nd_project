@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
 import * as API from '../../utils/api';
 import styled from 'styled-components';
 
@@ -70,11 +69,14 @@ function ModifyPages() {
 			return;
 		}	
 		try {
-			const res = await API.patch(`/posts/${_id}`, { title: title, contents: contents, categoryId:categoryId })
-			alert(res.data);
+			const res = await API.patch(`/posts/${_id}` , {title, contents, categoryId})
+			if (res.data){
+				alert("수정 되었습니다.")
+				navigate(`/posts/${_id}`)
+			}
 		} catch (error) {	
 			console.error('ErrorMessage :', error)
-			alert('이야기 수정을 하지 못했습니다.')
+			alert(error)
 		}
 	}
 
