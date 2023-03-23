@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as API from "../../../utils/api";
 
-async function postDB() {
+async function PostDB() {
   const [postList, setPostList] = useState([]);
 
   try {
@@ -39,4 +39,4 @@ async function postDB() {
   );
 }
 
-export default postDB;
+export default PostDB;

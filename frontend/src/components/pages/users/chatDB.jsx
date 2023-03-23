@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as API from "../../../utils/api";
 
-async function chatDB() {
+async function ChatDB() {
   const [chatList, setChatList] = useState([]);
 
   try {
@@ -39,4 +39,4 @@ async function chatDB() {
   );
 }
 
-export default chatDB;
+export default ChatDB;
