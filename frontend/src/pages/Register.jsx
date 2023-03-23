@@ -39,8 +39,6 @@ function Register() {
   );
 }
 
-export default Register;
-
 const RegisterContainer = styled.div`
   width: 700px;
   border: 2px solid #3e4e34;
@@ -60,3 +58,5 @@ const BackgroundImgLayout = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
 `;
+
+export default Register;
