@@ -43,7 +43,6 @@ function App() {
               path="/posts/category/:category"
               element={<CommunityMainPage />}
             />
-            {/* <Route path="/counseling" element={<CounselingPage />} /> */}
             <Route
               path="/counselingcenter"
               element={<CounselingCenterPage />}
