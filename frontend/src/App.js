@@ -1,54 +1,60 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Layout from "./components/commons/layout";
-import ChangeUserInfo from "./components/pages/users/ChangeUserInfo";
-import {
-  MainPage,
-  AboutUsPage,
-  AboutDomesticViolencePage,
-  CommunityMainPage,
-  PostingPage,
-  PostPage,
-  ModifyPage,
-  CounselingPage,
-  CounselingCenterPage,
-  CampaignsPage,
-  Register,
-} from "./pages";
-import UserLoginForm from "./components/pages/users/UserLoginForm";
-import UserInfo from "./components/pages/users/UserInfo";
-import ChangePassword from "./components/pages/users/ChangePassword";
-import UserWithdrawal from "./components/pages/users/UserWithdrawal";
+import { lazy, Suspense } from "react";
+
+const Layout = lazy(() => import("./components/commons/layout"));
+const MainPage = lazy(() => import("./pages/MainPage"));
+const AboutUsPage = lazy(() => import("./pages/AboutUsPage"));
+const AboutDomesticViolencePage = lazy(() =>
+  import("./pages/AboutDomesticViolencePage")
+);
+const CommunityMainPage = lazy(() =>
+  import("./pages/Community/CommunityMainPage")
+);
+const PostPage = lazy(() => import("./pages/Community/PostPage"));
+const PostingPage = lazy(() => import("./pages/Community/PostingPage"));
+const ModifyPage = lazy(() => import("./pages/Community/ModifyPage"));
+const CounselingCenterPage = lazy(() => import("./pages/CounselingCenterPage"));
+const CampaignsPage = lazy(() => import("./pages/CampaignsPage"));
+const Register = lazy(() => import("./pages/register"));
+const ChangeUserInfo = lazy(() =>
+  import("./components/pages/users/ChangeUserInfo")
+);
+const UserLoginForm = lazy(() =>
+  import("./components/pages/users/UserLoginForm")
+);
 
 function App() {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/aboutus" element={<AboutUsPage />} />
-          <Route
-            path="/aboutdomesticviolence"
-            element={<AboutDomesticViolencePage />}
-          />
-          <Route path="/posts" element={<CommunityMainPage />} />
-          <Route path="/posts/:_id" element={<PostPage />} />
-          <Route path="/posts/write" element={<PostingPage />} />
-          <Route path="/posts/modify/:_id" element={<ModifyPage />} />
-          <Route
-            path="/posts/category/:category"
-            element={<CommunityMainPage />}
-          />
-          <Route path="/counseling" element={<CounselingPage />} />
-          <Route path="/counselingcenter" element={<CounselingCenterPage />} />
-          <Route path="/campaigns" element={<CampaignsPage />} />
-          <Route path="/users/register" element={<Register />} />
-          <Route path="/users/changeuserinfo" element={<ChangeUserInfo />} />
-          <Route path="/users/login" element={<UserLoginForm />} />
-          <Route path="/users/userinfo" element={<UserInfo />} />
-          <Route path="/users/changepassword" element={<ChangePassword />} />
-          <Route path="/users/userwithdrawal" element={<UserWithdrawal />} />
-        </Route>
-      </Routes>
+      <Suspense fallback={<p> Loading...</p>}>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/aboutus" element={<AboutUsPage />} />
+            <Route
+              path="/aboutdomesticviolence"
+              element={<AboutDomesticViolencePage />}
+            />
+            <Route path="/posts" element={<CommunityMainPage />} />
+            <Route path="/posts/:_id" element={<PostPage />} />
+            <Route path="/posts/write" element={<PostingPage />} />
+            <Route path="/posts/modify/:_id" element={<ModifyPage />} />
+            <Route
+              path="/posts/category/:category"
+              element={<CommunityMainPage />}
+            />
+            {/* <Route path="/counseling" element={<CounselingPage />} /> */}
+            <Route
+              path="/counselingcenter"
+              element={<CounselingCenterPage />}
+            />
+            <Route path="/campaigns" element={<CampaignsPage />} />
+            <Route path="/users/register" element={<Register />} />
+            <Route path="/users/changeuserinfo" element={<ChangeUserInfo />} />
+            <Route path="/users/login" element={<UserLoginForm />} />
+          </Route>
+        </Routes>
+      </Suspense>
     </Router>
   );
 }
