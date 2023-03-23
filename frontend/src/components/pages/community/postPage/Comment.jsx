@@ -3,7 +3,6 @@ import * as API from '../../../../utils/api';
 import styled from 'styled-components';
 
 const CommentList = ({commentList}) => {
-	// const [ visible, setVisible ] = useState(false);
 
 	const handleDelete = useCallback( async (e) => {
 		
