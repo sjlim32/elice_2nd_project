@@ -16,10 +16,6 @@ function UserLoginForm() {
       localStorage.setItem("token", res.data.accessToken);
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("email", res.data.email);
-      axios.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${res.data.accessToken}`;
-      console.log(res.data);
       navigate("/");
     } catch (err) {
       alert("error");

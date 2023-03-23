@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { Navigate } from "react-router-dom";
 import * as API from "../../../utils/api";
 
 function SuppoterLoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   /*
   유저 로그인과 다르게 db에 저장되어 있는지 확인한 후
@@ -12,16 +14,18 @@ function SuppoterLoginForm() {
   3. 저장이 안되어 있으면 alert으로 가입을 하라고 안내
   위에 대한 부분 추가 구현 필요
   */
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = { email, password };
-    API.post("/login", userData)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        alert("error");
-      });
+    try {
+      const res = await API.post("/login", userData);
+      localStorage.setItem("token", res.data.accessToken);
+      localStorage.setItem("role", res.data.role);
+      localStorage.setItem("email", res.data.email);
+      Navigate("/");
+    } catch (err) {
+      alert("error");
+    }
   };
 
   return (
