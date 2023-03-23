@@ -17,6 +17,7 @@ import {
 import UserLoginForm from "./components/pages/users/UserLoginForm";
 import UserInfo from "./components/pages/users/UserInfo";
 import ChangePassword from "./components/pages/users/ChangePassword";
+import UserWithdrawal from "./components/pages/users/UserWithdrawal";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/users/login" element={<UserLoginForm />} />
           <Route path="/users/userinfo" element={<UserInfo />} />
           <Route path="/users/changepassword" element={<ChangePassword />} />
+          <Route path="/users/userwithdrawal" element={<UserWithdrawal />} />
         </Route>
       </Routes>
     </Router>

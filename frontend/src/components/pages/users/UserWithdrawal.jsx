@@ -11,7 +11,6 @@ function UserWithdrawal() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("check");
     try {
       const res = await API.delete(`/users`, password);
       console.log(res.data);
