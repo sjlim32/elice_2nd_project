@@ -15,10 +15,16 @@ function UserLoginForm() {
       localStorage.setItem("token", res.data.accessToken);
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("email", res.data.email);
+      alert("로그인 성공 !")
       navigate("/");
       window.location.reload();
     } catch (err) {
-      alert(err);
+      if (err.response) {
+        alert(err.response.data)
+        window.location.reload();
+      } else {
+        alert("로그인에 실패했습니다.")
+      }
     }
   };
 
