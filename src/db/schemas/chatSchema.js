@@ -1,17 +1,17 @@
 import { Schema } from "mongoose";
 
 const chatSchema = new Schema({
-  room_id: {
+  roomId: {
     type: String,
     required: true,
     unique: true,
     trim: true,
   },
-  supporter_id: {
+  supporterId: {
     type: String,
     required: true,
   },
-  user_id: {
+  userId: {
     type: String,
     required: true,
   },

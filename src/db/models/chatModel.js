@@ -10,22 +10,22 @@ class ChatModel {
   }
 
   async findByRoomId(roomId) {
-    const foundChat = await Chat.findOne({ room_id: roomId });
+    const foundChat = await Chat.findOne({ roomId });
     return foundChat;
   }
 
   async updateByRoomId(roomId, logs) {
-    const updatedChat = await Chat.updateOne({ room_id: roomId }, { logs });
+    const updatedChat = await Chat.updateOne({ roomId }, { logs });
     return updatedChat;
   }
 
   async findBySupporterId(supporterId) {
-    const foundChat = await Chat.find({ supporter_id: supporterId });
+    const foundChat = await Chat.find({ supporterId });
     return foundChat;
   }
 
   async findByUserId(userId) {
-    const foundChat = await Chat.find({ user_id: userId });
+    const foundChat = await Chat.find({ userId });
     return foundChat;
   }
 }
