@@ -11,16 +11,25 @@ const supportUserSchema = new Schema(
       required: true,
     },
     address: {
-      type: String,
+      type: new Schema(
+        {
+          zonecode: String,
+          address: String,
+          detailAddress: String,
+        },
+        {
+          _id: false,
+        },
+      ),
       required: true,
     },
     history: {
       type: String,
-      required: true,
+      required: false,
     },
     certification: {
       type: String,
-      required: true,
+      required: false,
     },
     role: {
       type: String,
