@@ -76,7 +76,6 @@ function SuppoterRegisterForm() {
         placeholder="abc@abc.com"
         onChange={(e) => setEmail(e.target.value)}
       />
-      <button id="checkEmail">중복 확인</button>
 
       <input
         id="password"

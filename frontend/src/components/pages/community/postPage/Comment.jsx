@@ -1,79 +1,104 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import * as API from '../../../../utils/api';
 import styled from 'styled-components';
 
-function Comment({post_id}) {
+const CommentList = ({commentList}) => {
 
-		// const { _id } = useParams(); 
+// .filter(writer => {
+// 									if (writer === true) {
+// 										return	'작성자'
+// 									} else if ( writer.role === 'support') {
+// 										const id = writer.email.split('@')
+// 										return `${id[0]}`
+// 									}	else if ( writer.role === 'admin') {
+// 										return 'admin'
+// 									}
+// 								})
+
+			return (
+			<>
+				{
+					commentList.map((reply, idx) => (
+						reply.map((reReply, idx) => {
+							return (
+								<CommentContainer key={idx} >
+								<CommentBox className='Writer'>{reReply.isWriter ? '작성자' : '익명'} </CommentBox>
+								<Commentary>{reReply.parentId ? ` ㄴ : ${reReply.contents}` : ` : ${reReply.contents}`}</Commentary>
+								<CommentBox className='CreateAt' style={{textAlign:'right'}}>{reReply.createdAt}</CommentBox>
+								</CommentContainer>
+							)
+						})
+					))
+				}
+			</>
+	)}
+
+function Comment({post_id}) {
 
 	const [ comments, setComments ] = useState([])
 	const [ commentary, setCommentary] = useState('')
+
+	const token = localStorage.getItem('token')
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const res = await API.get(`/posts/${post_id}/replies`)
-				console.log({post_id})
-				setComments(res.data)
-				console.log(res.data)
+					setComments(res.data)
+					console.log(res.data)
 			} catch (error) {
-				console.error("ErrorMessage: ", error)
-				setComments("소통마당을 불러오지 못했습니다.")
+				console.error('ErrorMessage: ', error)
+				setComments(error)
 			}
 		}
 		fetchData();
-	}, [])
+	}, [post_id])
 
-	const CommentList = () => {
-		
-		return comments.map((comment, idx) => (
-			<CommentContainer
-				key={idx}
-				isDeleted={comment.isDeleted}
-				parent={comment.parentId}
-			>
-				<CommentBox className="Writer">{comment.isWriter ? "작성자" : "익명"}</CommentBox>
-				{/* <Commentary> : {CommentContainer.isDeleted ? "삭제된 말입니다" : comment.contents}</Commentary> */}
-				<Commentary> : {comment.contents}</Commentary>
-				<CommentBox className="CreateAt" style={{textAlign:"right"}}>{comment.createdAt.split('T')[0]}</CommentBox>
-			</CommentContainer>
-		))
-	}
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		try {
+	// 			const res = await API.get(`/users`)
+	// 				setUser(res.data)
+	// 				console.log(res.data)
+	// 		} catch (error) {
+	// 			console.error('유저 없음, Message: ', error)
+	// 		}
+	// 	}
+	// 	fetchData();
+	// }, [post_id])
 
-	const handleSubmit = async (e) => {
+	const handleSubmit = useCallback(async (e) => {
 		e.preventDefault();
 
-		if (commentary.trim() === '') {
-			alert('공감의 말을 입력해주세요.');
-			return;
-		}	
-
 		try {
-			const res = await API.post(`/replies`, {postId: post_id, userId: 'none', parentId: 'none', contents: commentary})
+			const res = await API.post(
+				`/replies`, 
+				{ postId: post_id, userId: 'none', parentId: 'none', contents: commentary } ,
+				{headers: { 
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}` }}
+			)
 			if (res.data && res.data.ok === true) {
 				alert('공감의 말이 정상적으로 등록되었습니다.');
 			}
 		} catch (error) {
-			console.error("ErrorMessage : ", error)
-			alert("공감의 말을 등록하지 못했습니다.")
+			console.error('ErrorMessage : ', error)
+			alert('공감의 말을 등록하지 못했습니다.')
+			}
 		}
+	, []);
 
-	}
-
+	const CommentListComp = useMemo(() => <CommentList commentList={comments}/>, [comments])
 
 	return (
 		<Container>
 			<CommentRegisterBox onSubmit={handleSubmit}>
 				<TextBox>공감의 말 달기</TextBox>
-				<CommentInput placeholder={"공감의 말을 입력해주세요."} onChange={e=>{setCommentary(e.target.value)}}></CommentInput>
-				<Btn type="submit">등록</Btn>
+				<CommentInput placeholder={'공감의 말을 입력해주세요.'} onChange={e=>{setCommentary(e.target.value)}}></CommentInput>
+				<Btn type='submit'>등록</Btn>
 			</CommentRegisterBox>
 				<TextBox>공감 공간</TextBox>
-				<CommentList commentList={comments}>
-					{comments}
-				</CommentList>
+				{CommentListComp}
 		</Container>
 	)
 }
@@ -143,8 +168,8 @@ const Btn = styled.button`
 
 const CommentContainer = styled.div`
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+	// flex-direction: row;
+	// justify-content: space-between;
 	align-items: center;
 	padding: 5px;
 	margin: 5px;
@@ -162,8 +187,8 @@ const CommentBox = styled.div`
 `
 
 const Commentary = styled.div`
+	display: flex;
 	width: 800px;
-
 `
 
 

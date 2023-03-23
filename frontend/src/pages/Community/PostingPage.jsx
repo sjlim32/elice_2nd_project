@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import * as API from '../../utils/api'
 import styled from 'styled-components';
 
 const categories = [
@@ -22,6 +22,8 @@ function PostingPage() {
 	const [ title, setTitle ] = useState('')
 	const [ content, setContent ] = useState('')
 	const [ categoryId, setCategoryId ] = useState('소통공감')
+
+	const token = localStorage.getItem('token')
 
 	const CategoryContainer = ({categories}) => {
 		const handleCategory = (e) => {
@@ -55,13 +57,20 @@ function PostingPage() {
 			return;
 		}	
 		try {
-			const res = await axios.post('/posts/', { title: title, content: content, category:categoryId })
+			const res = await API.post(
+				'/posts/', 
+				{ title: title, content: content, category:categoryId },
+				{ headers: {
+					'Content-Type' : 'application/json',
+					'Authorization' : `Bearer ${token}`
+				}}
+			)
 			if (res.data && res.data.ok === true) {
 				alert('이야기가 정상적으로 등록되었습니다.');
 			}
 		} catch (error) {	
 			console.error('ErrorMessage :', error)
-			alert('이야기를 등록하지 못했습니다.')
+			alert(error)
 		}
 	}
 

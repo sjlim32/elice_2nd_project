@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
 import * as API from '../../utils/api';
 import styled from 'styled-components';
 
@@ -27,6 +26,8 @@ function ModifyPages() {
 	const [ title, setTitle ] = useState('')
 	const [ contents, setContents ] = useState('')
 	const [ categoryId, setCategoryId ] = useState('6411719e1410804b9b58697d')
+
+	const token = localStorage.getItem('token')
 
 	const CategoryContainer = ({categories}) => {
 		const handleCategory = (e) => {
@@ -70,11 +71,18 @@ function ModifyPages() {
 			return;
 		}	
 		try {
-			const res = await API.patch(`/posts/${_id}`, { title: title, contents: contents, categoryId:categoryId })
+			const res = await API.patch(
+				`/posts/${_id}`, 
+				{ title: title, contents: contents, categoryId:categoryId },
+				{ headers : {
+					'Content-Type' : 'application/json',
+					'Authorization' : `Bearer ${token}`
+				}}
+			)
 			alert(res.data);
 		} catch (error) {	
 			console.error('ErrorMessage :', error)
-			alert('이야기 수정을 하지 못했습니다.')
+			alert(error)
 		}
 	}
 
