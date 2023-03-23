@@ -11,5 +11,5 @@ export * from "./CounselingCenterPage";
 export { default as CampaignsPage } from "./CampaignsPage";
 export * from "./CampaignsPage";
 export * from "./Community";
-export { default as Register } from "./register";
-export * from "./register";
+export { default as Register } from "./Register";
+export * from "./Register";
