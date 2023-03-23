@@ -3,18 +3,29 @@ import * as API from '../../../../utils/api';
 import styled from 'styled-components';
 
 const CommentList = ({commentList}) => {
-	// const [ visible, setVisible ] = useState(false);
 
-// .filter(writer => {
-// 									if (writer === true) {
-// 										return	'작성자'
-// 									} else if ( writer.role === 'support') {
-// 										const id = writer.email.split('@')
-// 										return `${id[0]}`
-// 									}	else if ( writer.role === 'admin') {
-// 										return 'admin'
-// 									}
-// 								})
+	const handleDelete = useCallback( async (e) => {
+		
+		try {
+			const res = await API.delete(`/replies/${e.target.value}`)
+			if (res.data.result) {
+				alert(res.data.result)
+				window.location.reload();
+			}
+		} catch (error) {
+				console.error("ErrorMessage :", error)
+					if (error.response.status === 401) {
+						alert("로그인 정보가 없습니다.")
+						localStorage.removeItem("token", "role", "email");
+						window.location.reload();
+					} else {
+						alert("삭제에 실패했습니다.")
+						window.location.reload()
+					}
+			}
+	}, [])
+
+	const userEmail = localStorage.getItem('email')
 
 			return (
 			<>
@@ -22,15 +33,40 @@ const CommentList = ({commentList}) => {
 					commentList.map((reply, idx) => (
 						reply.map((reReply, idx) => {
 							return (
-								<CommentContainer key={idx} >
-								<CommentBox className='Writer'>{reReply.isWriter ? '작성자' : '익명'} </CommentBox>
-								<Commentary>{reReply.parentId ? ` ㄴ : ${reReply.contents}` : ` : ${reReply.contents}`}</Commentary>
-								{/* <Btn onClick={() => setVisible(!visible)}>공감의 말</Btn> */}
-								<CommentBox className='CreateAt' style={{textAlign:'right'}}>{reReply.createdAt.split("T")[0]}</CommentBox>
-								{/* { visible && (
-									<input placeholder='공감의 대댓글을 입력해주세요.'></input>
-									)
-								} */}
+								<CommentContainer key={idx}>
+										{
+											reReply.isWriter 
+											? <CmtWriter style={{color:"brown"}}>글쓴이</CmtWriter>
+											: ( 
+												reReply.userId.email === userEmail 
+												? <CmtWriter style={{color:"blue"}}>my 공감</CmtWriter>
+												: ( 
+													reReply.userId.role === 'admin' 
+													? <CmtWriter style={{color:'red'}}>'admin'</CmtWriter>
+													: ( reReply.userId.role === 'support' 
+														? <CmtWriter style={{color:'pink'}}>{`서포터 (${reReply.userId.email.split("@")[0]})`}</CmtWriter>
+														: <CmtWriter>익명</CmtWriter>
+														)
+													)
+												)
+										} 
+									<Cmt>
+										{reReply.parentId ? ` ㄴ : ${reReply.contents}` : ` : ${reReply.contents}`}
+									</Cmt>
+									<CmtDel>
+										{ 
+											reReply.userId.email === 'admin' 
+												? <Btn value={reReply._id} onClick={handleDelete}>지우기</Btn>
+												: ( 
+														reReply.userId.email === userEmail 
+														? <Btn value={reReply._id} onClick={e => handleDelete(e)}>지우기</Btn>
+														: null
+													)
+										}
+									</CmtDel>	
+									<CmtDate>
+										{reReply.createdAt.split("T")[0]}
+									</CmtDate>
 								</CommentContainer>
 							)
 						})
@@ -58,19 +94,6 @@ function Comment({post_id}) {
 		fetchData();
 	}, [post_id])
 
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		try {
-	// 			const res = await API.get(`/users`)
-	// 				setUser(res.data)
-	// 				console.log(res.data)
-	// 		} catch (error) {
-	// 			console.error('유저 없음, Message: ', error)
-	// 		}
-	// 	}
-	// 	fetchData();
-	// }, [post_id])
-
 	const handleSubmit = useCallback(async (e) => {
 		e.preventDefault();
 
@@ -81,8 +104,15 @@ function Comment({post_id}) {
 				window.location.reload();
 			}
 		} catch (error) {
-			console.error('ErrorMessage : ', error)
-			alert('공감의 말을 등록하지 못했습니다.')
+			console.error("ErrorMessage :", error)
+			if (error.response.status === 401) {
+				alert("로그인 정보가 없습니다.")
+				localStorage.removeItem("token", "role", "email");
+				window.location.replace(`/posts/${post_id}`)
+			} else {
+				alert("이야기를 바꾸지 못했습니다.")
+				window.location.assign(`/posts/${post_id}`)
+			}
 			}
 		}
 	, [commentary]);
@@ -149,11 +179,11 @@ const CommentInput = styled.input`
 const Btn = styled.button`
 	display: flex;
 	flex-direction: column;
-	flex: 0 1 75px;
+	flex: 0 1 60px;
 	justify-content: center;
 	align-items: center;
 
-	height: 30px;
+	height: 25px;
 
 	background-color: white;
 	border: 1px solid lightgray;
@@ -167,8 +197,6 @@ const Btn = styled.button`
 
 const CommentContainer = styled.div`
 	display: flex;
-	// flex-direction: row;
-	// justify-content: space-between;
 	align-items: center;
 	padding: 5px;
 	margin: 5px;
@@ -180,14 +208,35 @@ const CommentContainer = styled.div`
 	border-bottom: 1px solid lightgray;
 `
 
-const CommentBox = styled.div`
+const CmtWriter = styled.div`
+	display: flex;
+	flex: 0 1 130px;
 	padding: 5px;
-	width: 200px;
+
+	color : gray;
+
 `
 
-const Commentary = styled.div`
+const Cmt = styled.div`
 	display: flex;
+	flex: 1 1 750px;
 	width: 800px;
+
+`
+
+const CmtDel = styled.div`
+	display: flex;
+	justify-content: center;
+	width: 80px;
+`
+
+const CmtDate = styled.div`
+	display: flex;
+	justify-content: right;
+	flex: 1 1 50px;
+	padding: 5px;
+	
+	
 `
 
 

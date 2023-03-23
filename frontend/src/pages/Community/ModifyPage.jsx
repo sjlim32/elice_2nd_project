@@ -70,13 +70,18 @@ function ModifyPages() {
 		}	
 		try {
 			const res = await API.patch(`/posts/${_id}` , {title, contents, categoryId})
-			if (res.data){
-				alert("수정 되었습니다.")
-				navigate(`/posts/${_id}`)
-			}
+			alert(res.data.result)
+			navigate(`/posts/${_id}`)
 		} catch (error) {	
-			console.error('ErrorMessage :', error)
-			alert(error)
+			console.error("ErrorMessage :", error)
+			if (error.response.status === 401) {
+				alert("로그인 정보가 없습니다.")
+				localStorage.removeItem("token", "role", "email");
+				window.location.replace('/posts')
+			} else {
+				alert("이야기를 바꾸지 못했습니다.")
+				window.location.assign('/posts')
+			}
 		}
 	}
 
