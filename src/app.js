@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import http from "http";
+import { Server } from "socket.io";
 import {
   userRouter,
   categoryRouter,
@@ -13,6 +15,7 @@ import { responseHandler, errorHandler } from "./middlewares";
 const app = express();
 
 app.use(cors());
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
@@ -28,7 +31,9 @@ app.use("/api", postRouter);
 app.use("/api", replyRouter);
 app.use("/api", chatRouter);
 
+const server = http.createServer(app);
+
 app.use(responseHandler);
 app.use(errorHandler);
 
-export { app };
+export { app, server };

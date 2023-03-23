@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import { app } from "./src/app";
+import http from "http";
+import { Server } from "socket.io";
+import { app, server } from "./src/app";
 
 // 환경변수 사용
 dotenv.config();
@@ -20,4 +22,29 @@ mongoose.connection.on("error", () => {
 
 app.listen(port, () => {
   console.log(`${port}번 포트에서 대기중 🚀`);
+});
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", socket => {
+  socket.on("send_msg", data => {
+    socket.to(data.roomNumber).emit("receive_message", data.log);
+  });
+  socket.on("leave_room", data => {
+    socket.leave(data);
+  });
+  socket.on("join_room", data => {
+    socket.join(data);
+  });
+});
+
+io.on("disconnect", socket => {});
+
+server.listen(5000, () => {
+  console.log("server is running on port 5000");
 });
