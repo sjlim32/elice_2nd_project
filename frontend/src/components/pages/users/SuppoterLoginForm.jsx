@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import * as API from '../../../utils/api'
+import React, { useState } from "react";
+import * as API from "../../../utils/api";
 
 function SuppoterLoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   /*
   유저 로그인과 다르게 db에 저장되어 있는지 확인한 후
@@ -15,34 +15,35 @@ function SuppoterLoginForm() {
   const handleSubmit = (e) => {
     e.preventDefault();
     const userData = { email, password };
-    API
-        .post('/api/login', userData)
-        .then((res) => {
-            console.log(res.data)
-        })
-        .catch((err) => {
-            alert('error')
-        })
+    API.post("/login", userData)
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        alert("error");
+      });
   };
 
   return (
     <div>
       <input
-        id='email'
+        id="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-    
+
       <input
-        id='password'
-        type='password'
+        id="password"
+        type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
-      <button id='submit' onSubmit={handleSubmit}>로그인</button>
+      <button id="submit" onSubmit={handleSubmit}>
+        로그인
+      </button>
     </div>
-  )
+  );
 }
 
 export default SuppoterLoginForm;

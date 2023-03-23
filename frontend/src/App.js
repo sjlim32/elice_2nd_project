@@ -14,7 +14,9 @@ import {
   CampaignsPage,
   Register,
 } from "./pages";
-import UserLoginForm from './components/pages/users/UserLoginForm'
+import UserLoginForm from "./components/pages/users/UserLoginForm";
+import UserInfo from "./components/pages/users/UserInfo";
+import ChangePassword from "./components/pages/users/ChangePassword";
 
 function App() {
   return (
@@ -38,9 +40,11 @@ function App() {
           <Route path="/counseling" element={<CounselingPage />} />
           <Route path="/counselingcenter" element={<CounselingCenterPage />} />
           <Route path="/campaigns" element={<CampaignsPage />} />
-          <Route path='/users/register' element={<Register />} />
-          <Route path='/users/changeuserinfo' element={<ChangeUserInfo />} />
-          <Route path='/users/login' element={<UserLoginForm />} />
+          <Route path="/users/register" element={<Register />} />
+          <Route path="/users/changeuserinfo" element={<ChangeUserInfo />} />
+          <Route path="/users/login" element={<UserLoginForm />} />
+          <Route path="/users/userinfo" element={<UserInfo />} />
+          <Route path="/users/changepassword" element={<ChangePassword />} />
         </Route>
       </Routes>
     </Router>
