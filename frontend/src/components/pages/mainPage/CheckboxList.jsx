@@ -21,11 +21,8 @@ const Result = ({ score }) => {
     <>
       당신의 가정폭력 위험지수는 {score}점 입니다.
       <LinkButtonContainer>
-        <LinkButton onClick={() => navigate("/counseling")}>
-          온라인 상담 받기
-        </LinkButton>
         <LinkButton onClick={() => navigate("/counselingcenter")}>
-          가까운 상담소 찾기
+          상담소 찾기
         </LinkButton>
       </LinkButtonContainer>
     </>
