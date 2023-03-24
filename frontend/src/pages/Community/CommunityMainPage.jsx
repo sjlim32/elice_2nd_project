@@ -10,9 +10,15 @@ import Pagination from '../../components/pages/community/mainPage/Pagination';
 
 const categories = [
 	{ title: '전체', _id: '' },	
+	// ------ local id 값
+	// { title: '소통공감', _id: '6411719e1410804b9b58697d' },
+	// { title: '좋은정보', _id: '641171971410804b9b58697a' },
+	// { title: '고민거리', _id: '641171911410804b9b586977' },
+
+	// ------ deploy id 값
 	{ title: '소통공감', _id: '6411719e1410804b9b58697d' },
-	{ title: '좋은정보', _id: '641171971410804b9b58697a' },
-	{ title: '고민거리', _id: '641171911410804b9b586977' },
+	{ title: '좋은정보', _id: '641b4a5a3e01f8b6f21108fb' },
+	{ title: '고민거리', _id: '641b4a4c3e01f8b6f21108f5' },
 ]
 
 function CommunityMainPage() {

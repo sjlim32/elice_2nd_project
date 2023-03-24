@@ -25,7 +25,12 @@ function SuppoterLoginForm() {
       navigate("/");
       window.location.reload();
     } catch (err) {
-      alert("error");
+      if (err.response) {
+        alert(err.response.data)
+        window.location.reload();
+      } else {
+        alert("로그인에 실패했습니다.")
+      }
     }
   };
 
