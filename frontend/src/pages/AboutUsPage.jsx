@@ -73,7 +73,10 @@ const Title = styled.div`
   font-size: 55px;
   font-weight: 1000;
   text-align: center;
-  margin-bottom: 30px;
+
+  + div {
+    margin-top: 30px;
+  }
 `;
 
 const ChartLayout = styled.div`
