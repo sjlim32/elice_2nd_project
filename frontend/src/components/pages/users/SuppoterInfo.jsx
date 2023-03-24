@@ -14,7 +14,7 @@ function SuppoterInfo() {
       </Button>
 
       <Button>
-        <StyledLink>나의 활동 내역</StyledLink>
+        <StyledLink to="/users/myposts">나의 활동 내역</StyledLink>
       </Button>
     </Container>
   );
