@@ -34,7 +34,7 @@ const PostDB = lazy(() => import("./components/pages/users/PostDB"));
 function App() {
   return (
     <Router>
-      <Suspense fallback={<p> Loading...</p>}>
+      <Suspense fallback={<p style={{"text-align":"center", "font-size":"50px", "line-height":"600px"}}> Loading...</p>}>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<MainPage />} />
