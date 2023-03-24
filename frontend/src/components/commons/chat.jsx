@@ -8,7 +8,7 @@ import sendBtn from "../../images/send_btn.png";
 import backBtn from "../../images/back_btn.png";
 import miniBtn from "../../images/mini_btn.png";
 
-const socket = io.connect("http://localhost:5000");
+const socket = io.connect("http://localhost:5001");
 
 function Chat() {
   const [modal, setModal] = useState(false);
