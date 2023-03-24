@@ -14,6 +14,7 @@ function ChangeUserInfo() {
   const [address, setAddress] = useState("");
   const [detailAddress, setDetailAddress] = useState("");
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [error, setError] = useState("");
 
   const openPostcode = useCallback(() => {
     setIsPopupOpen(!isPopupOpen);
@@ -34,11 +35,11 @@ function ChangeUserInfo() {
 
   const validatePassword = () => {
     if (newPassword !== confirmPassword) {
-      console.log("password is not confirmed");
+      setError("password is not confirmed");
       return false;
     }
     if (password === "") {
-      console.log("please input password");
+      setError("please input password");
       return false;
     }
     return true;
@@ -63,6 +64,8 @@ function ChangeUserInfo() {
       } catch (err) {
         alert(err);
       }
+    } else {
+      alert(error);
     }
   };
 
