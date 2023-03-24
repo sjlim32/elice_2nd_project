@@ -58,9 +58,16 @@ function PostingPage() {
 				navigate('/posts')
 				}
 		} catch (error) {	
-			console.error('ErrorMessage :', error)
-			alert(error)
-			navigate('/posts')
+			console.error('ErrorMessage :', error)			
+
+			if (error.response.status === 401) {
+				alert("로그인 정보가 없습니다.")
+				localStorage.removeItem("token", "role", "email");
+				window.location.replace('/posts')
+			} else {
+				alert("이야기 등록을 하지 못했습니다.")
+				window.location.assign('/posts')
+			}
 		}
 	}
 
