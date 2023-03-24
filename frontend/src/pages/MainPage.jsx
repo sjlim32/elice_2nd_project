@@ -31,6 +31,7 @@ function MainPage() {
 
 const ImgWrapper = styled.div`
   display: flex;
+  height: 70vh;
   justify-content: center;
   margin-top: 50px;
 `;
