@@ -42,7 +42,7 @@ const CommentList = ({commentList}) => {
 												? <CmtWriter style={{color:"blue"}}>my 공감</CmtWriter>
 												: ( 
 													reReply.userId.role === 'admin' 
-													? <CmtWriter style={{color:'red'}}>'admin'</CmtWriter>
+													? <CmtWriter style={{color:'red'}}>관리자</CmtWriter>
 													: ( reReply.userId.role === 'support' 
 														? <CmtWriter style={{color:'pink'}}>{`서포터 (${reReply.userId.email.split("@")[0]})`}</CmtWriter>
 														: <CmtWriter>익명</CmtWriter>
