@@ -6,10 +6,10 @@ function AdminMain() {
   return (
     <div>
       <Button>
-        <StyledLink>서포터 신청 승인</StyledLink>
+        <StyledLink to="/admin/requestapprove">서포터 신청 승인</StyledLink>
       </Button>
       <Button>
-        <StyledLink>서포터 / 유저 관리</StyledLink>
+        <StyledLink to="/admin/userdb">서포터 / 유저 관리</StyledLink>
       </Button>
     </div>
   );
