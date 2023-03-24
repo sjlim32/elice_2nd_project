@@ -10,8 +10,9 @@ function AboutUsPage() {
   return (
     <div>
       <BackgroundImgLayout>
-        <Title>24/7은 언제 어디서나</Title>
-        <Title>당신과 함께하겠습니다.</Title>
+        <MainHead> 24/7이란? </MainHead>
+        <Title> " 언제 어디서나 </Title>
+        <Title> 당신과 함께하겠다는 뜻입니다. "</Title>
       </BackgroundImgLayout>
       <BackgroundColor>
         <ChartLayout>
@@ -61,7 +62,7 @@ function AboutUsPage() {
 }
 
 const BackgroundImgLayout = styled.div`
-  width: auto;
+  width: 100%;
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -71,6 +72,18 @@ const BackgroundImgLayout = styled.div`
   background-image: url(${bgImg});
   background-size: cover;
   background-repeat: no-repeat;
+  margin-bottom: 5rem;
+  padding-bottom: 10rem;
+`;
+
+const MainHead = styled.h1`
+  text-align: center;
+  justify-content: center;
+  margin: 5rem;
+  padding-bottom: 5rem;
+
+  width: 90%;
+  border-bottom: 1px solid lightgray;
 `;
 
 const BackgroundColor = styled.div`
@@ -81,6 +94,7 @@ const Title = styled.div`
   font-size: 60px;
   font-weight: 1000;
   text-align: center;
+  margin: 0 5rem 0 5rem;
 
   + div {
     margin-top: 30px;

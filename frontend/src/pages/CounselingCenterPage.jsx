@@ -22,7 +22,7 @@ function CounselingCenterPage() {
 
   return (
     <div>
-      <TitleWrapper>가정폭력 상담소(22.6.30. 국비 지원 기준)</TitleWrapper>
+      <MainHead>가정폭력 상담소(22.6.30. 국비 지원 기준)</MainHead>
       <ContentContainer>
         <MapContainer />
         {/* <SidoSelect
@@ -39,10 +39,14 @@ function CounselingCenterPage() {
   );
 }
 
-const TitleWrapper = styled.div`
-  font-size: 20px;
-  font-weight: bold;
+const MainHead = styled.h1`
   text-align: center;
+  justify-content: center;
+  margin: 5rem;
+  padding-bottom: 5rem;
+
+  width: 90%;
+  border-bottom: 1px solid lightgray;
 `;
 
 const ContentContainer = styled.div`
