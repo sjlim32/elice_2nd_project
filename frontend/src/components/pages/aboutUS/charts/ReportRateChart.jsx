@@ -62,7 +62,7 @@ export default function ReportRateChart() {
         />
         <Bar
           dataKey="가정폭력 신고 비율"
-          fill="#ff8c00"
+          fill="#3e4e34"
           barSize={50}
           label={{ position: "top" }}
         />

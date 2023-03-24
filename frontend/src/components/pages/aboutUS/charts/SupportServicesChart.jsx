@@ -10,6 +10,7 @@ import {
 } from "recharts";
 import { useCallback, useState } from "react";
 import { dataOfSupportServices } from "../../../../utils/consts";
+import styled from "styled-components";
 
 export default function SupportServicesChart() {
   const [activeIndex, setActiveIndex] = useState(2);
@@ -21,7 +22,7 @@ export default function SupportServicesChart() {
     [setActiveIndex]
   );
   return (
-    <>
+    <Container>
       <BarChart
         width={600}
         height={550}
@@ -64,7 +65,18 @@ export default function SupportServicesChart() {
           ))}
         </Bar>
       </BarChart>
-      <p>{`"${activeItem.name}"의 인지율 ${activeItem.인지율}%`}</p>
-    </>
+      <Desc>{`[${activeItem.name} 의 인지율 ${activeItem.인지율}%]`}</Desc>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+`;
+
+const Desc = styled.div`
+  text-align: right;
+  font-size: 15px;
+  margin-right: 40px;
+`;
