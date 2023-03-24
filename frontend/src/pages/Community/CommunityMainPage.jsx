@@ -102,24 +102,24 @@ function CommunityMainPage() {
       if (!search) {
         if (category !== "전체") {
           const res = await API.get("/posts");
-          const filterdPosts = res.data.filter(
+          const filterdPosts = res.data.partialPosts.filter(
             (post) => post.categoryId.title === category
           );
           setPosts(filterdPosts);
         } else {
           const res = await API.get("/posts");
-          setPosts(res.data);
+          setPosts(res.data.partialPosts);
         }
       } else {
         const res = await API.get(`/posts/search/${search}`);
         if (category !== "전체") {
-          const filterdPosts = res.data.filter(
+          const filterdPosts = res.data.partialPosts.filter(
             (post) => post.categoryId.title === category
           );
           setPosts(filterdPosts);
           console.log(category);
         } else {
-          setPosts(res.data);
+          setPosts(res.data.partialPosts);
         }
       }
     } catch (error) {
