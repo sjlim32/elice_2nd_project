@@ -29,10 +29,10 @@ const ChangePassword = lazy(() =>
   import("./components/pages/users/ChangePassword")
 );
 const AdminMain = lazy(() => import("./pages/AdminMain"));
-const PostDB = lazy(() => import("./components/pages/users/PostDB"));
+const MyPosts = lazy(() => import("./components/pages/users/MyPosts"))
 
 const MyPage = lazy(() => 
-  import("./components/pages/users/MyPage") )
+  import("./pages/MyPage") )
 
 function App() {
   return (
@@ -79,7 +79,7 @@ function App() {
             <Route path="/users/userwithdrawal" element={<UserWithdrawal />} />
             <Route path="/users/changepassword" element={<ChangePassword />} />
             <Route path="/admin" element={<AdminMain />} />
-            <Route path="/users/myposts" element={<PostDB />} />
+            <Route path="/users/myposts" element={<MyPosts />} />
             <Route path="/users/mypage" element={<MyPage />} />
           </Route>
         </Routes>

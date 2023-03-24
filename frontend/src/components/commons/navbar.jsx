@@ -53,7 +53,7 @@ function NavigationBar() {
           ) : token ? (
             <>
               <div>{ 
-              role === 'support' || 'pending'
+              role === 'support' || role === 'pending'
               ? `${email.split('@')[0]} 서포터님, 반갑습니다.`
               : ( role === 'admin' 
                 ? '관리자님, 반갑습니다.'

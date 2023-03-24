@@ -3,7 +3,15 @@ import * as API from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 
-function MyPage() {
+const getComments = () => {
+
+}
+
+const getPosts = () => {
+
+}
+
+function MyPosts() {
 
 	return(
 		<Container>
@@ -14,7 +22,7 @@ function MyPage() {
 					<Btn>내가 쓴 게시글 보기</Btn>
 				</BtnWrap>
 				<Show>
-
+						
 				</Show>
 			</MyPageWrap>
 		</Container>
@@ -78,4 +86,4 @@ const Show = styled.div`
 	border: 1px solid lightgray;
 `
 
-export default MyPage;
+export default MyPosts;
