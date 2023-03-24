@@ -2,20 +2,21 @@ import React, { useState } from "react";
 import * as API from "../../../utils/api";
 
 async function PostDB() {
-  const [postList, setPostList] = useState([]);
+  const [postList, setPostList] = useState("");
 
   try {
-    const res = await API.get("/users/:userId");
+    const res = await API.get("/myposts");
     setPostList(res.data);
+    console.log(postList);
   } catch (err) {
-    alert("error");
+    alert(err);
   }
 
-  const postingList = ({ post }) => {
+  const PostingList = ({ post }) => {
     return (
-      <tr key={post.title}>
+      <tr key={post._id}>
+        <td>{post._id}</td>
         <td>{post.title}</td>
-        <td>{post.date}</td>
       </tr>
     );
   };
@@ -25,15 +26,11 @@ async function PostDB() {
       <table>
         <thead>
           <tr>
-            <th>Role</th>
-            <th>Email</th>
+            <th>Post ID</th>
+            <th>Title</th>
           </tr>
         </thead>
-        <tbody>
-          {postList.map((post) => {
-            return <postingList post={post} />;
-          })}
-        </tbody>
+        <tbody></tbody>
       </table>
     </div>
   );
