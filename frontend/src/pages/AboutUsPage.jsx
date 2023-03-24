@@ -18,29 +18,31 @@ function AboutUsPage() {
           <ReportRateChart />
           <BigText>가정폭력 신고 비율은 매년 증가하고 있습니다.</BigText>
         </ChartLayout>
-        <BigText>
-          가정폭력은 재범률이 높지만 처벌 강도는 낮아, 피해자들은 여전히 고통을
-          받고 있습니다.
-        </BigText>
-        <SmallText>
-          전국 가정폭력 융합요소 데이터에 따르면 가정폭력범죄는 재범율이 총 신고
-          접수 건수에서 30% 이상을 차지합니다.
-        </SmallText>
-        <SmallText>
-          또한 검거인원 중 구속 처리되는 인원은 소수이며 대다수의 가정폭력
-          가해자는 불구속 처리되거나 가정보호사건으로 송치됩니다.
-        </SmallText>
+        <TextContainer>
+          <BigText>
+            가정폭력은 재범률이 높지만 처벌 강도는 낮아, 피해자들은 여전히
+            고통을 받고 있습니다.
+          </BigText>
+          <SmallText>
+            전국 가정폭력 융합요소 데이터에 따르면 가정폭력범죄는 재범율이 총
+            신고 접수 건수에서 30% 이상을 차지합니다.
+          </SmallText>
+          <SmallText>
+            또한 검거인원 중 구속 처리되는 인원은 소수이며 대다수의 가정폭력
+            가해자는 불구속 처리되거나 가정보호사건으로 송치됩니다.
+          </SmallText>
+        </TextContainer>
         <ChartLayout>
           <ArrestedChart />
           <RicidivismChart />
         </ChartLayout>
-        <BigText>우리는 무엇을 할 수 있을까?</BigText>
+        <EmphasizeText>우리는 무엇을 할 수 있을까?</EmphasizeText>
         <ChartLayoutRevers>
           <SurveyResultsChart />
           <SmallText>
-            시민들은 '폭력 허용적 사회문화의 개선' '가정폭력 관련 법 및
-            지원서비스 홍보'를 가정폭력을 감소시키기 위해 필요한 정책으로
-            꼽았습니다.
+            시민들은 '폭력 허용적 사회문화의 개선', '가정폭력 관련 법 및
+            지원서비스 홍보'를
+            <br /> 가정폭력을 감소시키기 위해 필요한 정책으로 꼽았습니다.
           </SmallText>
         </ChartLayoutRevers>
         <ChartLayout>
@@ -50,11 +52,11 @@ function AboutUsPage() {
             서비스의 인지도는 가장 낮습니다.
           </SmallText>
         </ChartLayout>
-        <BigText>
+        <EmphasizeText>
           사회의 가정폭력 인식 개선을 위한 정책 및 캠페인부터
           <br /> 편하게 고민을 상담할 수 있는 익명 상담 서비스와 커뮤니티까지
           <br /> 24/7이 당신의 안전과 행복을 위해 함께하겠습니다.
-        </BigText>
+        </EmphasizeText>
       </BackgroundColor>
     </div>
   );
@@ -92,6 +94,7 @@ const ChartLayout = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
+  height: 100vh;
 `;
 
 const ChartLayoutRevers = styled.div`
@@ -111,6 +114,21 @@ const BigText = styled.div`
 const SmallText = styled.div`
   font-size: 20px;
   text-align: center;
+`;
+
+const EmphasizeText = styled.div`
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+  height: 30vh;
+`;
+
+const TextContainer = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 `;
 
 export default AboutUsPage;
