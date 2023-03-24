@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import DaumPost from "./DaumPostcode";
 import PopupDom from "./PopupDom.jsx";
 import * as API from "../../../utils/api";
+import styled from "styled-components";
 
 function ChangeUserInfo() {
   const [users, setUsers] = useState([]);
@@ -118,10 +119,9 @@ function ChangeUserInfo() {
         />
       </div>
       <div>
-        주소
-        <button id="postcode" onClick={openPostcode}>
+        <PostButton id="postcode" onClick={openPostcode}>
           우편번호 검색
-        </button>
+        </PostButton>
         <div id="popupDom">
           {isPopupOpen && (
             <PopupDom>
@@ -144,11 +144,30 @@ function ChangeUserInfo() {
         />
       </div>
 
-      <button id="submit" onClick={handleSubmit}>
+      <EditButton id="submit" onClick={handleSubmit}>
         수정하기
-      </button>
+      </EditButton>
     </div>
   );
 }
+
+const PostButton = styled.button`
+  border-radius: 15px;
+  background-color: #3e4e34;
+  color: #ffffff;
+`;
+
+const EditButton = styled.button`
+  width: 80px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: #3e4e34;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+`;
 
 export default ChangeUserInfo;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 function SuppoterInfo() {
   return (
-    <div>
+    <Container>
       <Button>
         <StyledLink to="/users/changeuserinfo">개인 정보 수정</StyledLink>
       </Button>
@@ -16,9 +16,19 @@ function SuppoterInfo() {
       <Button>
         <StyledLink to="/users/myposts">나의 활동 내역</StyledLink>
       </Button>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  width: 700px;
+  border: 2px solid #3e4e34;
+  border-radius: 10px;
+  padding: 20px 20px 20px 20px;
+  margin: auto;
+  margin-top: 200px;
+`;
 
 const Button = styled.button`
   width: 100px;
