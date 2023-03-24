@@ -19,8 +19,8 @@ function ChangePassword() {
     if (validatePassword()) {
       try {
         const res = await API.patch("/users", {
-          password: password,
-          newPassword: newPassword,
+          currentPassword: password,
+          password: newPassword,
         });
         console.log(res.data);
         alert("update success");
@@ -32,26 +32,35 @@ function ChangePassword() {
 
   return (
     <div>
-      <input
-        id="password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+      <div>
+        기존 패스워드
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+      </div>
 
-      <input
-        id="newPassword"
-        type="password"
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-      />
+      <div>
+        새 패스워드
+        <input
+          id="newPassword"
+          type="password"
+          value={newPassword}
+          onChange={(e) => setNewPassword(e.target.value)}
+        />
+      </div>
 
-      <input
-        id="confirmPassword"
-        type="password"
-        value={confirmPassword}
-        onChange={(e) => setConfirmPassword(e.target.value)}
-      />
+      <div>
+        새 패스워드 확인
+        <input
+          id="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
+      </div>
 
       <button id="submit" onClick={handleSubmit}>
         수정하기
