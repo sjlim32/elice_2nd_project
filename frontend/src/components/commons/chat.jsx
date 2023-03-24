@@ -9,8 +9,8 @@ import miniBtn from "../../images/mini_btn.png";
 
 import * as API from "../../utils/api.js";
 
-const serverUrl = process.env.SERVER_URL;
-const chatPort = process.env.CHAT_PORT;
+const serverUrl = process.env.REACT_APP_SERVER_URL;
+const chatPort = process.env.REACT_APP_CHAT_PORT;
 
 const socket = io.connect(serverUrl + ":" + chatPort);
 
