@@ -18,7 +18,7 @@ class PostService {
     }
 
     const skipDocuments = perPageNumber * (pageNumber - 1);
-    return [perPageNumber, skipDocuments];
+    return [[perPageNumber, skipDocuments], totalPage];
   }
 
   getPartial(posts) {
@@ -43,10 +43,10 @@ class PostService {
 
   async getPosts(page, perPage) {
     const option = { isDeleted: false };
-    const params = await this.Parameter(option, page, perPage);
+    const [params, totalPage] = await this.Parameter(option, page, perPage);
     const posts = await postModel.findAll(...params);
     const partialPosts = this.getPartial(posts);
-    return partialPosts;
+    return {partialPosts, totalPage};
   }
 
   async getPostsByCategory(categoryId, page, perPage) {
@@ -56,10 +56,10 @@ class PostService {
     }
 
     const option = { isDeleted: false, categoryId };
-    const params = await this.Parameter(option, page, perPage);
+    const [params, totalPage] = await this.Parameter(option, page, perPage);
     const posts = await postModel.findAllByCategory(categoryId, ...params);
     const partialPosts = this.getPartial(posts);
-    return partialPosts;
+    return {partialPosts, totalPage};
   }
 
   async getMyPosts(userId) {
@@ -75,10 +75,10 @@ class PostService {
   async getPostsByTitleSearching(search, page, perPage) {
     const reg = new RegExp(search.trim(), "i");
     const option = { isDeleted: false, title: { $regex: reg } };
-    const params = await this.Parameter(option, page, perPage);
+    const [params, totalPage] = await this.Parameter(option, page, perPage);
     const posts = await postModel.findAllByTitleSearching(reg, ...params);
     const partialPosts = this.getPartial(posts);
-    return partialPosts;
+    return {partialPosts, totalPage};
   }
 
   async getPost(postId) {
