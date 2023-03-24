@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import * as API from "../../../utils/api";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import bgImg from "../../../images/user_back_image.png";
 import styled from "styled-components";
 
@@ -15,18 +14,24 @@ function UserLoginForm() {
     const userData = { email, password };
     try {
       const res = await API.post("/login", userData);
-      localStorage.setItem("token", res.data.accessToken);
-      localStorage.setItem("role", res.data.role);
-      localStorage.setItem("email", res.data.email);
-      alert("로그인 성공 !")
-      navigate("/");
-      window.location.reload();
-    } catch (err) {
-      if (err.response) {
-        alert(err.response.data)
+      if (res.data.role === "pending") {
+        alert("관리자의 승인을 기다려주세요");
+        navigate("/");
         window.location.reload();
       } else {
-        alert("로그인에 실패했습니다.")
+        localStorage.setItem("token", res.data.accessToken);
+        localStorage.setItem("role", res.data.role);
+        localStorage.setItem("email", res.data.email);
+        alert("로그인 성공 !");
+        navigate("/");
+        window.location.reload();
+      }
+    } catch (err) {
+      if (err.response) {
+        alert(err.response.data);
+        window.location.reload();
+      } else {
+        alert("로그인에 실패했습니다.");
       }
     }
   };

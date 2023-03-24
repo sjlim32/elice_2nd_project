@@ -62,6 +62,7 @@ function ChangeUserInfo() {
         console.log(res2.data);
         alert("update success");
       } catch (err) {
+        console.log("hello");
         alert(err);
       }
     } else {
