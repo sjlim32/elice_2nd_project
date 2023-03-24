@@ -27,6 +27,7 @@ function NavigationBar() {
   ];
 
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
   const handleLogout = (e) => {
     e.preventDefault();
@@ -43,7 +44,12 @@ function NavigationBar() {
       </Link>
       <Container>
         <MypageLogoutWrapper>
-          {token ? (
+          {role === "admin" ? (
+            <>
+              <StyledLink to="/admin">관리자페이지</StyledLink>
+              <StyledLink onClick={handleLogout}>로그아웃</StyledLink>
+            </>
+          ) : token ? (
             <>
               <StyledLink to="/users/mypage">마이페이지</StyledLink>
               <StyledLink onClick={handleLogout}>로그아웃</StyledLink>
