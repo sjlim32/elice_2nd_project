@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const serverUrl = "http://localhost:8080/api";
+const serverUrl = process.env.REACT_APP_CLIENT_PORT;;
 // const serverUrl = "http://kdt-ai6-team07.elicecoding.com/api";
 // const serverUrl = "/api"
 
