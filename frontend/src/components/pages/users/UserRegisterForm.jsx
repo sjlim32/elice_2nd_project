@@ -50,7 +50,12 @@ function UserRegisterForm() {
         navigate("/");
         window.location.reload();
       } catch (err) {
-        alert(error);
+        if (err.response) {
+          alert(err.response.data)
+          window.location.reload();
+        } else {
+          alert("회원가입 실패했습니다.")
+        }
       }
     } else alert(error);
   };
