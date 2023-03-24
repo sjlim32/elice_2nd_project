@@ -7,8 +7,8 @@ import { app, server } from "./src/app";
 // 환경변수 사용
 dotenv.config();
 const port = process.env.SERVER_PORT;
-
-app.set("port", process.env.PORT || 8080);
+const chatPort = process.env.CHAT_PORT;
+const domain = process.env.DOMAIN;
 
 // DB 만들고 연결할 주소
 mongoose.connect(process.env.DB_URL);
@@ -26,7 +26,7 @@ app.listen(port, () => {
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: domain,
     methods: ["GET", "POST"],
   },
 });
@@ -45,6 +45,6 @@ io.on("connection", socket => {
 
 io.on("disconnect", socket => {});
 
-server.listen(5000, () => {
-  console.log("server is running on port 5000");
+server.listen(chatPort||5003, () => {
+  console.log(`server is running on port ${chatPort}.`);
 });
