@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import Chat from "./components/commons/chat";
+import Chat from "./components/commons/Chat";
 import styled from "styled-components";
 
 const Layout = lazy(() => import("./components/commons/layout"));
