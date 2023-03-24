@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const serverUrl = process.env.REACT_APP_CLIENT_PORT;
+const serverUrl = `${process.env.REACT_APP_SERVER_URL}:${process.env.REACT_APP_SERVER_PORT}/api`;
 // const serverUrl = "http://kdt-ai6-team07.elicecoding.com/api";
 // const serverUrl = "/api"
 
@@ -16,7 +16,7 @@ async function get(endpoint, params) {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
-    params: params
+    params: params,
   });
 }
 

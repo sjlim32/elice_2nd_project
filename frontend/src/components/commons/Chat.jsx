@@ -9,7 +9,9 @@ import miniBtn from "../../images/mini_btn.png";
 
 import * as API from "../../utils/api.js";
 
-const socket = io.connect(`${process.env.REACT_APP_SERVER_URL}:${process.env.REACT_APP_CHAT_PORT}`);
+const socket = io.connect(
+  `${process.env.REACT_APP_SERVER_URL}:${process.env.REACT_APP_CHAT_PORT}`
+);
 
 function Chat() {
   const [modal, setModal] = useState(false);
