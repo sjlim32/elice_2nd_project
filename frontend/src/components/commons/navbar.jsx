@@ -27,6 +27,7 @@ function NavigationBar() {
   ];
 
   const token = localStorage.getItem("token");
+  const email = localStorage.getItem("email");
   const role = localStorage.getItem("role");
 
   const handleLogout = (e) => {
@@ -51,8 +52,15 @@ function NavigationBar() {
             </>
           ) : token ? (
             <>
-              <StyledLink to="/users/mypage">마이페이지</StyledLink>
-              <StyledLink onClick={handleLogout}>로그아웃</StyledLink>
+              <div>{ 
+              role === 'support' || 'pending'
+              ? `${email.split('@')[0]} 서포터님, 반갑습니다.`
+              : ( role === 'admin' 
+                ? '관리자님, 반갑습니다.'
+                : `${email.split('@')[0]} 유저님, 반갑습니다.`)
+                }</div>
+              <StyledLink2 to="/users/mypage">마이페이지</StyledLink2>
+              <StyledLink2 onClick={handleLogout}>로그아웃</StyledLink2>
             </>
           ) : (
             <>
@@ -74,34 +82,72 @@ function NavigationBar() {
 }
 
 const NavContainer = styled.nav`
-  width: 100%;
-  height: 150px;
   display: flex;
-  justify-content: space-between;
-  background-color: yellowgreen;
+  flex-direction: row;
+
+  width: 100%;
+  height: 200px;
+  background-color: #447348
 `;
 
 const MenuWrapper = styled.div`
   display: flex;
-  gap: 30px;
-  margin-top: auto;
+  justify-content: right;
+  
+  margin: 20px 330px 40px 0;
+
+  width: 100%;
   font-size: 30px;
-`;
+  gap: 40px;
 
-const StyledLink = styled(Link)`
-  text-decoration: none;
-`;
-
-const LogoImg = styled.img`
-  width: 200px;
-  height: 100%;
 `;
 
 const MypageLogoutWrapper = styled.div`
   display: flex;
-  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0 50px 0;
   margin-left: auto;
+  gap: 20px;
+  
+  width: 400px;
+  height: 30px;
+
+  background-color: #c5d4c6;
+  border-radius: 10px;
 `;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: white;
+  &:hover {
+    color: #baeb34;
+  }
+`;
+
+const StyledLink2 = styled(Link)`
+  text-decoration: none;
+  color: darkblue;
+  &:hover {
+    color: yellow;
+  }
+`;
+
+const LogoImg = styled.img`
+  display: flex;
+  flex-direction: column;
+  justify-contents: center;
+  align-items: center;
+  margin: 20px 20px 20px 40px;
+  
+  width: 130px;
+  height: 140px;
+  background-color : #6ca671;
+
+  border-radius: 100%;
+  border: 10px solid white;
+`;
+
 
 const Container = styled.div`
   display: flex;
