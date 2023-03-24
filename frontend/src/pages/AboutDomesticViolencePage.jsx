@@ -7,46 +7,46 @@ function AboutDomesticViolencePage() {
 
   const AboutViolence = () => {
     return (
-      <DivStyle>
+      <DivBox>
         남편과 아내, 부모와 자녀, 형제자매 및 기타 동거가족을 포함한 가족구성원
         중의 한사람이 다른 구성원에게 의도적으로 물리적인 힘을 사용하거나,
         정신적인 학대를 통하여 고통을 주는 행위입니다.
-      </DivStyle>
+      </DivBox>
     );
   };
 
   const ViolenceLaw = () => {
     return (
       <DivStyle>
-        <div>
+        <DivBox >
           '가정폭력이란 가정구성원 사이의 신체적, 정신적 또는 재산상 피해를
           수반하는 행위를 말합니다.'
-        </div>
-        <div>
+        </DivBox>
+        <DivBox >
           가정폭력의 범위를 "신체적, 정신적, 또는 재산상 피해를 수반하는 행위"
           로 보고 있어 신체적 폭력에 국한하지 않고 정신적 학대와 재산상의 손해
           및 손괴를 포함하는 포괄적인 폭력 개념을 인정하고 있습니다.
-        </div>
+        </DivBox>
       </DivStyle>
     );
   };
 
   const AboutLaw = () => {
     return (
-      <DivStyle>
+      <DivBox>
         가정폭력방지 및 피해자보호 등에 관한 법률 가정폭력범죄의 처벌 등에 관한
         특례법
-      </DivStyle>
+      </DivBox>
     );
   };
 
   const ViolenceType = () => {
     return (
       <DivStyle>
-        <div style={{ marginLeft: 200 }}>
+        <DivBox >
           경미 ------------------------------------------------------{">"}{" "}
           매우심각
-        </div>
+        </DivBox>
         <TypeStyle>
           <TypeBox> 신체적 폭력 </TypeBox>{" "}
           <TypeBox> 잡기, 흔들기, 밀치기, 뺨때리기 </TypeBox>{" "}
@@ -135,19 +135,19 @@ function AboutDomesticViolencePage() {
         </AnswerBox>
         <ExampleBox>
           {" "}
-          <div>
+          <ExampleText>
             {" "}
             01. 폭력행위를 제지시키고 범죄를 수사합니다. 그리고 피해자의 동의가
             있는 경우에는 피해자를 가정폭력관련 상담소나 보호시설로 인도하고
             (제5조 1호, 2호) 만약 긴급치료가 필요한 피해자는 병원 등의
             의료기관으로 인도하게 됩니다. (제5조 3호){" "}
-          </div>
-          <div>
+          </ExampleText>
+          <ExampleText>
             {" "}
             02. 폭력행위 재발 시는 격리 또는 접근금지 등의 임시조치를 신청할 수
             있음을 가해자에게 통보합니다. (제5조 4호)
-          </div>
-          <div>
+          </ExampleText>
+          <ExampleText>
             {" "}
             03. 위와 같은 응급조치에도 불구하고 가정폭력범죄가 재발할 우려가
             있다고 인정될 때에는 사법경찰관리는 검사에 대하여 법원에 임시조치를
@@ -155,7 +155,7 @@ function AboutDomesticViolencePage() {
             피해자나 가정구성원이 살거나 점유하는 방으로부터의 퇴거 등 격리나
             (제29조 1항 1호), 피해자의 주거, 직장 등에서 100미터 이내의
             접근금지명령 등이 있습니다.(제29조 1항 2호)
-          </div>
+          </ExampleText>
         </ExampleBox>
 
         <QustionBox> Q. 법원의 임시조치 종류는 무엇인가요? </QustionBox>
@@ -167,28 +167,28 @@ function AboutDomesticViolencePage() {
         </AnswerBox>
         <ExampleBox>
           {" "}
-          <div>
+          <ExampleText>
             {" "}
             01. 가해자를 피해자 또는 가정구성원의 주거 또는 점유하는
             방으로부터의 퇴거 등 격리시킬 수 있다. (제29조 1항 1호){" "}
-          </div>
-          <div>
+          </ExampleText>
+          <ExampleText>
             {" "}
             02. 피해자의 주거, 직장 등에서 100미터 이내의 접근을 금지시킬 수
             있다.(제29조 1항 2호)
-          </div>
-          <div> 03. 의료기관이나 기타 요양소에 위탁. (제29조 1항 3호)</div>
-          <div>
+          </ExampleText>
+          <ExampleText> 03. 의료기관이나 기타 요양소에 위탁. (제29조 1항 3호)</ExampleText>
+          <ExampleText>
             {" "}
             04. 경찰관서의 유치장 또는 구치소에 유치할 수 있습니다. (제29조 1항
             4호)
-          </div>
-          <div>
+          </ExampleText>
+          <ExampleText>
             {" "}
             *격리 및 접근금지 기간은 2월을, 위탁 및 유치 기간은 1월을 초과할 수
             없습니다. 단 피해자를 위하여 필요할 때에는 1차에 한하여 연장할 수
             있습니다. (제29조 5항)
-          </div>
+          </ExampleText>
         </ExampleBox>
       </DivStyle>
     );
@@ -213,7 +213,10 @@ function AboutDomesticViolencePage() {
 }
 
 const Container = styled.div`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const MainHead = styled.h1`
@@ -230,55 +233,112 @@ const HeadStyle = styled.h2`
   display: flex;
   flex-direction: column;
   align-items: left;
-  margin: 30px 0 10px 30px;
+  margin: 3rem 0 1rem 0;
+
+  font-size: 1.75rem;
 `;
 
 const DivStyle = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: left;
+  align-items: center;
   margin-left: 75px;
+  
+
+  height: auto;
 `;
 
 const TypeStyle = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: auto;
 `;
 
 const TypeBox = styled.div`
-  display: block;
-  width: 150px;
-  height: 100px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 10rem;
+  height: 8rem;
   border: 1px solid black;
   margin: 15px 30px 0 0;
+  padding: 0.2rem;
   text-align: center;
+
+  font-size: 1.3rem;
+  
 `;
 
 const QustionBox = styled.div`
-  background: #3e4e34;
-  border: 1px solid black;
-  width: 800px;
-  height: 30px;
-  line-height: 30px;
-  padding: 10px;
-  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  background: #c5d4c6;
+
+  width: 80%;
+  height: 2rem;
+  padding: 1rem;
+  margin: 0.5rem;
+
+  font-size: 1.5rem;
 `;
 
 const AnswerBox = styled.div`
-  border: 1px solid black;
-  width: 800px;
-  height: auto;
-  line-height: 30px;
-  padding: 10px;
-  margin-top: -1px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0.5rem;
+
+  width: 80%;
+  height: 3rem;
+  padding: 1rem;
+
+  font-size: 1.5rem;
 `;
 
 const ExampleBox = styled.div`
-  background: #b4bfad;
-  border: 1px solid black;
-  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
   height: auto;
-  line-height: 30px;
-  padding: 10px;
-  margin-top: -1px;
+  padding: 1rem;
+  gap: 0.5rem;
+  margin: 0.5rem;
+
+  font-size: 1.5rem;
 `;
+
+const DivBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  margin: 0.5rem;
+  text-align: center;
+
+  font-size: 1.5rem;
+
+  width: 90%;
+`
+
+const ExampleText = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0.5rem;
+
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  gap: 0.5rem;
+
+  font-size: 1.5rem;
+  color: green;
+`
+
 export default AboutDomesticViolencePage;

@@ -11,7 +11,7 @@ function Posts({contents, currPage}){
 					contents !== undefined ? contents.map((post, idx) => { 
 						return (
 							<Content key={idx}>
-								<SpanNo className="no">{(idx+1 * currPage)}</SpanNo>
+								<SpanNo className="no">{((currPage-1)*10)+(idx+1)}</SpanNo>
 								<SpanCate className="category">{post.categoryId.title}</SpanCate>
 								<SpanTitle className="title">
 									<LinkDiv to={`/posts/${post._id}`}>{post.title}</LinkDiv>

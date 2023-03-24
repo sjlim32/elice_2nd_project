@@ -7,7 +7,7 @@ import sendBtn from "../../images/send_btn.png";
 import backBtn from "../../images/back_btn.png";
 import miniBtn from "../../images/mini_btn.png";
 
-import * as API from "../../utils/api.js";
+import * as API from "../../utils/api";
 
 const socket = io.connect(
   `${process.env.REACT_APP_SERVER_URL}:${process.env.REACT_APP_CHAT_PORT}`

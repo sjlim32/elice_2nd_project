@@ -65,7 +65,7 @@ function AboutUsPage() {
 
 const BackgroundImgLayout = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 30rem;
   display: flex;
   flex-direction: column;
   align-items: center;
