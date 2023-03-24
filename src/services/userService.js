@@ -113,12 +113,12 @@ class UserService {
     if (!isPasswordCorrect) throw new Error("패스워드가 일치하지 않습니다.");
 
     const accessToken = await this.generateAccessToken(user);
-    const refreshToken = await this.generateRefreshToken(user);
-    await this.storeRefreshToken(user.id, refreshToken);
+    // const refreshToken = await this.generateRefreshToken(user);
+    // await this.storeRefreshToken(user.id, refreshToken);
 
     const { role } = user;
 
-    return { accessToken, refreshToken, email, role };
+    return { accessToken, role };
   }
 
   async getTokenByUserId(userId) {
@@ -130,7 +130,6 @@ class UserService {
     const accessToken = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "15m" },
     );
 
     return accessToken;

@@ -45,6 +45,6 @@ io.on("connection", socket => {
 
 io.on("disconnect", socket => {});
 
-server.listen(chatPort||5003, () => {
+server.listen(chatPort || 5003, () => {
   console.log(`server is running on port ${chatPort}.`);
 });

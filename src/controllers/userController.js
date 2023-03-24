@@ -76,18 +76,18 @@ class UserController {
     const { email, password } = req.body;
 
     try {
-      const { accessToken, refreshToken, role } = await userService.login({
+      const { accessToken, role } = await userService.login({
         email,
         password,
       });
 
-      const cookieOptions = {
-        httpOnly: true,
-        // secure: true,
-        sameSite: "strict",
-      };
+      // const cookieOptions = {
+      //   httpOnly: true,
+      //   // secure: true,
+      //   sameSite: "strict",
+      // };
 
-      res.cookie("refreshToken", refreshToken, cookieOptions);
+      // res.cookie("refreshToken", refreshToken, cookieOptions);
       req.data = { accessToken, role, email };
       next();
     } catch (error) {
