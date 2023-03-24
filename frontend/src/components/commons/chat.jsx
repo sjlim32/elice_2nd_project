@@ -7,12 +7,12 @@ import sendBtn from "../../images/send_btn.png";
 import backBtn from "../../images/back_btn.png";
 import miniBtn from "../../images/mini_btn.png";
 
-import API from "../../utils/api.js"
+import * as API from "../../utils/api.js";
 
 const serverUrl = process.env.SERVER_URL;
 const chatPort = process.env.CHAT_PORT;
 
-const socket = io.connect(serverUrl+":"+chatPort);
+const socket = io.connect(serverUrl + ":" + chatPort);
 
 function Chat() {
   const [modal, setModal] = useState(false);
@@ -69,12 +69,11 @@ function Chat() {
       }
       socket.emit("join_room", roomNumber);
       setLastRoomNumber(roomNumber);
-      API
-        .post("/chats/join/" + roomNumber, {
-          roomId: roomNumber,
-          supporterId: roomNumber.split("!!")[0].split(":")[1],
-          userId: roomNumber.split("!!")[1].split(":")[1],
-        })
+      API.post("/chats/join/" + roomNumber, {
+        roomId: roomNumber,
+        supporterId: roomNumber.split("!!")[0].split(":")[1],
+        userId: roomNumber.split("!!")[1].split(":")[1],
+      })
         .then((res) => {
           setChatLog(res.data.logs);
         })
@@ -138,7 +137,7 @@ function Chat() {
               } else setRoomNumber("S:" + targetData[i].email + "!!U:" + id);
             }}
           >
-            {targetData[i].userName} 서포터 ({targetData[i].email})
+            {targetData[i].userName} 서포터
           </SingleList>
         );
       }
@@ -173,8 +172,7 @@ function Chat() {
     const role = localStorage.getItem("role");
     if (modal && !target) {
       if (role === "support") {
-        API
-          .get("/chats/supporters/" + id)
+        API.get("/chats/supporters/" + id)
           .then((res) => {
             setTargetData(res.data);
           })
@@ -182,8 +180,7 @@ function Chat() {
       }
       if (role === "user") {
         const token = "Bearer " + localStorage.getItem("token");
-        API
-          .get("/users/userRole/support")
+        API.get("/users/userRole/support")
           .then((res) => setTargetData(res.data))
           .catch((err) => {
             alert("로그아웃 되었습니다. 다시 로그인해주세요.");
