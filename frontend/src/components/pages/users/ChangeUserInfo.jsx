@@ -36,6 +36,10 @@ function ChangeUserInfo() {
       console.log("password is not confirmed");
       return false;
     }
+    if (password === "") {
+      console.log("please input password");
+      return false;
+    }
     return true;
   };
 
@@ -114,6 +118,7 @@ function ChangeUserInfo() {
         />
       </div>
       <div>
+        주소
         <button id="postcode" onClick={openPostcode}>
           우편번호 검색
         </button>
