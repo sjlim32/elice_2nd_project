@@ -71,7 +71,7 @@ const BackgroundImgLayout = styled.div`
 `;
 
 const Title = styled.div`
-  font-size: 55px;
+  font-size: 60px;
   font-weight: 1000;
   text-align: center;
 
@@ -96,12 +96,12 @@ const ChartLayoutRevers = styled.div`
 `;
 
 const BigText = styled.div`
-  font-size: 30px;
+  font-size: 40px;
   font-weight: bold;
 `;
 
 const SmallText = styled.div`
-  font-size: 15px;
+  font-size: 20px;
 `;
 
 export default AboutUsPage;
