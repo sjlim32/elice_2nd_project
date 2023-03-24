@@ -65,7 +65,9 @@ const CommentList = ({commentList}) => {
 										}
 									</CmtDel>	
 									<CmtDate>
-										{reReply.createdAt.split("T")[0]}
+										{reReply.createdAt 
+										? reReply.createdAt.split("T")[0]
+										: null}
 									</CmtDate>
 								</CommentContainer>
 							)
@@ -95,14 +97,8 @@ function Comment({post_id}) {
 	}, [post_id])
 
 	const handleSubmit = useCallback(async (e) => {
-		e.preventDefault();
-
 		try {
 			const res = await API.post(`/replies`, { postId: post_id, parentId: null, contents: commentary })
-			if (res.data) {
-				alert('공감의 말이 정상적으로 등록되었습니다.');
-				window.location.reload();
-			}
 		} catch (error) {
 			console.error("ErrorMessage :", error)
 			if (error.response.status === 401) {

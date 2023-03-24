@@ -34,7 +34,7 @@ function NavigationBar() {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("email");
-    window.location.reload();
+    window.location.href = "/";
   };
 
   return (

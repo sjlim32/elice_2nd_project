@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 // import axios from 'axios';
 import * as API from '../../utils/api';
-
 import styled from 'styled-components';
+
 import CategoryFilter from '../../components/pages/community/mainPage/CategoryFilter';
-import Search from '../../components/pages/community/mainPage/Search';
 import Posts from '../../components/pages/community/mainPage/Posts';
 import Pagination from '../../components/pages/community/mainPage/Pagination';
 
@@ -23,6 +22,7 @@ function CommunityMainPage() {
 	const [ category, setCategory ] = useState('전체');
 	const [ posts, setPosts ] = useState([]);
 	const [ isLogin, setIsLogin ] = useState(false);
+	const [search, setSearch] = useState('');
 
 	// pagination 구현을 위한 변수
 	const [ page, setPage ] = useState(1);
@@ -39,35 +39,83 @@ function CommunityMainPage() {
 		localStorage.getItem('token') === null ? setIsLogin(false) : setIsLogin(true)
 	}, [])
 
-	// ? 카테고리 별 게시물 받아오기
+	// ------ 카테고리 별 게시물 받아오기
 	const getCategoryPost = async (categoryId) => {
 		try {
 			if (categoryId === '') {
-				const res = await API.get('/posts');
-				setPosts(res.data)
+				if (search) {
+					const res = await API.get(`/posts/search/${search}`)
+					setPosts(res.data)
+				} else {
+					const res = await API.get('/posts');
+					setPosts(res.data)
+				}
 			} else {
-				const res = await API.get(`/posts/category/${categoryId}`)
-				setPosts(res.data)
+				if (search) {
+					const res = await API.get(`/posts/category/${categoryId}`)
+					const filterdPosts = res.data.filter(post => post.title.includes(search))
+					setPosts(filterdPosts)
+				} else {
+					const res = await API.get(`/posts/category/${categoryId}`)
+					setPosts(res.data)
+					console.log(search)
+				}
 			}
 		} catch (error) {
 			console.error("ErrorMessage :", error);
-			console.log(category)
 			alert("이야기를 불러오지 못했습니다.")
 		}
-	};
+	}
 
-	// ? 최초 전체포스트 받아오기
+	// ------ 최초 전체포스트 받아오기
 	useEffect(() => {
 		const getPost = async () => {
 			try {
 				const res = await API.get('/posts');
 				setPosts(res.data)
+				setSearch('')
+				setCategory('전체')
 			} catch (error) {
 				console.error(error);
 			}
 		}
 		getPost();
 	}, [])
+
+
+	// ------ 검색 
+	// 추후 디바운스 처리 필요 	
+
+	const onSearch = (e) => {
+		e.preventDefault()
+		setSearch(e.target.value)
+	}
+
+	const handleSearch = async () => {
+		try { 
+			if (!search) {
+				if ( category !== '전체' ) {
+					const res = await API.get('/posts');
+					const filterdPosts = res.data.filter(post => post.categoryId.title === category )
+					setPosts(filterdPosts)
+				} else {
+				const res = await API.get('/posts');
+				setPosts(res.data)
+				}
+			} else {
+				const res = await API.get(`/posts/search/${search}`)
+				if (category !== '전체') {
+					const filterdPosts = res.data.filter(post => post.categoryId.title === category )
+					setPosts(filterdPosts)
+					console.log(category)
+				} else {
+					setPosts(res.data)
+			}
+			}
+		} catch (error) {
+			console.error("에러 :", error)
+		}
+	}
 
   return (
 	<Container>
@@ -79,7 +127,10 @@ function CommunityMainPage() {
 				setCategory={setCategory}
 				setPosts={getCategoryPost}
 			/>
-			<Search></Search>
+				<SearchDiv>
+					<SearchBox type='text' value={search} placeholder='검색어를 입력해주세요.' onChange={onSearch} />
+					<SearchBtn onClick={handleSearch}> 검색 </SearchBtn>
+				</SearchDiv>
 			<WriteBtn 
 				style={ isLogin ? { display:'' }: { display:'none'} }
 				onClick={() => {navigate('/posts/write')}}>이야기 등록</WriteBtn>
@@ -116,6 +167,30 @@ const SearchWrap = styled.div`
 	width: 1200px;
 	height: 180px;
 	border-bottom: 1px solid gray;
+`
+
+const SearchDiv = styled.div`
+	display: flex;
+	align-items: center;
+`
+
+const SearchBox = styled.input`
+	display: flex;
+	width: 500px;
+	height: 30px;
+	border: 1px solid lightgray;
+	padding-left: 10px;
+	margin: 0px 20px 0 30px;
+`
+
+const SearchBtn = styled.button`
+	height: 25px;
+	border: 0.5px solid gray;
+	border-radius: 5px;
+	background-color: white;
+	&:active {
+	background-color: lightgray;
+	}
 `
 
 const WriteBtn = styled.button`

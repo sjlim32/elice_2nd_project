@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useCallback } from 'react';
+import * as API from '../../../../utils/api';
 import styled from 'styled-components';
 
-function Search() {
+function Search({setPosts}) {
 	
 	const [search, setSearch] = useState('');
 
@@ -11,13 +11,17 @@ function Search() {
 		setSearch(e.target.value);
 	}
 	
-	// ! axios.get('post/category/:categoryId/:seaerch') -> 이 떄, post.title 에 search 값이 포함된 모든 것 불러옴
-	const handleSubmit = async (e) => {
+	const handleSubmit = async () => {
 		try { 
-			e.preventDefault()
+			const res = await API.get(`posts/search/search/${search}`)
+			if (res.data) {
+				setPosts(res.data)
+				console.log(res.data)
+			}
 		} catch (error) {
+			console.error("에러 :", error)
 		}
-	};
+	}
 
 	return (
 			<SearchForm onSubmit={handleSubmit}>
