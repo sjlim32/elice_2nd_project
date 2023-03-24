@@ -3,10 +3,11 @@ import { useNavigate } from "react-router-dom";
 // import axios from 'axios';
 import * as API from "../../utils/api";
 import styled from "styled-components";
+import Pagination from 'react-js-pagination'
+import "./Pagination.css";
 
 import CategoryFilter from "../../components/pages/community/mainPage/CategoryFilter";
 import Posts from "../../components/pages/community/mainPage/Posts";
-import Pagination from "../../components/pages/community/mainPage/Pagination";
 
 const categories = [
   { title: "전체", _id: "" },
@@ -24,21 +25,17 @@ const categories = [
 function CommunityMainPage() {
   const navigate = useNavigate();
 
-  const [category, setCategory] = useState("전체");
-  const [posts, setPosts] = useState([]);
-  const [isLogin, setIsLogin] = useState(false);
-  const [search, setSearch] = useState("");
+  const [ category, setCategory ] = useState("전체");
+  const [ posts, setPosts ] = useState([]);
+  const [ isLogin, setIsLogin ] = useState(false);
+  const [ search, setSearch ] = useState("");
 
-  // pagination 구현을 위한 변수
-  const [page, setPage] = useState(1);
-  const limit = 10;
-  const offset = (page - 1) * limit;
-  const postsData = (posts) => {
-    if (posts) {
-      let res = posts.slice(offset, offset + limit);
-      return res;
-    }
-  };
+  const [ currPage, setCurrPage ] = useState(1)
+  const [ totalPage, setTotalPage ] = useState(null)
+  const [ render, setRender ] = useState(false);
+  const perPage = 10;
+
+  const params = { page:currPage, perPage: perPage}
 
   useEffect(() => {
     localStorage.getItem("token") === null
@@ -46,42 +43,13 @@ function CommunityMainPage() {
       : setIsLogin(true);
   }, []);
 
-  // ------ 카테고리 별 게시물 받아오기
-  const getCategoryPost = async (categoryId) => {
-    try {
-      if (categoryId === "") {
-        if (search) {
-          const res = await API.get(`/posts/search/${search}`);
-          setPosts(res.data);
-        } else {
-          const res = await API.get("/posts");
-          setPosts(res.data);
-        }
-      } else {
-        if (search) {
-          const res = await API.get(`/posts/category/${categoryId}`);
-          const filterdPosts = res.data.filter((post) =>
-            post.title.includes(search)
-          );
-          setPosts(filterdPosts);
-        } else {
-          const res = await API.get(`/posts/category/${categoryId}`);
-          setPosts(res.data);
-          console.log(search);
-        }
-      }
-    } catch (error) {
-      console.error("ErrorMessage :", error);
-      alert("이야기를 불러오지 못했습니다.");
-    }
-  };
-
   // ------ 최초 전체포스트 받아오기
   useEffect(() => {
     const getPost = async () => {
       try {
-        const res = await API.get("/posts");
-        setPosts(res.data);
+        const res = await API.get("/posts", params);
+        setPosts(() => res.data.partialPosts);
+        setTotalPage(() => res.data.totalPage)
         setSearch("");
         setCategory("전체");
       } catch (error) {
@@ -90,6 +58,36 @@ function CommunityMainPage() {
     };
     getPost();
   }, []);
+
+  // ------ 카테고리 별 게시물 받아오기
+  const getCategoryPost = async (categoryId) => {
+    try {
+      if (categoryId === "") {
+        if (search) {
+          const res = await API.get(`/posts/search/${search}`);
+          setPosts(() => res.data.partialPosts);
+        } else {
+          const res = await API.get("/posts");
+          setPosts(() => res.data.partialPosts);
+        }
+      } else {
+        if (search) {
+          const res = await API.get(`/posts/category/${categoryId}`);
+          const filterdPosts = res.data.partialPosts.filter((post) =>
+            post.title.includes(search)
+          );
+          setPosts(filterdPosts);
+        } else {
+          const res = await API.get(`/posts/category/${categoryId}`);
+          setPosts(() => res.data.partialPosts);
+          console.log(search);
+        }
+      }
+    } catch (error) {
+      console.error("ErrorMessage :", error);
+      alert("이야기를 불러오지 못했습니다.");
+    }
+  };
 
   // ------ 검색
   // 추후 디바운스 처리 필요
@@ -129,6 +127,29 @@ function CommunityMainPage() {
     }
   };
 
+  // ----- pagination
+
+  const handlePageChange = async (page) => {
+    if (currPage === page)
+      return;
+    setCurrPage(page);
+    setRender(true);
+    
+  }
+
+  const rending = async () => {
+    const res = await API.get("/posts", params);
+    setPosts(() => res.data.partialPosts);
+  }
+
+  useEffect(() => {
+    if (render) {
+      rending();
+      setRender(false);
+    }
+  }, [render, currPage])
+
+
   return (
     <Container>
       <MainHead>이야기 광장</MainHead>
@@ -165,12 +186,16 @@ function CommunityMainPage() {
           <SpanAuthor>글쓴이</SpanAuthor>
           <SpanDate>작성일자</SpanDate>
         </ContentBar>
-        <Posts contents={postsData(posts)} />
+        <Posts contents={posts} currPage={currPage} />
+
         <Pagination
-          limit={limit}
-          page={page}
-          totalPosts={posts.length}
-          setPage={setPage}
+          activePage={currPage}
+          itemsCountPerPage={perPage}
+          totalItemsCount={totalPage * perPage}
+          pageRangeDisplayed={totalPage}
+          prevPageText={"<"}
+          nextPageText={">"}
+          onChange={handlePageChange}
         />
       </BoardWrap>
     </Container>
@@ -185,14 +210,19 @@ const Container = styled.div`
 
 const MainHead = styled.h1`
   text-align: center;
-  margin: 80px 0 40px 0;
+  justify-content: center;
+  margin: 5rem;
+  padding-bottom: 5rem;
+
+  width: 90%;
+  border-bottom: 1px solid lightgray;
 `;
 
 const SearchWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 1200px;
+  width: 95%;
   height: 180px;
   border-bottom: 1px solid gray;
 `;
@@ -216,6 +246,7 @@ const SearchBtn = styled.button`
   border: 0.5px solid gray;
   border-radius: 5px;
   background-color: white;
+  width: 50px;
   &:active {
     background-color: lightgray;
   }

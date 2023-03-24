@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const serverUrl = process.env.REACT_APP_CLIENT_PORT;;
+const serverUrl = process.env.REACT_APP_CLIENT_PORT;
 // const serverUrl = "http://kdt-ai6-team07.elicecoding.com/api";
 // const serverUrl = "/api"
 
@@ -8,7 +8,7 @@ const serverUrl = process.env.REACT_APP_CLIENT_PORT;;
 // ex) 로그인일 때, endpoint는 '/login'
 //     const response = await get('/login');
 
-async function get(endpoint) {
+async function get(endpoint, params) {
   console.log(`%cGET 요청 ${serverUrl + endpoint}`, "color: #a25cd1;");
 
   return axios.get(serverUrl + endpoint, {
@@ -16,6 +16,7 @@ async function get(endpoint) {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
+    params: params
   });
 }
 
