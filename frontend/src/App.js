@@ -29,6 +29,9 @@ const ChangePassword = lazy(() =>
   import("./components/pages/users/ChangePassword")
 );
 
+const MyPage = lazy(() => 
+  import("./components/pages/users/MyPage") )
+
 function App() {
   return (
     <Router>
@@ -58,7 +61,7 @@ function App() {
             <Route path="/users/changeuserinfo" element={<ChangeUserInfo />} />
             <Route path="/users/login" element={<UserLoginForm />} />
             <Route path="/users/userwithdrawal" element={<UserWithdrawal />} />
-            <Route path="/users/changepassword" element={<ChangePassword />} />
+            <Route path="/users/mypage" element={<MyPage />} />
           </Route>
         </Routes>
       </Suspense>
