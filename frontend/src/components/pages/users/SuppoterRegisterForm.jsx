@@ -62,20 +62,14 @@ function SuppoterRegisterForm() {
       try {
         const res = await API.post("/users", userData);
         console.log(res.data);
-        const res2 = await API.post("/login", userData);
-        localStorage.setItem("token", res2.data.accessToken);
-        localStorage.setItem("role", res2.data.role);
-        localStorage.setItem("email", res2.data.email);
-        navigate("/");
-        window.location.reload();
       } catch (err) {
         if (err.response) {
-          alert(err.response.data)
+          alert(err.response.data);
           window.location.reload();
         } else {
-          alert("회원가입에 실패했습니다.")
+          alert("회원가입에 실패했습니다.");
         }
-        }
+      }
     } else alert(error);
   };
 
