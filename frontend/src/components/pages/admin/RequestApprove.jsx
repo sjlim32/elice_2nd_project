@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as API from "../../../utils/api";
+import styled from "styled-components";
 
 function AdminUserDB() {
   const [users, setUsers] = useState([]);
@@ -43,18 +44,18 @@ function AdminUserDB() {
       <tr key={user.email}>
         <td>{user.role}</td>
         <td>{user.email}</td>
-        <button value={user._id} onClick={handleClick}>
+        <Button value={user._id} onClick={handleClick}>
           가입 승인
-        </button>
-        <button value={user._id} onClick={handleClick2}>
+        </Button>
+        <Button value={user._id} onClick={handleClick2}>
           가입 거절
-        </button>
+        </Button>
       </tr>
     );
   };
 
   return (
-    <div>
+    <Container>
       <table>
         <thead>
           <tr>
@@ -68,8 +69,27 @@ function AdminUserDB() {
           })}
         </tbody>
       </table>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  width: 500px;
+  border: 2px solid #3e4e34;
+  border-radius: 10px;
+  padding: 20px 20px 20px 20px;
+  margin: auto;
+  margin-top: 200px;
+  align-items: center;
+`;
+
+const Button = styled.button`
+  width: 100px;
+  border-radius: 15px;
+  background-color: #3e4e34;
+  color: #ffffff;
+`;
 
 export default AdminUserDB;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as API from "../../../utils/api";
+import styled from "styled-components";
 
 function AdminUserDB() {
   const [users, setUsers] = useState([]);
@@ -19,51 +20,69 @@ function AdminUserDB() {
   const UserDB = ({ user }) => {
     return (
       <tr key={user.email}>
-        <td>{user.role}</td>
         <td>{user.email}</td>
       </tr>
     );
   };
 
   return (
-    <div>
-      <label>
-        <input
-          type="radio"
-          value="user"
-          checked={role === "user"}
-          onChange={(e) => {
-            setRole("user");
-          }}
-        />
-        User
-      </label>
-      <label>
-        <input
-          type="radio"
-          value="supporter"
-          checked={role === "support"}
-          onChange={(e) => {
-            setRole("support");
-          }}
-        />
-        Supporter
-      </label>
-      <table>
-        <thead>
-          <tr>
-            <th>Role</th>
-            <th>Email</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => {
-            return <UserDB user={user} />;
-          })}
-        </tbody>
-      </table>
-    </div>
+    <Container>
+      <InnerContainer>
+        <label>
+          <input
+            type="radio"
+            value="user"
+            checked={role === "user"}
+            onChange={(e) => {
+              setRole("user");
+            }}
+          />
+          User
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="supporter"
+            checked={role === "support"}
+            onChange={(e) => {
+              setRole("support");
+            }}
+          />
+          Supporter
+        </label>
+        <table>
+          <thead>
+            <tr>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((user) => {
+              return <UserDB user={user} />;
+            })}
+          </tbody>
+        </table>
+      </InnerContainer>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-flow: column wrap;
+  width: 500px;
+  border: 2px solid #3e4e34;
+  border-radius: 10px;
+  padding: 20px 20px 20px 20px;
+  margin: auto;
+  margin-top: 200px;
+  align-items: center;
+`;
+
+const InnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+`;
 
 export default AdminUserDB;

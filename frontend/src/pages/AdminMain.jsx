@@ -4,14 +4,14 @@ import styled from "styled-components";
 
 function AdminMain() {
   return (
-    <div>
+    <Container>
       <Button>
         <StyledLink to="/admin/requestapprove">서포터 신청 승인</StyledLink>
       </Button>
       <Button>
         <StyledLink to="/admin/userdb">서포터 / 유저 관리</StyledLink>
       </Button>
-    </div>
+    </Container>
   );
 }
 
@@ -36,6 +36,16 @@ const StyledLink = styled(Link)`
   &:hover {
     color: #baeb34;
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  width: 700px;
+  border: 2px solid #3e4e34;
+  border-radius: 10px;
+  padding: 20px 20px 20px 20px;
+  margin: auto;
+  margin-top: 200px;
 `;
 
 export default AdminMain;
