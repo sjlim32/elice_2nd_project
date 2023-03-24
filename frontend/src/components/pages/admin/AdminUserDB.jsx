@@ -5,10 +5,10 @@ async function AdminUserDB() {
   const [users, setUsers] = useState([]);
 
   try {
-    const res = await API.get("/admin/users/userRole");
+    const res = await API.get("/admin/users/userRole/:userRole");
     setUsers(res.data);
   } catch (err) {
-    alert("error");
+    alert(err);
   }
 
   const UserDB = ({ user }) => {

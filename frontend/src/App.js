@@ -30,11 +30,25 @@ const ChangePassword = lazy(() =>
 );
 const MyPage = lazy(() => import("./pages/MyPage"));
 const PostDB = lazy(() => import("./components/pages/users/PostDB"));
+const AdminUserDB = lazy(() => import("./components/pages/admin/AdminUserDB"));
 
 function App() {
   return (
     <Router>
-      <Suspense fallback={<p style={{"text-align":"center", "font-size":"50px", "line-height":"600px"}}> Loading...</p>}>
+      <Suspense
+        fallback={
+          <p
+            style={{
+              "text-align": "center",
+              "font-size": "50px",
+              "line-height": "600px",
+            }}
+          >
+            {" "}
+            Loading...
+          </p>
+        }
+      >
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route path="/" element={<MainPage />} />
@@ -63,6 +77,7 @@ function App() {
             <Route path="/users/userwithdrawal" element={<UserWithdrawal />} />
             <Route path="/users/changepassword" element={<ChangePassword />} />
             <Route path="/users/myposts" element={<PostDB />} />
+            <Route path="/admin/userdb" element={<AdminUserDB />} />
           </Route>
         </Routes>
       </Suspense>
