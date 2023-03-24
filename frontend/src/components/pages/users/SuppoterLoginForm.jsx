@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as API from "../../../utils/api";
 
 function SuppoterLoginForm() {
@@ -25,7 +25,12 @@ function SuppoterLoginForm() {
       navigate("/");
       window.location.reload();
     } catch (err) {
-      alert("error");
+      if (err.response) {
+        alert(err.response.data)
+        window.location.reload();
+      } else {
+        alert("로그인에 실패했습니다.")
+      }
     }
   };
 

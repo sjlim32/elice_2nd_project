@@ -69,8 +69,13 @@ function SuppoterRegisterForm() {
         navigate("/");
         window.location.reload();
       } catch (err) {
-        alert(error);
-      }
+        if (err.response) {
+          alert(err.response.data)
+          window.location.reload();
+        } else {
+          alert("회원가입에 실패했습니다.")
+        }
+        }
     } else alert(error);
   };
 
