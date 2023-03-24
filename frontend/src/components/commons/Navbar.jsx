@@ -109,7 +109,7 @@ const MypageLogoutWrapper = styled.div`
   margin-left: auto;
   gap: 20px;
 
-  width: 400px;
+  width: 450px;
   height: 30px;
 
   background-color: #c5d4c6;

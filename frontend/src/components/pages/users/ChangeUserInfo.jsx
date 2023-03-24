@@ -71,7 +71,7 @@ function ChangeUserInfo() {
   };
 
   return (
-    <div>
+    <Container>
       <div>
         이메일
         <input id="email" placeholder={users.email} disabled />
@@ -151,7 +151,7 @@ function ChangeUserInfo() {
       <EditButton id="submit" onClick={handleSubmit}>
         수정하기
       </EditButton>
-    </div>
+    </Container>
   );
 }
 
@@ -172,6 +172,18 @@ const EditButton = styled.button`
   align-items: center;
   justify-content: center;
   margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+`;
+
+const Container = styled.div`
+  width: 700px;
+  border: 2px solid #3e4e34;
+  border-radius: 10px;
+  padding: 20px 20px 20px 20px;
+  margin: auto;
+  margin-top: 200px;
+  text-align: center;
 `;
 
 export default ChangeUserInfo;
