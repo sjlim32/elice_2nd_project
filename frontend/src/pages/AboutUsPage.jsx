@@ -105,10 +105,12 @@ const ChartLayoutRevers = styled.div`
 const BigText = styled.div`
   font-size: 40px;
   font-weight: bold;
+  text-align: center;
 `;
 
 const SmallText = styled.div`
   font-size: 20px;
+  text-align: center;
 `;
 
 export default AboutUsPage;
