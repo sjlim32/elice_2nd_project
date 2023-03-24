@@ -34,13 +34,10 @@ const AdminMain = lazy(() => import("./pages/AdminMain"));
 const MyPosts = lazy(() => import("./components/pages/users/MyPosts"));
 
 const MyPage = lazy(() => import("./pages/MyPage"));
-<<<<<<< HEAD
 const AdminUserDB = lazy(() => import("./components/pages/admin/AdminUserDB"));
 const RequestApprove = lazy(() =>
   import("./components/pages/admin/RequestApprove")
 );
-=======
->>>>>>> 5d86b75598caa8cbdf8966da8abda16179396cb0
 
 function App() {
   return (
