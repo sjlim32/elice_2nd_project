@@ -52,13 +52,13 @@ function NavigationBar() {
             </>
           ) : token ? (
             <>
-              <div>{ 
-              role === 'support' || role === 'pending'
-              ? `${email.split('@')[0]} 서포터님, 반갑습니다.`
-              : ( role === 'admin' 
-                ? '관리자님, 반갑습니다.'
-                : `${email.split('@')[0]} 유저님, 반갑습니다.`)
-                }</div>
+              <div>
+                {role === "support" || role === "pending"
+                  ? `${email.split("@")[0]} 서포터님, 반갑습니다.`
+                  : role === "admin"
+                  ? "관리자님, 반갑습니다."
+                  : `${email.split("@")[0]} 유저님, 반갑습니다.`}
+              </div>
               <StyledLink2 to="/users/mypage">마이페이지</StyledLink2>
               <StyledLink2 onClick={handleLogout}>로그아웃</StyledLink2>
             </>
@@ -87,19 +87,18 @@ const NavContainer = styled.nav`
 
   width: 100%;
   height: 200px;
-  background-color: #447348
+  background-color: #447348;
 `;
 
 const MenuWrapper = styled.div`
   display: flex;
   justify-content: right;
-  
+
   margin: 20px 330px 40px 0;
 
   width: 100%;
   font-size: 30px;
   gap: 40px;
-
 `;
 
 const MypageLogoutWrapper = styled.div`
@@ -109,7 +108,7 @@ const MypageLogoutWrapper = styled.div`
   margin: 20px 0 50px 0;
   margin-left: auto;
   gap: 20px;
-  
+
   width: 400px;
   height: 30px;
 
@@ -136,22 +135,22 @@ const StyledLink2 = styled(Link)`
 const LogoImg = styled.img`
   display: flex;
   flex-direction: column;
-  justify-contents: center;
+  justify-content: center;
   align-items: center;
   margin: 20px 20px 20px 40px;
-  
+
   width: 130px;
   height: 140px;
-  background-color : #6ca671;
+  background-color: #6ca671;
 
   border-radius: 100%;
   border: 10px solid white;
 `;
 
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 85%;
 `;
 
 export default NavigationBar;

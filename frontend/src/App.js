@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import Chat from "./components/commons/chat";
+import styled from "styled-components";
 
 const Layout = lazy(() => import("./components/commons/layout"));
 const MainPage = lazy(() => import("./pages/MainPage"));
@@ -29,10 +31,9 @@ const ChangePassword = lazy(() =>
   import("./components/pages/users/ChangePassword")
 );
 const AdminMain = lazy(() => import("./pages/AdminMain"));
-const MyPosts = lazy(() => import("./components/pages/users/MyPosts"))
+const MyPosts = lazy(() => import("./components/pages/users/MyPosts"));
 
-const MyPage = lazy(() => 
-  import("./pages/MyPage") )
+const MyPage = lazy(() => import("./pages/MyPage"));
 
 function App() {
   return (
@@ -84,8 +85,18 @@ function App() {
           </Route>
         </Routes>
       </Suspense>
+      <ChatWrapper>
+        <Chat />
+      </ChatWrapper>
     </Router>
   );
 }
+
+const ChatWrapper = styled.div`
+  display: flex;
+  position: fixed;
+  right: 10px;
+  bottom: 30px;
+`;
 
 export default App;
