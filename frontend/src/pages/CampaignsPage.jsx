@@ -7,10 +7,10 @@ function CampaignsPage() {
   const Blackdot = () => {
     return (
       <Container>
-        <img src={blackdotImg} alt="blackdotImage_01" />
-        <img src={blackdot2Img} alt="blackdotImage_02" />
+        <img style={{ width: "30%" }}src={blackdotImg} alt="blackdotImage_01" />
+        <img style={{ width: "30%" }}src={blackdot2Img} alt="blackdotImage_02" />
         <TextBox>
-          <div>블랙닷 캠페인 (Black Dot Campaigne)</div>
+          <h2>블랙닷 캠페인 (Black Dot Campaigne)</h2>
           <div>
             블랙닷 캠페인은 2015년 영국에서 시작된 캠페인입니다. 폭력을 당하고
             있다고 하더라도, 가족이거나 친밀한 사람이라면 보복 등이 무서워서
@@ -39,12 +39,12 @@ function CampaignsPage() {
     return (
       <SecondContainer>
         <img
-          style={{ width: 800 }}
+          style={{ width: "50%" }}
           src={violenceSignImg}
           alt="violenceSign_01"
         />
         <TextBox>
-          <div>도움이 필요해요 ( Signal For Help )</div>
+          <h2>도움이 필요해요 ( Signal For Help )</h2>
           <div>
             '가정폭력 피해자는 언제 어디서든 상대방에게 손바닥을 보여준 후,
             엄지손가락을 먼저 접은 뒤, 나머지 손가락을 접어 주먹을 쥐면 된다.'
@@ -78,30 +78,47 @@ function CampaignsPage() {
 
 const MainHead = styled.h1`
   text-align: center;
+  justify-content: center;
+  margin: 5rem;
+  padding-bottom: 5rem;
+
+  width: 90%;
+  border-bottom: 1px solid lightgray;
 `;
 
 const Container = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 50px;
+  align-items: center;
+  margin: 3rem;
+  padding-bottom: 3rem;
+  gap: 2rem;
+
+  border-bottom: 1px solid lightgray;
+
+
+  width: 95%;
 `;
 
 const SecondContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
   justify-content: center;
-  margin-top: 50px;
+  align-items: center;
+  margin: 3rem;
+  gap: 2rem;
+  
+  width: 95%;
 `;
 
 const TextBox = styled.div`
   display: flex;
-  flex-flow: column wrap;
-  justify-content: space-evenly;
-  width: 800px;
-  border: 1px solid black;
-  margin: 0 20px 0 20px;
-  padding: 10px;
+  flex-flow: row wrap;
+  gap: 2rem;
+  width: 50rem;
+
+  color: darkgreen
 `;
 
 export default CampaignsPage;

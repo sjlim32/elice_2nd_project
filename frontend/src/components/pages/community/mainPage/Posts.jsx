@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import loadingImg from '../../../../images/loadingImg.png';
 import { Link } from 'react-router-dom';
 
-function Posts({contents}){
+function Posts({contents, currPage}){
 
 		return (
 			<ContentWrap>
@@ -11,10 +11,10 @@ function Posts({contents}){
 					contents !== undefined ? contents.map((post, idx) => { 
 						return (
 							<Content key={idx}>
-								<SpanNo className="no">{post.idx}</SpanNo>
+								<SpanNo className="no">{(idx+1 * currPage)}</SpanNo>
 								<SpanCate className="category">{post.categoryId.title}</SpanCate>
 								<SpanTitle className="title">
-									<Link to={`/posts/${post._id}`}>{post.title}</Link>
+									<LinkDiv to={`/posts/${post._id}`}>{post.title}</LinkDiv>
 								</SpanTitle>
 								<SpanWriter className="writer">{post.userId.role === 'user' ? '익명' : post.userId.role}</SpanWriter>
 								<SpanDate className="date">{post.createdAt.split('T')[0]}</SpanDate>
@@ -77,5 +77,13 @@ const ImageWrap = styled.div`
 	flex-direction: row;
 	justify-content: center;
 `;
+
+const LinkDiv = styled(Link)`
+	text-decoration : none;
+	color: inherit;
+	&:hover {
+		color: green;
+	}
+`
 
 export default Posts;

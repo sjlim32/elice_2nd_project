@@ -218,6 +218,12 @@ const Container = styled.div`
 
 const MainHead = styled.h1`
   text-align: center;
+  justify-content: center;
+  margin: 5rem;
+  padding-bottom: 5rem;
+
+  width: 90%;
+  border-bottom: 1px solid lightgray;
 `;
 
 const HeadStyle = styled.h2`
