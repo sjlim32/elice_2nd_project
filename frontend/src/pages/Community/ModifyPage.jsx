@@ -24,7 +24,7 @@ function ModifyPages() {
 
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [categoryId, setCategoryId] = useState("6411719e1410804b9b58697d");
+  const [categoryId, setCategoryId] = useState("641b4a5a3e01f8b6f21108fb");
 
   const CategoryContainer = ({ categories }) => {
     const handleCategory = (e) => {

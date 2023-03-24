@@ -7,7 +7,7 @@ import sendBtn from "../../images/send_btn.png";
 import backBtn from "../../images/back_btn.png";
 import miniBtn from "../../images/mini_btn.png";
 
-import API from "../../utils/api.js"
+import * as API from "../../utils/api";
 
 const serverUrl = process.env.SERVER_URL;
 const chatPort = process.env.CHAT_PORT;

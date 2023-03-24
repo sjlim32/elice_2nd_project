@@ -89,7 +89,7 @@ const MainHead = styled.h1`
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin: 3rem;
   padding-bottom: 3rem;
@@ -97,14 +97,14 @@ const Container = styled.div`
 
   border-bottom: 1px solid lightgray;
 
-
+  font-size: 1.5rem;
   width: 95%;
 `;
 
 const SecondContainer = styled.div`
   display: flex;
   flex-direction: row-reverse;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   margin: 3rem;
   gap: 2rem;
@@ -116,9 +116,10 @@ const TextBox = styled.div`
   display: flex;
   flex-flow: row wrap;
   gap: 2rem;
-  width: 50rem;
+  width: 60rem;
 
-  color: darkgreen
+  color: darkgreen;
+  font-size: 1.5rem;
 `;
 
 export default CampaignsPage;

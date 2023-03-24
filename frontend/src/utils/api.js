@@ -1,8 +1,10 @@
 import axios from "axios";
 
-const serverUrl = process.env.REACT_APP_CLIENT_PORT;
+// const serverUrl = process.env.REACT_APP_CLIENT_PORT;
 // const serverUrl = "http://kdt-ai6-team07.elicecoding.com/api";
 // const serverUrl = "/api"
+
+const serverUrl = `${process.env.REACT_APP_SERVER_URL}:${process.env.REACT_APP_SERVER_PORT}/api`
 
 // endpoint : serverUrl 뒤에 오는 path
 // ex) 로그인일 때, endpoint는 '/login'
