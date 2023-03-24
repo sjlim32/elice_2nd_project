@@ -67,9 +67,9 @@ function ChangePassword() {
         />
       </div>
 
-      <button id="submit" onClick={handleSubmit}>
+      <EditButton id="submit" onClick={handleSubmit}>
         수정하기
-      </button>
+      </EditButton>
     </div>
   );
 }
