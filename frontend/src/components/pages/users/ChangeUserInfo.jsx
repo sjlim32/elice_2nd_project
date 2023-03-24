@@ -37,6 +37,10 @@ function ChangeUserInfo() {
       console.log("password is not confirmed");
       return false;
     }
+    if (password === "") {
+      console.log("please input password");
+      return false;
+    }
     return true;
   };
 
