@@ -28,6 +28,7 @@ const UserWithdrawal = lazy(() =>
 const ChangePassword = lazy(() =>
   import("./components/pages/users/ChangePassword")
 );
+const AdminMain = lazy(() => import("./pages/AdminMain"));
 const MyPage = lazy(() => import("./pages/MyPage"));
 const PostDB = lazy(() => import("./components/pages/users/PostDB"));
 const AdminUserDB = lazy(() => import("./components/pages/admin/AdminUserDB"));
@@ -76,6 +77,7 @@ function App() {
             <Route path="/users/login" element={<UserLoginForm />} />
             <Route path="/users/userwithdrawal" element={<UserWithdrawal />} />
             <Route path="/users/changepassword" element={<ChangePassword />} />
+            <Route path="/admin" element={<AdminMain />} />
             <Route path="/users/myposts" element={<PostDB />} />
             <Route path="/admin/userdb" element={<AdminUserDB />} />
           </Route>
