@@ -134,6 +134,7 @@ function SuppoterRegisterForm() {
                 done={(data) => {
                   setZonecode(data.zonecode);
                   setAddress(data.address);
+                  console.log(typeof (zonecode, address));
                 }}
               />
             </PopupDom>
@@ -147,7 +148,7 @@ function SuppoterRegisterForm() {
           onChange={(e) => setDetailAddress(e.target.value)}
         />
       </div>
-      <RegisterButton onSubmit={handleSubmit}>가입하기</RegisterButton>
+      <RegisterButton onClick={handleSubmit}>가입하기</RegisterButton>
     </RegisterContainer>
   );
 }

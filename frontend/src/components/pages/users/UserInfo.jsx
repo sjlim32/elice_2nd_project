@@ -13,11 +13,7 @@ function UserInfo() {
       </button>
 
       <button>
-        <Link>나의 상담 내역</Link>
-      </button>
-
-      <button>
-        <Link>나의 활동 내역</Link>
+        <Link to="/users/myposts">나의 활동 내역</Link>
       </button>
     </div>
   );

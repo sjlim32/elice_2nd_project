@@ -28,6 +28,8 @@ const UserWithdrawal = lazy(() =>
 const ChangePassword = lazy(() =>
   import("./components/pages/users/ChangePassword")
 );
+const MyPage = lazy(() => import("./pages/MyPage"));
+const PostDB = lazy(() => import("./components/pages/users/PostDB"));
 
 function App() {
   return (
@@ -55,10 +57,12 @@ function App() {
             />
             <Route path="/campaigns" element={<CampaignsPage />} />
             <Route path="/users/register" element={<Register />} />
+            <Route path="/users/mypage" element={<MyPage />} />
             <Route path="/users/changeuserinfo" element={<ChangeUserInfo />} />
             <Route path="/users/login" element={<UserLoginForm />} />
             <Route path="/users/userwithdrawal" element={<UserWithdrawal />} />
             <Route path="/users/changepassword" element={<ChangePassword />} />
+            <Route path="/users/myposts" element={<PostDB />} />
           </Route>
         </Routes>
       </Suspense>
