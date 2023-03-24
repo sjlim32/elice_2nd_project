@@ -12,6 +12,10 @@ function ChangePassword() {
       console.log("password is not confirmed");
       return false;
     }
+    if (password === "") {
+      console.log("please input password");
+      return false;
+    }
     return true;
   };
 
@@ -34,7 +38,7 @@ function ChangePassword() {
   return (
     <div>
       <div>
-        기존 패스워드
+        기존 비밀번호
         <input
           id="password"
           type="password"
@@ -44,7 +48,7 @@ function ChangePassword() {
       </div>
 
       <div>
-        새 패스워드
+        새 비밀번호
         <input
           id="newPassword"
           type="password"
@@ -54,7 +58,7 @@ function ChangePassword() {
       </div>
 
       <div>
-        새 패스워드 확인
+        새 비밀번호 확인
         <input
           id="confirmPassword"
           type="password"
@@ -63,9 +67,9 @@ function ChangePassword() {
         />
       </div>
 
-      <EditButton id="submit" onClick={handleSubmit}>
+      <button id="submit" onClick={handleSubmit}>
         수정하기
-      </EditButton>
+      </button>
     </div>
   );
 }
