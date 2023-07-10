@@ -1,0 +1,42 @@
+{
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  // "extends": ["airbnb-base", "prettier", "plugin:node/recommended"],
+  "extends": ["airbnb", "prettier", "plugin:node/recommended"],
+
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly",
+    "__dirname": true
+  },
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true,
+    "requireConfigFile": false
+  },
+  "plugins": ["prettier"],
+
+  "rules": {
+    // "linebreak-style": ["error", "windows"], // window 환경
+    // "linebreak-style": ["error", "unix"],  // mac 환경
+    "linebreak-style": 0,
+    "prettier/prettier": [
+      "error",
+      { "singleQuote": false, "endOfLine": "auto" }
+    ],
+    "no-unused-vars": "warn",
+    "no-console": "off",
+    "func-names": "off",
+    "no-plusplus": "off",
+    "no-process-exit": "off",
+    "class-methods-use-this": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+    "prefer-object-spread": "off"
+  }
+}
